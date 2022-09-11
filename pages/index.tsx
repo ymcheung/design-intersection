@@ -1,11 +1,16 @@
-import type { NextPage } from 'next'
-import Head from 'next/head'
-import Image from 'next/image'
+import type { NextPage } from 'next';
+import Script from 'next/script';
+import HeadMeta from '@utils/HeadMeta';
+import Header from '@components/Header';
+
 
 const Home: NextPage = () => {
   return (
     <>
-     <main>index</main>
+      <HeadMeta />
+      <Script async src="https://cdn.splitbee.io/sb.js"></Script>
+      <Header />
+      <main>index</main>
     </>
   )
 }

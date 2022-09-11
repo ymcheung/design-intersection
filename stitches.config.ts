@@ -1,5 +1,5 @@
-import type * as Stitches from '@stitches/react'
-import { createStitches } from '@stitches/react'
+import type * as Stitches from '@stitches/react';
+import { createStitches } from '@stitches/react';
 
 export const {
   config,
@@ -76,7 +76,8 @@ export const {
     }),
   },
   media: {
-    bp1: '(min-width: 520px)',
-    bp2: '(min-width: 900px)',
+    m640: '(min-width: 640px)',
+    m992: '(min-width: 992px)',
+    m1200: '(min-width: 1200px)'
   },
 })

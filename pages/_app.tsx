@@ -1,7 +1,5 @@
-import type { AppProps } from 'next/app'
+import type { AppProps } from 'next/app';
 
-function MyApp({ Component, pageProps }: AppProps) {
+export default function DesignIntersection({ Component, pageProps }: AppProps) {
   return <Component {...pageProps} />
 }
-
-export default MyApp
