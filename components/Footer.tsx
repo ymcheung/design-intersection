@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { styled } from "../stitches.config";
 import { Container } from "@components/layouts";
+import { IntersectionLogo, Intersection } from "@elements/intersection";
 
 const FooterBox = styled('footer', {
   paddingTop: '$24',
@@ -13,7 +14,7 @@ const FooterLayout = styled(Container, {
   display: 'grid',
 
   variants: {
-    responsive: {
+    layout: {
       wide: {
         grid: 'auto / 1fr 1fr'
       }
@@ -28,23 +29,11 @@ const Logo = styled('figure', {
   margin: '0 0 $16'
 });
 
-const LogoImage = styled('svg', {
-  width: '$24',
-  aspectRatio: 1,
-  borderRadius: '4px'
-});
-
-const Intersection = styled('figcaption', {
-  marginBottom: '-$2',
-  paddingTop: '$2',
-  color: 'hsl($shade100)',
-  fontSize: '1.6rem',
-  fontWeight: 600,
-  fontStyle: 'italic',
-  letterSpacing: '4px',
-  lineHeight: '$24',
-  textTransform: 'uppercase'
-});
+// const LogoImage = styled('svg', {
+//   width: '$24',
+//   aspectRatio: 1,
+//   borderRadius: '4px'
+// });
 
 const Slogan = styled('span', {
   display: 'inline-block',
@@ -59,7 +48,7 @@ const LogoBuild = styled('svg', {
   aspectRatio: '25 / 4',
 });
 
-const LinkBlock = styled('a', {
+const LogoBuildLink = styled('a', {
   display: 'block',
   marginBlockEnd: '$32',
 
@@ -72,10 +61,17 @@ const LinkBlock = styled('a', {
   }
 });
 
+const AuthorLink = styled('a', {
+  color: 'inherit'
+});
+
 const Divider = styled('hr', {
   marginBlockStart: 0,
   marginBlockEnd: '$16',
-  borderBottom: '1px solid $shade1200'
+  borderTop: '1px solid hsl($shade1200)',
+  borderRight: 0,
+  borderBottom: 0,
+  borderLeft: 0
 });
 
 const Footnote = styled('span', {
@@ -90,24 +86,24 @@ export default function Footer() {
 
   return (
     <FooterBox>
-      <FooterLayout responsive={{ '@m640': 'wide' }}>
+      <FooterLayout responsive={{ '@m1200': 'noPadding' }} layout={{'@m640': 'wide' }}>
         <section>
         <Logo>
-          <LogoImage viewBox="0 0 96 96"><use xlinkHref="/sprite.svg#logoIntersection" /></LogoImage>
-          <Intersection>Intersection</Intersection>
+          <IntersectionLogo position="footer" viewBox="0 0 96 96"><use xlinkHref="/sprite.svg#logoIntersection" /></IntersectionLogo>
+          <Intersection position="footer">Intersection</Intersection>
         </Logo>
           <Slogan>優化、插件、高清、視頻、反饋、交互設計：已經看膩這些中國用語。</Slogan>
         </section>
         <section>
           <Link href="https://build.intersection.tw" passHref>
-            <LinkBlock responsive={{ '@m640': 'wide' }}>
+            <LogoBuildLink responsive={{ '@m640': 'wide' }}>
               <LogoBuild viewBox="0 0 500 80">
                 <use xlinkHref="/sprite.svg#logoBuild" />
               </LogoBuild>
-            </LinkBlock>
+            </LogoBuildLink>
           </Link>
           <Divider />
-          <Footnote>2016 - {thisYear}・@ymcheung 翻譯的文章</Footnote>
+          <Footnote>2016 - {thisYear}・<Link href="https://read.cv/ymcheung" passHref><AuthorLink target="_blank" rel="noopener">@ymcheung</AuthorLink></Link> 翻譯的文章</Footnote>
         </section>
       </FooterLayout>
     </FooterBox>

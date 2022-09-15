@@ -11,7 +11,7 @@ const Home: NextPage = () => {
       <HeadMeta />
       <Script async src="https://cdn.splitbee.io/sb.js"></Script>
       <Header />
-      <main>index</main>
+      <main></main>
       <Footer />
     </>
   )

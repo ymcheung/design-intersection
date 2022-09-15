@@ -1,12 +1,16 @@
-import Link from "next/link";
-import { styled } from "../stitches.config";
-import { Container } from "@components/layouts";
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { styled } from '../stitches.config';
+import { Container } from '@components/layouts';
+import { IntersectionLogo, Intersection } from '@elements/intersection';
 
 interface HeaderProps {
   headingTag?: string;
 }
 
 const HeaderBox = styled('header', {
+  fontFamily: '$default',
+  paddingY: '$12',
   borderBottom: '1px solid hsl($shade1200)'
 });
 
@@ -21,26 +25,33 @@ const SiteHeading = styled('strong', {
 
 const SiteHeadingHome = styled('span', {
   display: 'block',
-  fontSize: '1.6rem'
+  color: 'hsl($shade800)',
+  fontSize: '$16',
+  fontWeight: 'normal',
+  lineHeight: '$20'
 });
 
-const SiteHeadingName = styled('span', {
-  display: 'block',
-  fontSize: '1.2rem'
-});
+export default function Header({ headingTag }: HeaderProps) {
+  const router = useRouter();
 
-export default function Header({ headingTag }: HeaderProps ) {
   return (
     <HeaderBox>
-      <Container>
-        <Link href="/" passHref>
-          <HomeLink>
-            <SiteHeading>
-              <SiteHeadingHome>首頁</SiteHeadingHome>
-              <SiteHeadingName>Intersection</SiteHeadingName>
-            </SiteHeading>
-          </HomeLink>
-        </Link>
+      <Container responsive={{ '@m1200': 'noPadding' }}>
+        <SiteHeading>
+        {
+            router.pathname === '/' ? <>
+              <IntersectionLogo position="header" viewBox="0 0 96 96"><use xlinkHref="/sprite.svg#logoIntersection" /></IntersectionLogo>
+              <Intersection position="header">Intersection</Intersection>
+            </> : (
+            <Link href="/" passHref>
+              <HomeLink>
+                  <SiteHeadingHome>首頁</SiteHeadingHome>
+                  <Intersection position="header">Intersection</Intersection>
+              </HomeLink>
+            </Link>
+          )
+        }
+        </SiteHeading>
       </Container>
     </HeaderBox>
   );
