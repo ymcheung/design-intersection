@@ -7,7 +7,7 @@ interface HeaderProps {
 }
 
 const HeaderBox = styled('header', {
-  borderBottom: '1px solid #ccc'
+  borderBottom: '1px solid hsl($shade1200)'
 });
 
 const HomeLink = styled('a', {

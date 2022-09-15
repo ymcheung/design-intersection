@@ -2,6 +2,7 @@ import type { NextPage } from 'next';
 import Script from 'next/script';
 import HeadMeta from '@utils/HeadMeta';
 import Header from '@components/Header';
+import Footer from '@components/Footer';
 
 
 const Home: NextPage = () => {
@@ -11,6 +12,7 @@ const Home: NextPage = () => {
       <Script async src="https://cdn.splitbee.io/sb.js"></Script>
       <Header />
       <main>index</main>
+      <Footer />
     </>
   )
 }
