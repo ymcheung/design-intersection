@@ -20,7 +20,8 @@ const HomeLink = styled('a', {
 });
 
 const SiteHeading = styled('strong', {
-  display: 'block'
+  display: 'block',
+  margin: 0
 });
 
 const SiteHeadingHome = styled('span', {
@@ -33,16 +34,18 @@ const SiteHeadingHome = styled('span', {
 
 export default function Header({ headingTag }: HeaderProps) {
   const router = useRouter();
+  const isRootPath = router.pathname === '/';
 
   return (
     <HeaderBox>
       <Container responsive={{ '@m1200': 'noPadding' }}>
-        <SiteHeading>
+        <SiteHeading as={isRootPath ? 'h1' : 'strong'}>
         {
-            router.pathname === '/' ? <>
-              <IntersectionLogo position="header" viewBox="0 0 96 96"><use xlinkHref="/sprite.svg#logoIntersection" /></IntersectionLogo>
-              <Intersection position="header">Intersection</Intersection>
-            </> : (
+          isRootPath ?
+          <>
+            <IntersectionLogo position="header" viewBox="0 0 96 96"><use xlinkHref="/sprite.svg#logoIntersection" /></IntersectionLogo>
+            <Intersection position="header">Intersection</Intersection>
+          </> : (
             <Link href="/" passHref>
               <HomeLink>
                   <SiteHeadingHome>首頁</SiteHeadingHome>
