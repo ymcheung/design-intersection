@@ -35,7 +35,8 @@ export const {
       12: '12px',
       16: '16px',
       24: '24px',
-      32: '32px'
+      32: '32px',
+      64: '64px'
     },
     sizes: {
       12: '12px',
@@ -54,7 +55,8 @@ export const {
       16: '16px',
       18: '18px',
       20: '20px',
-      24: '24px'
+      24: '24px',
+      28: '28px'
     },
     fonts: {
       default: `"Overpass", system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"`

@@ -16,7 +16,8 @@ const FooterLayout = styled(Container, {
   variants: {
     layout: {
       wide: {
-        grid: 'auto / 1fr 1fr'
+        grid: 'auto / 1fr 1fr',
+        columnGap: '$16'
       }
     }
   }

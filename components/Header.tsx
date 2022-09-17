@@ -4,13 +4,10 @@ import { styled } from '../stitches.config';
 import { Container } from '@components/layouts';
 import { IntersectionLogo, Intersection } from '@elements/intersection';
 
-interface HeaderProps {
-  headingTag?: string;
-}
-
 const HeaderBox = styled('header', {
   fontFamily: '$default',
-  paddingY: '$12',
+  paddingTop: '$12',
+  paddingBottom: '$8',
   borderBottom: '1px solid hsl($shade1200)'
 });
 
@@ -32,7 +29,7 @@ const SiteHeadingHome = styled('span', {
   lineHeight: '$20'
 });
 
-export default function Header({ headingTag }: HeaderProps) {
+export default function Header() {
   const router = useRouter();
   const isRootPath = router.pathname === '/';
 
