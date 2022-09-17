@@ -48,6 +48,7 @@ const HomeLayout = styled(Container, {
     layout: {
       tablet: {
         grid: '"featured all" auto / 5fr 3fr',
+        alignItems: 'start',
         columnGap: '$64'
       }
     }
@@ -55,17 +56,26 @@ const HomeLayout = styled(Container, {
 });
 
 const PostList = styled('ul', {
-  marginTop: 0,
-  marginBottom: '$24',
+  display: 'grid',
+  rowGap: '$24',
+  marginBlockStart: 0,
+  marginBlockEnd: '$24',
   padding: 0,
 
   variants: {
     position: {
       featured: {
+        position: 'sticky',
+        top: '$64',
         gridArea: 'featured'
       },
       all: {
         gridArea: 'all'
+        // paddingTop: '$64'
+      }
+    },
+    responsive: {
+      mobile: {
       }
     }
   }
@@ -88,18 +98,12 @@ const PostItem = styled('li', {
 
 const Cover = styled('figure', {
   position: 'relative',
-  aspectRatio: 16 / 9,
-  marginTop: 0,
+  marginBlockStart: 0,
+  marginBlockEnd: '$16',
+  backgroundColor: 'hsl($shade1500)',
+  // borderBottom: '1px solid hsl($shade1200)',
 
   variants: {
-    position: {
-      featured: {
-        marginBlockEnd: '$16'
-      },
-      all: {
-        marginBlockEnd: '$12'
-      }
-    },
     responsive: {
       mobile: {
         marginX: '-$16'
@@ -107,6 +111,19 @@ const Cover = styled('figure', {
       },
       tablet: {
         marginX: 0
+      }
+    },
+    featured: {
+      mobile: {
+        aspectRatio: 16 / 9
+      },
+      tablet: {
+        aspectRatio: 32 / 9
+      }
+    },
+    position: {
+      all: {
+        aspectRatio: 16 / 9
       }
     }
   }
@@ -180,7 +197,7 @@ const Home: NextPage<postsProps> = ({ posts }) => {
         <PostList position={{ '@m992': 'featured' }}>
           {featuredPosts.map(({ title, cover, description, publishedTime }, index) => (
             <PostItem key={`featured_${index}`}>
-              <Cover position="featured" responsive={{ '@initial': 'mobile', '@m992': 'tablet' }}>
+              <Cover responsive={{ '@initial': 'mobile', '@m992': 'tablet' }} featured={{ '@initial': 'mobile', '@m992': 'tablet' }}>
                 <Image src={cover} layout="fill" objectFit="cover" alt="" />
                 <DateLabel responsive={{ '@initial': 'mobile', '@m992': 'tablet' }} dateTime={formatDate(publishedTime)}>{formatDate(publishedTime)}</DateLabel>
               </Cover>
@@ -192,7 +209,7 @@ const Home: NextPage<postsProps> = ({ posts }) => {
         <PostList position={{ '@m992': 'all' }}>
           {posts.map(({ title, cover, publishedTime }, index) => (
             <PostItem key={`all_${index}`}>
-              <Cover position="all" responsive={{ '@initial': 'mobile', '@m992': 'tablet' }}>
+              <Cover responsive={{ '@initial': 'mobile', '@m992': 'tablet' }} position="all">
                 <Image src={cover} layout="fill" objectFit="cover" alt="" />
                 <DateLabel responsive={{ '@initial': 'mobile', '@m992': 'tablet' }} dateTime={formatDate(publishedTime)}>{formatDate(publishedTime)}</DateLabel>
               </Cover>

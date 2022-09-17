@@ -5,10 +5,16 @@ import { Container } from '@components/layouts';
 import { IntersectionLogo, Intersection } from '@elements/intersection';
 
 const HeaderBox = styled('header', {
+  position: 'sticky',
+  top: 0,
+  right: 0,
+  left: 0,
+  zIndex: 1,
   fontFamily: '$default',
   paddingTop: '$12',
   paddingBottom: '$8',
-  borderBottom: '1px solid hsl($shade1200)'
+  borderBottom: '1px solid hsl($shade1200)',
+  backgroundColor: 'white'
 });
 
 const HomeLink = styled('a', {
