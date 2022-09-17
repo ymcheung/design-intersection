@@ -16,9 +16,11 @@ export const {
       loContrast: 'white',
 
       shade100: '210 4% 10%',
+      shade500: '120 1% 34%',
       shade800: '210 1% 53%',
       shade1200: '210 2% 77%',
       shade1500: '210 9% 96%',
+      white: '240 100% 100%',
 
       gray100: 'hsl(206,22%,99%)',
       gray200: 'hsl(206,12%,97%)',

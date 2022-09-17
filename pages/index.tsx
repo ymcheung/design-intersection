@@ -5,10 +5,14 @@ import { gql } from '@apollo/client';
 import client from '../apollo-client';
 import { formatDate } from '@utils/formatDate';
 import { styled } from '../stitches.config';
+
+import ymcheung from '../public/translator/ymcheung.webp';
+
 import HeadMeta from '@utils/HeadMeta';
 import Header from '@components/Header';
 import { Container } from '@components/layouts';
 import Footer from '@components/Footer';
+import Link from 'next/link';
 
 interface queryProps {
   slug: {
@@ -55,30 +59,63 @@ const HomeLayout = styled(Container, {
   }
 });
 
+const MainGridCell = styled('div', {
+  variants: {
+    position: {
+      featured: {
+        gridArea: 'featured'
+      },
+      all: {
+        gridArea: 'all'
+      }
+    },
+    responsive: {
+      tablet: {
+        position: 'sticky',
+        top: '$64'
+      }
+    }
+  }
+});
+
+const Heading = styled('h2', {
+  variants: {
+    position: {
+      cell: {
+        margin: '0 0 $8',
+        paddingTop: '$8',
+        color: 'hsl($shade500)',
+        fontSize: '$20',
+        lineHeight: '$28'
+      },
+      postsFeatured: {
+        margin: '0 0 $12',
+        color: 'hsl($shade100)',
+        fontSize: '$20',
+        lineHeight: '$28'
+      },
+      postsAll: {
+        margin: '0 0 $8',
+        color: 'hsl($shade100)',
+        fontSize: '$16',
+        lineHeight: '$24'
+      },
+      translator: {
+        margin: '0 0 $16',
+        color: 'hsl($shade500)',
+        fontSize: '$16',
+        lineHeight: '$24'
+      }
+    }
+  }
+});
+
 const PostList = styled('ul', {
   display: 'grid',
   rowGap: '$24',
   marginBlockStart: 0,
   marginBlockEnd: '$24',
-  padding: 0,
-
-  variants: {
-    position: {
-      featured: {
-        position: 'sticky',
-        top: '$64',
-        gridArea: 'featured'
-      },
-      all: {
-        gridArea: 'all'
-        // paddingTop: '$64'
-      }
-    },
-    responsive: {
-      mobile: {
-      }
-    }
-  }
+  padding: 0
 });
 
 const PostItem = styled('li', {
@@ -136,6 +173,7 @@ const DateLabel = styled('time', {
   paddingTop: '$4',
   paddingBottom: '$2',
   paddingInlineStart: '$12',
+  color: 'hsl($shade800)',
   fontSize: '$16',
   lineHeight: 1,
   backgroundColor: 'hsl($shade1500)',
@@ -154,34 +192,75 @@ const DateLabel = styled('time', {
   }
 });
 
-const PostTitle = styled('h2', {
-  variants: {
-    position: {
-      featured: {
-        margin: '0 0 $12',
-        fontSize: '$20',
-        lineHeight: '$28'
-      },
-      all: {
-        margin: '0 0 $8',
-        fontSize: '$16'
-      }
-    }
-  }
-});
-
-const PostDescription = styled('p', {
-  marginTop: 0,
+const Description = styled('p', {
+  marginBlockStart: 0,
 
   variants: {
     position: {
       featured: {
+        color: 'hsl($shade800)',
         fontSize: '$16',
         lineHeight: '$24'
+      },
+      translator: {
+        marginBlockEnd: '$4',
+        fontSize: '$14',
+        lineHeight: '$20'
+      },
+      translatorLink: {
+        marginBlockEnd: '$4',
+        color: 'hsl($shade800)',
+        fontSize: '$14',
+        lineHeight: '$20',
+        textDecorationColor: 'transparent',
+
+        '&:hover': {
+          textDecorationColor: 'hsl($shade800)',
+        }
       }
     }
   }
 });
+
+const FeaturedDivider = styled('hr', {
+  marginBlockStart: 0,
+  marginBlockEnd: '$16',
+  borderTop: '1px solid hsl($shade1200)',
+  borderRight: 0,
+  borderBottom: 0,
+  borderLeft: 0,
+
+  variants: {
+    position: {
+      bottom: {
+        display: 'none'
+      }
+    }
+  }
+});
+
+const TranslatorCard = styled('figure', {
+  display: 'grid',
+  grid: 'auto / 80px 1fr',
+  columnGap: '$8',
+  margin: '0 0 $32',
+
+  // variants: {
+  //   responsive: {
+  //     mobile: {
+  //       marginBlockEnd: '$24'
+  //     },
+  //     tablet: {
+  //       marginBlockEnd: '$32'
+  //     }
+  //   }
+  // }
+});
+
+const TranslatorAvatar = styled(Image, {
+  borderRadius: '12px'
+});
+
 
 const Home: NextPage<postsProps> = ({ posts }) => {
   const featuredPosts = posts.filter(({ tags }) =>
@@ -194,29 +273,48 @@ const Home: NextPage<postsProps> = ({ posts }) => {
       <Script async src="https://cdn.splitbee.io/sb.js"></Script>
       <Header />
       <HomeLayout as="main" layout={{ '@m992': 'tablet' }} responsive={{ '@m1200': 'noPadding' }}>
-        <PostList position={{ '@m992': 'featured' }}>
-          {featuredPosts.map(({ title, cover, description, publishedTime }, index) => (
-            <PostItem key={`featured_${index}`}>
-              <Cover responsive={{ '@initial': 'mobile', '@m992': 'tablet' }} featured={{ '@initial': 'mobile', '@m992': 'tablet' }}>
-                <Image src={cover} layout="fill" objectFit="cover" alt="" />
-                <DateLabel responsive={{ '@initial': 'mobile', '@m992': 'tablet' }} dateTime={formatDate(publishedTime)}>{formatDate(publishedTime)}</DateLabel>
-              </Cover>
-              <PostTitle position="featured">{title}</PostTitle>
-              <PostDescription position="featured">{description}</PostDescription>
-            </PostItem>
-          ))}
-        </PostList>
-        <PostList position={{ '@m992': 'all' }}>
+        <MainGridCell position={{ '@m992': 'featured' }} responsive={{ '@m992': 'tablet' }}>
+          <PostList>
+            {featuredPosts.map(({ title, cover, description, publishedTime }, index) => (
+              <PostItem key={`featured_${index}`}>
+                <Cover
+                  responsive={{ '@initial': 'mobile', '@m992': 'tablet' }}
+                  featured={{ '@initial': 'mobile', '@m992': 'tablet' }}
+                >
+                  <Image src={cover} layout="fill" objectFit="cover" alt="" />
+                  <DateLabel responsive={{ '@initial': 'mobile', '@m992': 'tablet' }} dateTime={formatDate(publishedTime)}>{formatDate(publishedTime)}</DateLabel>
+                </Cover>
+                <Heading position="postsFeatured">{title}</Heading>
+                <Description position="featured">{description}</Description>
+              </PostItem>
+            ))}
+          </PostList>
+          <FeaturedDivider />
+          <Heading position="cell">關於譯者</Heading>
+          <TranslatorCard>
+            <TranslatorAvatar src={ymcheung} width={80} height={80} layout="fixed" alt="" />
+            <figcaption>
+              <Heading position="translator">Yuming Cheung</Heading>
+              <Description position="translator">網站前端開發 @RE:LAB</Description>
+              <Link href="https://read.cv/ymcheung" passHref><Description as="a" position="translatorLink">read.cv/ymcheung</Description></Link>
+            </figcaption>
+          </TranslatorCard>
+          <FeaturedDivider position={{ '@m992': 'bottom' }} />
+        </MainGridCell>
+        <MainGridCell position={{ '@m992': 'all' }} responsive={{ '@m992': 'tablet' }}>
+        <Heading position="cell">所有文章</Heading>
+        <PostList>
           {posts.map(({ title, cover, publishedTime }, index) => (
             <PostItem key={`all_${index}`}>
               <Cover responsive={{ '@initial': 'mobile', '@m992': 'tablet' }} position="all">
                 <Image src={cover} layout="fill" objectFit="cover" alt="" />
                 <DateLabel responsive={{ '@initial': 'mobile', '@m992': 'tablet' }} dateTime={formatDate(publishedTime)}>{formatDate(publishedTime)}</DateLabel>
               </Cover>
-              <PostTitle position="all">{title}</PostTitle>
+              <Heading as="h3" position="postsAll">{title}</Heading>
             </PostItem>
           ))}
         </PostList>
+        </MainGridCell>
       </HomeLayout>
       <Footer />
     </>

@@ -14,7 +14,8 @@ const HeaderBox = styled('header', {
   paddingTop: '$12',
   paddingBottom: '$8',
   borderBottom: '1px solid hsl($shade1200)',
-  backgroundColor: 'white'
+  backgroundColor: 'hsl($white / 0.88)',
+  backdropFilter: 'blur(12px)'
 });
 
 const HomeLink = styled('a', {
@@ -46,13 +47,15 @@ export default function Header() {
         {
           isRootPath ?
           <>
-            <IntersectionLogo position="header" viewBox="0 0 96 96"><use xlinkHref="/sprite.svg#logoIntersection" /></IntersectionLogo>
+            <IntersectionLogo position="header" viewBox="0 0 96 96">
+              <use xlinkHref="/sprite.svg#logoIntersection" />
+            </IntersectionLogo>
             <Intersection position="header">Intersection</Intersection>
           </> : (
             <Link href="/" passHref>
               <HomeLink>
-                  <SiteHeadingHome>首頁</SiteHeadingHome>
-                  <Intersection position="header">Intersection</Intersection>
+                <SiteHeadingHome>首頁</SiteHeadingHome>
+                <Intersection position="header">Intersection</Intersection>
               </HomeLink>
             </Link>
           )

@@ -23,7 +23,7 @@ export const Intersection = styled('span', {
   marginBottom: '-$2',
   paddingTop: '$2',
   color: 'hsl($shade100)',
-  fontWeight: 600,
+  fontWeight: 700,
   fontStyle: 'italic',
   letterSpacing: '4px',
   textTransform: 'uppercase',
