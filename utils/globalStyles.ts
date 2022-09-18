@@ -54,4 +54,16 @@ export const globalStyles = globalCss({
       src: 'local("Overpass"), url("/fonts/Overpass-BoldItalic.woff2") format("woff2")',
     }
   ],
+
+  // '#__next': {
+  //   display: 'grid',
+
+  //   '@media screen and (min-width: 992px)': {
+  //     grid: `"header header" auto
+  //            "featured all" auto
+  //            "footer footer" auto / 5fr 3fr`,
+  //     alignItems: 'start',
+  //     columnGap: '$64'
+  //   }
+  // }
 });

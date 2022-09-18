@@ -7,7 +7,15 @@ const FooterBox = styled('footer', {
   paddingTop: '$24',
   paddingBottom: '$16',
   fontFamily: '$default',
-  backgroundColor: 'hsl($shade1500)'
+  backgroundColor: 'hsl($shade1500)',
+
+  variants: {
+    responsive: {
+      tablet: {
+        gridArea: 'footer'
+      }
+    }
+  }
 });
 
 const FooterLayout = styled(Container, {

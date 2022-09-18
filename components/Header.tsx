@@ -11,27 +11,28 @@ const HeaderBox = styled('header', {
   left: 0,
   zIndex: 1,
   fontFamily: '$default',
-  paddingTop: '$12',
-  paddingBottom: '$8',
+  paddingY: '$12',
   borderBottom: '1px solid hsl($shade1200)',
   backgroundColor: 'hsl($white / 0.88)',
-  backdropFilter: 'blur(12px)'
+  backdropFilter: 'blur(12px)',
 });
 
 const HomeLink = styled('a', {
-  display: 'block',
+  display: 'inline-block',
   textDecoration: 'none'
 });
 
 const SiteHeading = styled('strong', {
   display: 'block',
-  margin: 0
+  margin: 0,
+  fontSize: 0
 });
 
 const SiteHeadingHome = styled('span', {
   display: 'block',
+  marginBlockEnd: '$4',
   color: 'hsl($shade800)',
-  fontSize: '$16',
+  fontSize: '$14',
   fontWeight: 'normal',
   lineHeight: '$20'
 });

@@ -1,5 +1,6 @@
 import type { NextPage } from 'next';
 import Script from 'next/script';
+import Link from 'next/link';
 import Image from 'next/image';
 import { gql } from '@apollo/client';
 import client from '../apollo-client';
@@ -12,7 +13,6 @@ import HeadMeta from '@utils/HeadMeta';
 import Header from '@components/Header';
 import { Container } from '@components/layouts';
 import Footer from '@components/Footer';
-import Link from 'next/link';
 
 interface queryProps {
   slug: {
@@ -45,12 +45,12 @@ interface postsProps {
 }
 
 const HomeLayout = styled(Container, {
-  display: 'grid',
   fontFamily: '$default',
 
   variants: {
     layout: {
       tablet: {
+        display: 'grid',
         grid: '"featured all" auto / 5fr 3fr',
         alignItems: 'start',
         columnGap: '$64'
@@ -59,7 +59,7 @@ const HomeLayout = styled(Container, {
   }
 });
 
-const MainGridCell = styled('div', {
+const HomeCell = styled('div', {
   variants: {
     position: {
       featured: {
@@ -95,7 +95,7 @@ const Heading = styled('h2', {
         lineHeight: '$28'
       },
       postsAll: {
-        margin: '0 0 $8',
+        margin: 0,
         color: 'hsl($shade100)',
         fontSize: '$16',
         lineHeight: '$24'
@@ -131,6 +131,11 @@ const PostItem = styled('li', {
       }
     }
   }
+});
+
+const PostLink = styled('a', {
+  display: 'block',
+  textDecoration: 'none'
 });
 
 const Cover = styled('figure', {
@@ -174,8 +179,8 @@ const DateLabel = styled('time', {
   paddingBottom: '$2',
   paddingInlineStart: '$12',
   color: 'hsl($shade800)',
-  fontSize: '$16',
-  lineHeight: 1,
+  fontSize: '$14',
+  lineHeight: '$18',
   backgroundColor: 'hsl($shade1500)',
   border: '4px solid white',
   borderRight: 0,
@@ -198,12 +203,13 @@ const Description = styled('p', {
   variants: {
     position: {
       featured: {
-        color: 'hsl($shade800)',
+        color: 'hsl($shade500)',
         fontSize: '$16',
         lineHeight: '$24'
       },
       translator: {
         marginBlockEnd: '$4',
+        color: 'hsl($shade800)',
         fontSize: '$14',
         lineHeight: '$20'
       },
@@ -257,35 +263,41 @@ const TranslatorCard = styled('figure', {
   // }
 });
 
-const TranslatorAvatar = styled(Image, {
-  borderRadius: '12px'
-});
+  const TranslatorAvatar = styled(Image, {
+    borderRadius: '12px'
+  });
 
 
-const Home: NextPage<postsProps> = ({ posts }) => {
-  const featuredPosts = posts.filter(({ tags }) =>
+  const Home: NextPage<postsProps> = ({ posts }) => {
+    const featuredPosts = posts.filter(({ tags }) =>
     tags.includes('featured')
   );
+
+  console.log(posts)
 
   return (
     <>
       <HeadMeta />
       <Script async src="https://cdn.splitbee.io/sb.js"></Script>
       <Header />
-      <HomeLayout as="main" layout={{ '@m992': 'tablet' }} responsive={{ '@m1200': 'noPadding' }}>
-        <MainGridCell position={{ '@m992': 'featured' }} responsive={{ '@m992': 'tablet' }}>
+      <HomeLayout layout={{ '@m992': 'tablet' }} responsive={{ '@m1200': 'noPadding' }}>
+        <HomeCell as="main" position={{ '@m992': 'featured' }} responsive={{ '@m992': 'tablet' }}>
           <PostList>
-            {featuredPosts.map(({ title, cover, description, publishedTime }, index) => (
+            {featuredPosts.map(({ slug, title, cover, description, publishedTime }, index) => (
               <PostItem key={`featured_${index}`}>
-                <Cover
-                  responsive={{ '@initial': 'mobile', '@m992': 'tablet' }}
-                  featured={{ '@initial': 'mobile', '@m992': 'tablet' }}
-                >
-                  <Image src={cover} layout="fill" objectFit="cover" alt="" />
-                  <DateLabel responsive={{ '@initial': 'mobile', '@m992': 'tablet' }} dateTime={formatDate(publishedTime)}>{formatDate(publishedTime)}</DateLabel>
-                </Cover>
-                <Heading position="postsFeatured">{title}</Heading>
-                <Description position="featured">{description}</Description>
+                <Link href={`/${slug}`} passHref>
+                  <PostLink>
+                    <Cover
+                      responsive={{ '@initial': 'mobile', '@m992': 'tablet' }}
+                      featured={{ '@initial': 'mobile', '@m992': 'tablet' }}
+                    >
+                      <Image src={cover} layout="fill" objectFit="cover" alt="" />
+                      <DateLabel responsive={{ '@initial': 'mobile', '@m992': 'tablet' }} dateTime={formatDate(publishedTime)}>{formatDate(publishedTime)}</DateLabel>
+                    </Cover>
+                    <Heading position="postsFeatured">{title}</Heading>
+                    <Description position="featured">{description}</Description>
+                  </PostLink>
+                </Link>
               </PostItem>
             ))}
           </PostList>
@@ -300,21 +312,25 @@ const Home: NextPage<postsProps> = ({ posts }) => {
             </figcaption>
           </TranslatorCard>
           <FeaturedDivider position={{ '@m992': 'bottom' }} />
-        </MainGridCell>
-        <MainGridCell position={{ '@m992': 'all' }} responsive={{ '@m992': 'tablet' }}>
+        </HomeCell>
+        <HomeCell position={{ '@m992': 'all' }} responsive={{ '@m992': 'tablet' }}>
         <Heading position="cell">所有文章</Heading>
         <PostList>
-          {posts.map(({ title, cover, publishedTime }, index) => (
+          {posts.map(({ slug, title, cover, publishedTime }, index) => (
             <PostItem key={`all_${index}`}>
-              <Cover responsive={{ '@initial': 'mobile', '@m992': 'tablet' }} position="all">
-                <Image src={cover} layout="fill" objectFit="cover" alt="" />
-                <DateLabel responsive={{ '@initial': 'mobile', '@m992': 'tablet' }} dateTime={formatDate(publishedTime)}>{formatDate(publishedTime)}</DateLabel>
-              </Cover>
-              <Heading as="h3" position="postsAll">{title}</Heading>
+              <Link href={`/${slug}`} passHref>
+                <PostLink>
+                  <Cover responsive={{ '@initial': 'mobile', '@m992': 'tablet' }} position="all">
+                    <Image src={cover} layout="fill" objectFit="cover" alt="" />
+                    <DateLabel responsive={{ '@initial': 'mobile', '@m992': 'tablet' }} dateTime={formatDate(publishedTime)}>{formatDate(publishedTime)}</DateLabel>
+                  </Cover>
+                  <Heading as="h3" position="postsAll">{title}</Heading>
+                </PostLink>
+              </Link>
             </PostItem>
           ))}
         </PostList>
-        </MainGridCell>
+        </HomeCell>
       </HomeLayout>
       <Footer />
     </>
@@ -326,6 +342,7 @@ export async function getStaticProps() {
     query: gql`
       query Posts {
         allPost(sort: { publishedTime:DESC }) {
+          _id
           slug {
             current
           }

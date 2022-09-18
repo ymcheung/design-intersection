@@ -7,7 +7,8 @@ export const IntersectionLogo = styled('svg', {
     position: {
       header: {
         display: 'block',
-        width: '$16',
+        width: '$20',
+        aspectRatio: 1,
         marginBottom: '$4',
         borderRadius: '3px'
       },
@@ -20,6 +21,7 @@ export const IntersectionLogo = styled('svg', {
 });
 
 export const Intersection = styled('span', {
+  display: 'inline-block',
   marginBottom: '-$2',
   paddingTop: '$2',
   color: 'hsl($shade100)',

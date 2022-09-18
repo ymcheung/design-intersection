@@ -40,6 +40,13 @@ export default {
       title: 'Description',
       type: 'text'
     },
+
+    {
+      title: 'Source',
+      name: 'source',
+      type: 'reference',
+      to: [{ type: 'source' }]
+    },
     {
       name: 'tags',
       title: 'Tags',
