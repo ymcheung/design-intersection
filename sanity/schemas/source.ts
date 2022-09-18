@@ -9,6 +9,11 @@ export default {
       type: 'string'
     },
     {
+      name: 'subtitle',
+      title: 'Subtitle',
+      type: 'string'
+    },
+    {
       name: 'url',
       title: 'Link Url',
       type: 'string'

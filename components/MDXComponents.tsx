@@ -4,8 +4,8 @@ import { styled } from '../stitches.config';
 const Paragraph = styled('p', {
   marginBlockStart: 0,
   marginBlockEnd: '$16',
-  fontSize: '$16',
-  lineHeight: '$24'
+  fontSize: '$18',
+  lineHeight: '$28'
 });
 
 const List = styled('ul', {

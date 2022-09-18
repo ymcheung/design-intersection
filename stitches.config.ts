@@ -53,13 +53,15 @@ export const {
       16: '1.6rem',
       18: '1.8rem',
       20: '2rem',
+      24: '2.4rem'
     },
     lineHeights: {
       16: '16px',
       18: '18px',
       20: '20px',
       24: '24px',
-      28: '28px'
+      28: '28px',
+      32: '32px'
     },
     fonts: {
       default: `"Overpass", system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"`

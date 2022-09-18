@@ -21,6 +21,7 @@ interface queryProps {
     current: string;
   };
   title: string;
+  subtitle: string;
   mainImage: {
     asset: {
       url: string;
@@ -38,6 +39,7 @@ interface queryProps {
 interface postProps {
   post: {
     title: string;
+    subtitle: string;
     cover: string;
     description: string;
     modifiedTime: string;
@@ -64,23 +66,75 @@ const PostLayout = styled(Container, {
 });
 
 const PostBody = styled('article', {
+  marginBlockEnd: '$64',
+  paddingBlockStart: '$16',
 
+  '& img': {
+    maxWidth: '100%'
+  },
+
+  variants: {
+    responsive: {
+      tablet: {
+      }
+    }
+  }
+});
+
+const PostTitle = styled('h1', {
+  marginBlockStart: 0,
+  marginBlockEnd: '$16',
+  fontSize: '$20',
+
+  variants: {
+    responsive: {
+      tablet: {
+        fontSize: '$24'
+      }
+    },
+    withSubtitle: {
+      true: {
+        marginBlockEnd: '$8'
+      }
+    }
+  }
+});
+
+const PostSubtitle = styled('p', {
+  marginBlockStart: 0,
+  marginBlockEnd: '$16',
+  fontSize: '$18',
+  lineHeight: '$24'
+});
+
+
+const PostMeta = styled('aside', {
+  paddingBlockStart: '$16',
+
+  variants: {
+    responsive: {
+      tablet: {
+        paddingBlockStart: '$16'
+      }
+    }
+  }
 });
 
 export default function Post({ post, source }: postProps) {
-  const { title } = post;
+  const { title, subtitle } = post;
 
   return (
     <>
       <Header />
       <PostLayout layout={{ '@m992': 'tablet' }} responsive={{ '@m1200': 'noPadding' }}>
-        <article>
-          <h1>{title}</h1>
+        <PostBody responsive={{ '@m992': 'tablet' }}>
+          <PostTitle responsive={{ '@m992': 'tablet' }} withSubtitle={!!subtitle}>{title}</PostTitle>
+          {subtitle && <PostSubtitle>{subtitle}</PostSubtitle>}
           <MDXRemote {...source} components={MDXComponents} />
-        </article>
-        <aside>
-
-        </aside>
+        </PostBody>
+        <PostMeta responsive={{ '@m992': 'tablet' }}>
+        1
+        </PostMeta>
       </PostLayout>
       <Footer />
     </>
@@ -100,7 +154,9 @@ export async function getStaticPaths() {
     `,
   });
 
-  const paths = data.allPost.map(({ slug }: staticPathProps) => ({ params: { slug: slug.current }}));
+  const paths = data.allPost.map(({ slug }: staticPathProps) => ({
+    params: { slug: slug.current }
+  }));
 
   return {
     paths,
@@ -115,6 +171,7 @@ export async function getStaticProps({ params }: GetStaticPropsContext) {
         allPost( where: { slug: { current: { eq: "${params?.slug}"}}}) {
           _id
           title
+          subtitle,
           mainImage {
             asset {
               url
@@ -132,10 +189,11 @@ export async function getStaticProps({ params }: GetStaticPropsContext) {
     `,
   });
 
-  const post = data.allPost.map(({ title, mainImage, description, _updatedAt, publishedTime, tags }: queryProps) => {
+  const post = data.allPost.map(({ title, subtitle, mainImage, description, _updatedAt, publishedTime, tags }: queryProps) => {
     const tagsSlug = tags.map(({ slug }) => slug);
     return ({
       title,
+      subtitle,
       cover: mainImage.asset.url,
       description,
       modifiedTime: _updatedAt,
