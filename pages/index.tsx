@@ -10,8 +10,10 @@ import { styled } from '../stitches.config';
 import ymcheung from '../public/translator/ymcheung.webp';
 
 import HeadMeta from '@utils/HeadMeta';
+import { Divider } from '@elements/divider';
 import Header from '@components/Header';
 import { Container } from '@components/layouts';
+import { Heading } from '@components/headings';
 import Footer from '@components/Footer';
 
 interface queryProps {
@@ -78,37 +80,6 @@ const HomeCell = styled('div', {
   }
 });
 
-const Heading = styled('h2', {
-  variants: {
-    position: {
-      cell: {
-        margin: '0 0 $8',
-        paddingTop: '$8',
-        color: 'hsl($shade500)',
-        fontSize: '$20',
-        lineHeight: '$28'
-      },
-      postsFeatured: {
-        margin: '0 0 $12',
-        color: 'hsl($shade100)',
-        fontSize: '$20',
-        lineHeight: '$28'
-      },
-      postsAll: {
-        margin: 0,
-        color: 'hsl($shade100)',
-        fontSize: '$16',
-        lineHeight: '$24'
-      },
-      translator: {
-        margin: '0 0 $16',
-        color: 'hsl($shade500)',
-        fontSize: '$16',
-        lineHeight: '$24'
-      }
-    }
-  }
-});
 
 const PostList = styled('ul', {
   display: 'grid',
@@ -228,23 +199,6 @@ const Description = styled('p', {
   }
 });
 
-const FeaturedDivider = styled('hr', {
-  marginBlockStart: 0,
-  marginBlockEnd: '$16',
-  borderTop: '1px solid hsl($shade1200)',
-  borderRight: 0,
-  borderBottom: 0,
-  borderLeft: 0,
-
-  variants: {
-    position: {
-      bottom: {
-        display: 'none'
-      }
-    }
-  }
-});
-
 const TranslatorCard = styled('figure', {
   display: 'grid',
   grid: 'auto / 80px 1fr',
@@ -278,7 +232,7 @@ const TranslatorCard = styled('figure', {
   return (
     <>
       <HeadMeta />
-      <Script async src="https://cdn.splitbee.io/sb.js"></Script>
+      {process.env.NODE_ENV === 'production' && <Script async src="https://cdn.splitbee.io/sb.js"></Script>}
       <Header />
       <HomeLayout layout={{ '@m992': 'tablet' }} responsive={{ '@m1200': 'noPadding' }}>
         <HomeCell as="main" position={{ '@m992': 'featured' }} responsive={{ '@m992': 'tablet' }}>
@@ -301,7 +255,7 @@ const TranslatorCard = styled('figure', {
               </PostItem>
             ))}
           </PostList>
-          <FeaturedDivider />
+          <Divider />
           <Heading position="cell">關於譯者</Heading>
           <TranslatorCard>
             <TranslatorAvatar src={ymcheung} width={80} height={80} layout="fixed" alt="" />
@@ -311,7 +265,7 @@ const TranslatorCard = styled('figure', {
               <Link href="https://read.cv/ymcheung" passHref><Description as="a" position="translatorLink">read.cv/ymcheung</Description></Link>
             </figcaption>
           </TranslatorCard>
-          <FeaturedDivider position={{ '@m992': 'bottom' }} />
+          <Divider display={{ '@m992': 'none' }} />
         </HomeCell>
         <HomeCell position={{ '@m992': 'all' }} responsive={{ '@m992': 'tablet' }}>
         <Heading position="cell">所有文章</Heading>

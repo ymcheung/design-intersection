@@ -2,6 +2,7 @@ import Link from "next/link";
 import { styled } from "../stitches.config";
 import { Container } from "@components/layouts";
 import { IntersectionLogo, Intersection } from "@elements/intersection";
+import { Divider } from "@elements/divider";
 
 const FooterBox = styled('footer', {
   paddingTop: '$24',
@@ -72,15 +73,6 @@ const LogoBuildLink = styled('a', {
 
 const AuthorLink = styled('a', {
   color: 'inherit'
-});
-
-const Divider = styled('hr', {
-  marginBlockStart: 0,
-  marginBlockEnd: '$16',
-  borderTop: '1px solid hsl($shade1200)',
-  borderRight: 0,
-  borderBottom: 0,
-  borderLeft: 0
 });
 
 const Footnote = styled('span', {

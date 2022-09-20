@@ -16,6 +16,7 @@ export const {
       loContrast: 'white',
 
       shade100: '210 4% 10%',
+      shade400: '210 2% 25%',
       shade500: '120 1% 34%',
       shade800: '210 1% 53%',
       shade1200: '210 2% 77%',
@@ -53,7 +54,8 @@ export const {
       16: '1.6rem',
       18: '1.8rem',
       20: '2rem',
-      24: '2.4rem'
+      24: '2.4rem',
+      32: '3.2rem'
     },
     lineHeights: {
       16: '16px',
@@ -61,7 +63,8 @@ export const {
       20: '20px',
       24: '24px',
       28: '28px',
-      32: '32px'
+      32: '32px',
+      40: '40px'
     },
     fonts: {
       default: `"Overpass", system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"`

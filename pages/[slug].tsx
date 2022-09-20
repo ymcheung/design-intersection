@@ -4,10 +4,14 @@ import client from '../apollo-client';
 import { serialize } from 'next-mdx-remote/serialize';
 import { MDXRemote } from 'next-mdx-remote';
 import MDXComponents from '@components/MDXComponents';
+import Link from 'next/link';
 import { formatDate } from '@utils/formatDate';
+import remarkGfm from 'remark-gfm';
 import { styled } from '../stitches.config';
+import { Divider } from '@elements/divider';
 import Header from '@components/Header';
 import { Container } from '@components/layouts';
+import { Heading } from '@components/headings';
 import Footer from '@components/Footer';
 
 interface staticPathProps {
@@ -21,7 +25,7 @@ interface queryProps {
     current: string;
   };
   title: string;
-  subtitle: string;
+  subtitle?: string;
   mainImage: {
     asset: {
       url: string;
@@ -31,6 +35,13 @@ interface queryProps {
   description: string;
   _updatedAt: string;
   publishedTime: string;
+  source: {
+    title: string;
+    subtitle?: string;
+    url: string;
+    author: string;
+    intro: string;
+  };
   tags: [{
     slug: string
   }];
@@ -39,14 +50,21 @@ interface queryProps {
 interface postProps {
   post: {
     title: string;
-    subtitle: string;
+    subtitle?: string;
     cover: string;
     description: string;
     modifiedTime: string;
     publishedTime: string;
+    source: {
+      title: string;
+      subtitle?: string;
+      url: string;
+      author: string;
+      intro: string;
+    }
     tags: string[];
   },
-  source: {
+  mdxSource: {
     compiledSource: string;
   }
 }
@@ -58,7 +76,7 @@ const PostLayout = styled(Container, {
     layout: {
       tablet: {
         display: 'grid',
-        grid: 'auto / 4fr 1fr',
+        grid: 'auto / 3fr 1fr',
         columnGap: '$64'
       }
     }
@@ -84,12 +102,25 @@ const PostBody = styled('article', {
 const PostTitle = styled('h1', {
   marginBlockStart: 0,
   marginBlockEnd: '$16',
-  fontSize: '$20',
+  color: 'hsl($shade100)',
 
   variants: {
-    responsive: {
+    translated: {
+      mobile: {
+        fontSize: '$24',
+        lineHeight: '$32'
+      },
       tablet: {
-        fontSize: '$24'
+        fontSize: '$32',
+        lineHeight: '$40'
+      }
+    },
+    source: {
+      mobile: {
+        display: 'inline-block',
+        fontSize: '$16',
+        fontWeight: 'bold',
+        lineHeight: '$24'
       }
     },
     withSubtitle: {
@@ -102,39 +133,80 @@ const PostTitle = styled('h1', {
 
 const PostSubtitle = styled('p', {
   marginBlockStart: 0,
-  marginBlockEnd: '$16',
-  fontSize: '$18',
-  lineHeight: '$24'
-});
-
-
-const PostMeta = styled('aside', {
-  paddingBlockStart: '$16',
+  color: 'hsl($shade800)',
 
   variants: {
-    responsive: {
-      tablet: {
-        paddingBlockStart: '$16'
+    translated: {
+      mobile: {
+        marginBlockEnd: '$24',
+        fontSize: '$18',
+        lineHeight: '$24',
+      }
+    },
+    source: {
+      mobile: {
+        marginBlockEnd: '$16',
+        fontSize: '$16',
+        lineHeight: '$20',
       }
     }
   }
 });
 
-export default function Post({ post, source }: postProps) {
-  const { title, subtitle } = post;
+// const PostMeta = styled('aside', {
+// });
+
+const SourceAuthor = styled('h3', {
+  marginBlockStart: 0,
+
+  variants: {
+    of: {
+      name: {
+        marginBlockEnd: '$8',
+        color: 'hsl($shade500)',
+        fontSize: '$16',
+        lineHeight: '$24',
+      },
+      intro: {
+        marginBlockEnd: 0,
+        color: 'hsl($shade800)',
+        fontSize: '$14',
+        lineHeight: '$24',
+      }
+    }
+  }
+});
+
+
+const Pipe = styled('span', {
+  display: 'inline-block',
+  marginX: '$8',
+  color: 'hsl($shade1200)',
+  fontWeight: 'normal'
+});
+
+export default function Post({ post, mdxSource }: postProps) {
+  const { title, subtitle, source} = post;
 
   return (
     <>
       <Header />
       <PostLayout layout={{ '@m992': 'tablet' }} responsive={{ '@m1200': 'noPadding' }}>
         <PostBody responsive={{ '@m992': 'tablet' }}>
-          <PostTitle responsive={{ '@m992': 'tablet' }} withSubtitle={!!subtitle}>{title}</PostTitle>
-          {subtitle && <PostSubtitle>{subtitle}</PostSubtitle>}
-          <MDXRemote {...source} components={MDXComponents} />
+          <PostTitle translated={{ '@initial': 'mobile', '@m992': 'tablet' }} withSubtitle={!!subtitle}>{title}</PostTitle>
+          {subtitle && <PostSubtitle translated={{ '@initial': 'mobile' }}>{subtitle}</PostSubtitle>}
+          <MDXRemote {...mdxSource} components={MDXComponents} />
         </PostBody>
-        <PostMeta responsive={{ '@m992': 'tablet' }}>
-        1
-        </PostMeta>
+        <aside>
+          <Heading position="cell">日期<Pipe>|</Pipe>原文</Heading>
+          <Link href={source.url} passHref>
+            <PostTitle as="a" source={{ '@initial': 'mobile' }} withSubtitle={!!source.subtitle}>{source.title}</PostTitle>
+          </Link>
+          {source.subtitle && <PostSubtitle source={{ '@initial': 'mobile' }}>{source.subtitle}</PostSubtitle>}
+          <Divider />
+          <SourceAuthor of="name">{source.author}</SourceAuthor>
+          <SourceAuthor as="p" of="intro">{source.intro}</SourceAuthor>
+        </aside>
       </PostLayout>
       <Footer />
     </>
@@ -181,6 +253,13 @@ export async function getStaticProps({ params }: GetStaticPropsContext) {
           description
           _updatedAt
           publishedTime
+          source {
+            title
+            subtitle
+            url
+            author
+            intro
+          }
           tags {
             slug
           }
@@ -189,7 +268,7 @@ export async function getStaticProps({ params }: GetStaticPropsContext) {
     `,
   });
 
-  const post = data.allPost.map(({ title, subtitle, mainImage, description, _updatedAt, publishedTime, tags }: queryProps) => {
+  const post = data.allPost.map(({ title, subtitle, mainImage, description, _updatedAt, publishedTime, source, tags }: queryProps) => {
     const tagsSlug = tags.map(({ slug }) => slug);
     return ({
       title,
@@ -198,6 +277,13 @@ export async function getStaticProps({ params }: GetStaticPropsContext) {
       description,
       modifiedTime: _updatedAt,
       publishedTime,
+      source: {
+        title: source.title,
+        subtitle: source.subtitle,
+        url: source.url,
+        author: source.author,
+        intro: source.intro
+      },
       tags: tagsSlug
     })
   });
@@ -206,23 +292,19 @@ export async function getStaticProps({ params }: GetStaticPropsContext) {
   const mdxSource = await serialize(
     source,
     {
-    // made available to the arguments of any custom mdx component
-    // MDX's available options, see the MDX docs for more info.
-    // https://mdxjs.com/packages/mdx/#compilefile-options
-    mdxOptions: {
-      remarkPlugins: [],
-      rehypePlugins: [],
-      format: 'mdx'
-    },
-    // Indicates whether or not to parse the frontmatter from the mdx source
-    parseFrontmatter: false,
-  }
+      mdxOptions: {
+        remarkPlugins: [remarkGfm],
+        rehypePlugins: [],
+        format: 'mdx'
+      },
+      parseFrontmatter: false
+    }
   );
 
   return {
     props: {
       post: post[0],
-      source: mdxSource
+      mdxSource
     },
   }
 }
