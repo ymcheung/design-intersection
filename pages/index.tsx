@@ -204,30 +204,16 @@ const TranslatorCard = styled('figure', {
   grid: 'auto / 80px 1fr',
   columnGap: '$8',
   margin: '0 0 $32',
-
-  // variants: {
-  //   responsive: {
-  //     mobile: {
-  //       marginBlockEnd: '$24'
-  //     },
-  //     tablet: {
-  //       marginBlockEnd: '$32'
-  //     }
-  //   }
-  // }
 });
 
-  const TranslatorAvatar = styled(Image, {
-    borderRadius: '12px'
-  });
+const TranslatorAvatar = styled(Image, {
+  borderRadius: '12px'
+});
 
-
-  const Home: NextPage<postsProps> = ({ posts }) => {
-    const featuredPosts = posts.filter(({ tags }) =>
+const Home: NextPage<postsProps> = ({ posts }) => {
+  const featuredPosts = posts.filter(({ tags }) =>
     tags.includes('featured')
   );
-
-  console.log(posts)
 
   return (
     <>

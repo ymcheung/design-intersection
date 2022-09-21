@@ -3,7 +3,7 @@ import { gql } from '@apollo/client';
 import client from '../apollo-client';
 import { serialize } from 'next-mdx-remote/serialize';
 import { MDXRemote } from 'next-mdx-remote';
-import MDXComponents from '@components/MDXComponents';
+import { MdxHeadings, Paragraph, List, ArticleImage } from '@components/article';
 import Link from 'next/link';
 import { formatDate } from '@utils/formatDate';
 import remarkGfm from 'remark-gfm';
@@ -69,6 +69,18 @@ interface postProps {
   }
 }
 
+interface ChildrenProps {
+  children: React.ReactNode;
+}
+
+interface HrefProp extends ChildrenProps {
+  href: string;
+}
+
+interface OrderedListProp extends ChildrenProps {
+  startNumber: number;
+}
+
 const PostLayout = styled(Container, {
   fontFamily: '$default',
 
@@ -85,18 +97,7 @@ const PostLayout = styled(Container, {
 
 const PostBody = styled('article', {
   marginBlockEnd: '$64',
-  paddingBlockStart: '$16',
-
-  '& img': {
-    maxWidth: '100%'
-  },
-
-  variants: {
-    responsive: {
-      tablet: {
-      }
-    }
-  }
+  paddingBlockStart: '$16'
 });
 
 const PostTitle = styled('h1', {
@@ -153,16 +154,13 @@ const PostSubtitle = styled('p', {
   }
 });
 
-// const PostMeta = styled('aside', {
-// });
-
 const SourceAuthor = styled('h3', {
   marginBlockStart: 0,
 
   variants: {
     of: {
       name: {
-        marginBlockEnd: '$8',
+        marginBlockEnd: '$4',
         color: 'hsl($shade500)',
         fontSize: '$16',
         lineHeight: '$24',
@@ -177,28 +175,56 @@ const SourceAuthor = styled('h3', {
   }
 });
 
-
 const Pipe = styled('span', {
   display: 'inline-block',
+  width: '1px',
+  height: '$20',
   marginX: '$8',
-  color: 'hsl($shade1200)',
-  fontWeight: 'normal'
+  verticalAlign: 'text-top',
+  backgroundColor: 'hsl($accent / 0.5)'
 });
 
 export default function Post({ post, mdxSource }: postProps) {
-  const { title, subtitle, source} = post;
+  const { title, subtitle, source } = post;
+
+  const OlWithStartNumber = ({ startNumber, children }: OrderedListProp) => {
+    const Ol = styled('ol', {
+      marginBlockStart: 0
+    });
+
+    const Li = styled('li', {
+      fontSize: '$18',
+      listStyleType: 'square'
+    });
+
+    return (<Ol start={startNumber}><Li>{children}</Li></Ol>);
+  }
+
+  const MDXComponents = {
+    h2: ({ children }: ChildrenProps) => <MdxHeadings level="h2">{children}</MdxHeadings>,
+    h3: ({ children }: ChildrenProps) => <MdxHeadings as="h3" level="h3">{children}</MdxHeadings>,
+    p: ({ children }: ChildrenProps) => <Paragraph>{children}</Paragraph>,
+    strong: ({ children }: ChildrenProps) => <strong>{children}</strong>,
+    ul: ({ children }: ChildrenProps) => <List type="unordered">{ children }</List>,
+    ol: ({ children }: ChildrenProps) => <List as="ol">{ children }</List>,
+    a: ({ href, children }: HrefProp) =>
+      <Link href={href} passHref><a>{children}</a></Link>,
+    img: ({ src, alt }) => <ArticleImage src={src} responsive={{'@initial': 'mobile', '@m992': 'tablet'}} loading="lazy" alt={alt} />,
+    hr: () => <Divider position="article" />,
+    OlWithStartNumber
+  };
 
   return (
     <>
       <Header />
       <PostLayout layout={{ '@m992': 'tablet' }} responsive={{ '@m1200': 'noPadding' }}>
-        <PostBody responsive={{ '@m992': 'tablet' }}>
+        <PostBody>
           <PostTitle translated={{ '@initial': 'mobile', '@m992': 'tablet' }} withSubtitle={!!subtitle}>{title}</PostTitle>
           {subtitle && <PostSubtitle translated={{ '@initial': 'mobile' }}>{subtitle}</PostSubtitle>}
           <MDXRemote {...mdxSource} components={MDXComponents} />
         </PostBody>
         <aside>
-          <Heading position="cell">日期<Pipe>|</Pipe>原文</Heading>
+          <Heading position="cell">日期<Pipe />原文</Heading>
           <Link href={source.url} passHref>
             <PostTitle as="a" source={{ '@initial': 'mobile' }} withSubtitle={!!source.subtitle}>{source.title}</PostTitle>
           </Link>

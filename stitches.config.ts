@@ -15,6 +15,8 @@ export const {
       hiContrast: 'hsl(206,10%,5%)',
       loContrast: 'white',
 
+      accent: '11 71% 61%',
+
       shade100: '210 4% 10%',
       shade400: '210 2% 25%',
       shade500: '120 1% 34%',

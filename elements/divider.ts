@@ -13,6 +13,13 @@ export const Divider = styled('hr', {
       none: {
         display: 'none'
       }
+    },
+    position: {
+      article: {
+        display: 'block',
+        width: '80px',
+        marginX: '$auto'
+      }
     }
   }
 });
