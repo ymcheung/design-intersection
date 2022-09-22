@@ -48,11 +48,9 @@ export const List = styled('ul', {
   }
 });
 
-export const ListItem = styled('li', {
-});
-
 export const ArticleFigure = styled('figure', {
-  marginBlockEnd: '$16',
+  marginBlockStart: 0,
+  marginBlockEnd: '$24',
 
   variants: {
     responsive: {
@@ -64,13 +62,71 @@ export const ArticleFigure = styled('figure', {
       }
     }
   }
-})
+});
 
 export const ArticleImage = styled('img', {
   width: '100%',
-  maxWidth: 'calc(100% + 32px)'
+  maxWidth: 'calc(100% + 32px)',
+  marginBlockEnd: '$8'
+});
+
+
+export const ArticleFigureCaption = styled('figcaption', {
+  color: 'hsl($shade800)',
+  fontSize: '$16',
+  lineHeight: '$24',
+
+  variants: {
+    responsive: {
+      mobile: {
+        marginX: '$16'
+      },
+      tablet: {
+        marginX: 0
+      }
+    }
+  }
 });
 
 export const ArticleLink = styled('a', {
   color: 'hsl($shade500)'
 });
+
+export const ArticleBlockQuote = styled('blockquote', {
+  marginBlockStart: 0,
+  marginBlockEnd: '$24',
+  marginX: 0,
+  paddingX: '$32',
+
+  variants: {
+    responsive: {
+      mobile: {
+        paddingX: '$32'
+      },
+      tablet: {
+        paddingX: '$64'
+      }
+    }
+  },
+
+  '& p': {
+    position: 'relative',
+    marginY: 0,
+    color: 'hsl($shade100)',
+    fontSize: '$20',
+    fontWeight: 'bold',
+    lineHeight: '$32',
+
+    '&::before': {
+      position: 'absolute',
+      left: '-$24',
+      content: '「',
+      color: 'hsl($accent / 0.5)'
+    },
+
+    '&::after': {
+      content: '」',
+      color: 'hsl($accent / 0.5)'
+    }
+  }
+})

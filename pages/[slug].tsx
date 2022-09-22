@@ -3,11 +3,12 @@ import { gql } from '@apollo/client';
 import client from '../apollo-client';
 import { serialize } from 'next-mdx-remote/serialize';
 import { MDXRemote } from 'next-mdx-remote';
-import { MdxHeadings, Paragraph, List, ArticleFigure, ArticleImage, ArticleLink } from '@components/article';
+import { MdxHeadings, Paragraph, List, ArticleFigure, ArticleImage, ArticleFigureCaption, ArticleLink, ArticleBlockQuote } from '@components/article';
 import Link from 'next/link';
 import Image from 'next/image';
 import { formatDate } from '@utils/formatDate';
 import remarkGfm from 'remark-gfm';
+import remarkUnwrapImages from 'remark-unwrap-images';
 import { styled } from '../stitches.config';
 import { Divider } from '@elements/divider';
 import Header from '@components/Header';
@@ -184,17 +185,34 @@ const SourceAuthor = styled('h3', {
   }
 });
 
-const Pipe = styled('span', {
+const Time = styled('time', {
   display: 'inline-block',
-  width: '1px',
-  height: '$20',
-  marginX: '$8',
-  verticalAlign: 'text-top',
-  backgroundColor: 'hsl($accent / 0.5)'
-});
+  color: 'hsl($shade800)',
+  fontSize: '$16',
+
+  variants: {
+    floor: {
+      ground: {
+        marginBlockEnd: '$64'
+      },
+      aside: {
+        marginBlockEnd: 0
+      }
+    }
+  }
+})
+
+// const Pipe = styled('span', {
+//   display: 'inline-block',
+//   width: '1px',
+//   height: '$20',
+//   marginX: '$8',
+//   verticalAlign: 'text-top',
+//   backgroundColor: 'hsl($accent / 0.5)'
+// });
 
 export default function Post({ post, postBody, authorIntro }: postProps) {
-  const { title, subtitle, source } = post;
+  const { title, subtitle, publishedTime, source } = post;
 
   const OlWithStartNumber = ({ startNumber, children }: OrderedListProp) => {
     const Ol = styled('ol', {
@@ -222,9 +240,11 @@ export default function Post({ post, postBody, authorIntro }: postProps) {
       </Link>,
     img: ({ src, alt }: ImageProps) =>
       <ArticleFigure responsive={{ '@initial': 'mobile', '@m992': 'tablet' }}>
-        <ArticleImage src={src} alt={alt} />
-        {alt && <figcaption>{alt}</figcaption>}
+        <ArticleImage src={src} alt="" />
+        {alt && <ArticleFigureCaption responsive={{ '@initial': 'mobile', '@m992': 'tablet' }}>{alt}</ArticleFigureCaption>}
       </ArticleFigure>,
+    blockquote: ({ children }: ChildrenProps) =>
+      <ArticleBlockQuote responsive={{ '@initial': 'mobile', '@m992': 'tablet' }}>{children}</ArticleBlockQuote>,
     hr: () => <Divider position="article" />
   };
 
@@ -238,7 +258,7 @@ export default function Post({ post, postBody, authorIntro }: postProps) {
           <MDXRemote {...postBody} components={MDXComponents} />
         </PostBody>
         <aside>
-          <Heading position="cell">日期<Pipe />原文</Heading>
+          <Heading position="cell">原文</Heading>
           <Link href={source.url} passHref>
             <PostTitle as="a" source={{ '@initial': 'mobile' }} withSubtitle={!!source.subtitle}>{source.title}</PostTitle>
           </Link>
@@ -246,6 +266,10 @@ export default function Post({ post, postBody, authorIntro }: postProps) {
           <Divider />
           <SourceAuthor of="name">{source.author}</SourceAuthor>
           <SourceAuthor as="p" of="intro"><MDXRemote {...authorIntro} /></SourceAuthor>
+          <Heading position="cell">日期</Heading>
+          <Time dateTime={formatDate(publishedTime)} floor={{ '@initial': 'ground', '@m992': 'aside' }}>
+            {formatDate(publishedTime)}
+          </Time>
         </aside>
       </PostLayout>
       <Footer />
@@ -332,7 +356,7 @@ export async function getStaticProps({ params }: GetStaticPropsContext) {
   const postBody = await serialize(
     body, {
       mdxOptions: {
-        remarkPlugins: [remarkGfm],
+        remarkPlugins: [remarkGfm, remarkUnwrapImages],
         format: 'mdx'
       },
       parseFrontmatter: false
