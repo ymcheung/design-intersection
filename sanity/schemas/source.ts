@@ -6,7 +6,8 @@ export default {
     {
       name: 'title',
       title: 'Title',
-      type: 'string'
+      type: 'string',
+      required: true
     },
     {
       name: 'subtitle',
@@ -16,17 +17,19 @@ export default {
     {
       name: 'url',
       title: 'Link Url',
-      type: 'string'
+      type: 'string',
+      required: true
     },
     {
       name: 'author',
       title: 'Author',
-      type: 'string'
+      type: 'string',
+      required: true
     },
     {
       name: 'intro',
       title: 'Author Intro',
-      type: 'text'
+      type: 'markdown'
     }
   ]
 }

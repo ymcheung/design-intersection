@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import { styled } from '../stitches.config';
 
 export const MdxHeadings = styled('h2', {
@@ -9,12 +8,12 @@ export const MdxHeadings = styled('h2', {
   variants: {
     level: {
       h2: {
-        fontSize: '$20',
-        lineHeight: '$32',
+        fontSize: '$24',
+        lineHeight: '$36',
       },
       h3: {
-        fontSize: '$16',
-        lineHeight: '$24',
+        fontSize: '$20',
+        lineHeight: '$28',
       }
     }
   }
@@ -25,16 +24,20 @@ export const Paragraph = styled('p', {
     marginBlockStart: 0,
     marginBlockEnd: '$24',
     color: 'hsl($shade400)',
-    fontSize: '$18',
-    lineHeight: '$28'
+    fontSize: '$20',
+    lineHeight: '$32'
   }
 });
 
 export const List = styled('ul', {
+  display: 'grid',
+  rowGap: '$12',
   marginBlockStart: 0,
-  marginBlockEnd: '$16',
-  fontSize: '$16',
-  lineHeight: '$24',
+  marginBlockEnd: '$24',
+  paddingInlineStart: '$16',
+  color: 'hsl($shade400)',
+  fontSize: '$20',
+  lineHeight: '$32',
 
   variants: {
     type: {
@@ -45,7 +48,12 @@ export const List = styled('ul', {
   }
 });
 
-export const ArticleImage = styled(Image, {
+export const ListItem = styled('li', {
+});
+
+export const ArticleFigure = styled('figure', {
+  marginBlockEnd: '$16',
+
   variants: {
     responsive: {
       mobile: {
@@ -56,4 +64,13 @@ export const ArticleImage = styled(Image, {
       }
     }
   }
+})
+
+export const ArticleImage = styled('img', {
+  width: '100%',
+  maxWidth: 'calc(100% + 32px)'
+});
+
+export const ArticleLink = styled('a', {
+  color: 'hsl($shade500)'
 });

@@ -57,6 +57,7 @@ export const {
       18: '1.8rem',
       20: '2rem',
       24: '2.4rem',
+      28: '2.8rem',
       32: '3.2rem'
     },
     lineHeights: {
@@ -66,6 +67,7 @@ export const {
       24: '24px',
       28: '28px',
       32: '32px',
+      36: '36px',
       40: '40px'
     },
     fonts: {

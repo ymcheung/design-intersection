@@ -3,8 +3,9 @@ import { gql } from '@apollo/client';
 import client from '../apollo-client';
 import { serialize } from 'next-mdx-remote/serialize';
 import { MDXRemote } from 'next-mdx-remote';
-import { MdxHeadings, Paragraph, List, ArticleImage } from '@components/article';
+import { MdxHeadings, Paragraph, List, ArticleFigure, ArticleImage, ArticleLink } from '@components/article';
 import Link from 'next/link';
+import Image from 'next/image';
 import { formatDate } from '@utils/formatDate';
 import remarkGfm from 'remark-gfm';
 import { styled } from '../stitches.config';
@@ -64,7 +65,10 @@ interface postProps {
     }
     tags: string[];
   },
-  mdxSource: {
+  postBody: {
+    compiledSource: string;
+  },
+  authorIntro: {
     compiledSource: string;
   }
 }
@@ -75,6 +79,11 @@ interface ChildrenProps {
 
 interface HrefProp extends ChildrenProps {
   href: string;
+}
+
+interface ImageProps {
+  src: string;
+  alt: string;
 }
 
 interface OrderedListProp extends ChildrenProps {
@@ -108,8 +117,8 @@ const PostTitle = styled('h1', {
   variants: {
     translated: {
       mobile: {
-        fontSize: '$24',
-        lineHeight: '$32'
+        fontSize: '$28',
+        lineHeight: '$36'
       },
       tablet: {
         fontSize: '$32',
@@ -140,8 +149,8 @@ const PostSubtitle = styled('p', {
     translated: {
       mobile: {
         marginBlockEnd: '$24',
-        fontSize: '$18',
-        lineHeight: '$24',
+        fontSize: '$20',
+        lineHeight: '$28',
       }
     },
     source: {
@@ -184,7 +193,7 @@ const Pipe = styled('span', {
   backgroundColor: 'hsl($accent / 0.5)'
 });
 
-export default function Post({ post, mdxSource }: postProps) {
+export default function Post({ post, postBody, authorIntro }: postProps) {
   const { title, subtitle, source } = post;
 
   const OlWithStartNumber = ({ startNumber, children }: OrderedListProp) => {
@@ -208,10 +217,15 @@ export default function Post({ post, mdxSource }: postProps) {
     ul: ({ children }: ChildrenProps) => <List type="unordered">{ children }</List>,
     ol: ({ children }: ChildrenProps) => <List as="ol">{ children }</List>,
     a: ({ href, children }: HrefProp) =>
-      <Link href={href} passHref><a>{children}</a></Link>,
-    img: ({ src, alt }) => <ArticleImage src={src} responsive={{'@initial': 'mobile', '@m992': 'tablet'}} loading="lazy" alt={alt} />,
-    hr: () => <Divider position="article" />,
-    OlWithStartNumber
+      <Link href={href} passHref>
+        <ArticleLink>{children}</ArticleLink>
+      </Link>,
+    img: ({ src, alt }: ImageProps) =>
+      <ArticleFigure responsive={{ '@initial': 'mobile', '@m992': 'tablet' }}>
+        <ArticleImage src={src} alt={alt} />
+        {alt && <figcaption>{alt}</figcaption>}
+      </ArticleFigure>,
+    hr: () => <Divider position="article" />
   };
 
   return (
@@ -221,7 +235,7 @@ export default function Post({ post, mdxSource }: postProps) {
         <PostBody>
           <PostTitle translated={{ '@initial': 'mobile', '@m992': 'tablet' }} withSubtitle={!!subtitle}>{title}</PostTitle>
           {subtitle && <PostSubtitle translated={{ '@initial': 'mobile' }}>{subtitle}</PostSubtitle>}
-          <MDXRemote {...mdxSource} components={MDXComponents} />
+          <MDXRemote {...postBody} components={MDXComponents} />
         </PostBody>
         <aside>
           <Heading position="cell">日期<Pipe />原文</Heading>
@@ -231,7 +245,7 @@ export default function Post({ post, mdxSource }: postProps) {
           {source.subtitle && <PostSubtitle source={{ '@initial': 'mobile' }}>{source.subtitle}</PostSubtitle>}
           <Divider />
           <SourceAuthor of="name">{source.author}</SourceAuthor>
-          <SourceAuthor as="p" of="intro">{source.intro}</SourceAuthor>
+          <SourceAuthor as="p" of="intro"><MDXRemote {...authorIntro} /></SourceAuthor>
         </aside>
       </PostLayout>
       <Footer />
@@ -314,14 +328,23 @@ export async function getStaticProps({ params }: GetStaticPropsContext) {
     })
   });
 
-  const source = data.allPost[0].body;
-  const mdxSource = await serialize(
-    source,
-    {
+  const body = data.allPost[0].body;
+  const postBody = await serialize(
+    body, {
       mdxOptions: {
         remarkPlugins: [remarkGfm],
-        rehypePlugins: [],
         format: 'mdx'
+      },
+      parseFrontmatter: false
+    }
+  );
+
+  const intro = data.allPost[0].source.intro;
+  const authorIntro = await serialize(
+    intro, {
+      mdxOptions: {
+        remarkPlugins: [remarkGfm],
+        format: 'md'
       },
       parseFrontmatter: false
     }
@@ -330,7 +353,8 @@ export async function getStaticProps({ params }: GetStaticPropsContext) {
   return {
     props: {
       post: post[0],
-      mdxSource
+      postBody,
+      authorIntro
     },
   }
 }

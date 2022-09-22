@@ -6,7 +6,8 @@ export default {
     {
       name: 'title',
       title: 'Title',
-      type: 'string'
+      type: 'string',
+      required: true
     },
     {
       name: 'subtitle',
@@ -17,6 +18,7 @@ export default {
       name: 'mainImage',
       title: 'Main image',
       type: 'image',
+      required: true,
       options: {
         hotspot: true
       }
@@ -24,17 +26,20 @@ export default {
     {
       name: 'publishedTime',
       title: 'Published at',
-      type: 'datetime'
+      type: 'datetime',
+      required: true
     },
     {
       name: 'body',
       title: 'Body',
-      type: 'markdown'
+      type: 'markdown',
+      required: true
     },
     {
       name: 'slug',
       title: 'Slug',
       type: 'slug',
+      required: true,
       options: {
         source: 'title',
         maxLength: 96
@@ -43,14 +48,16 @@ export default {
     {
       name: 'description',
       title: 'Description',
-      type: 'text'
+      type: 'text',
+      required: true
     },
 
     {
       title: 'Source',
       name: 'source',
       type: 'reference',
-      to: [{ type: 'source' }]
+      to: [{ type: 'source' }],
+      required: true
     },
     {
       name: 'tags',
