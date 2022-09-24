@@ -1,23 +1,21 @@
-import Link, { LinkProps } from 'next/link';
-import { AnchorHTMLAttributes } from 'react';
+import type { ComponentProps } from 'react';
+import Link from 'next/link';
 import { StyledLink } from './styled';
 
-interface ArticleLinkProps {
-  children: React.ReactNode
-  href: string;
-}
+export default function ArticleLink({ children, href }: ComponentProps<'a'>) {
+  if (!href) {
+    throw new Error('should pass href as props')
+  }
 
-type AnchorProps = JSX.IntrinsicElements['a'] & {
-  href: string;
-  children: React.ReactNode
-} & LinkProps;
+  const isExternal = href.startsWith('http');
 
-// React.AnchorHTMLAttributes<HTMLAnchorElement>
-
-export default function ArticleLink({ children, href }: AnchorProps) {
   return (
     <Link href={href} passHref>
-      <StyledLink>{children}</StyledLink>
+      {
+        isExternal ?
+          <StyledLink target="_blank" rel="noopener">{children}</StyledLink> :
+          <StyledLink>{children}</StyledLink>
+      }
     </Link>
   );
 };

@@ -10,16 +10,16 @@ import ArticleUL from '@components/article/ArticleUL';
 import ArticleOL from '@components/article/ArticleOL';
 import ArticleLink from '@components/article/ArticleLink';
 import ArticleImage from '@components/article/ArticleImage';
-import Link from 'next/link';
-import { formatDate } from '@utils/formatDate';
 import remarkGfm from 'remark-gfm';
 import remarkUnwrapImages from 'remark-unwrap-images';
 import { styled } from '../stitches.config';
+import { PostTitle, PostSubtitle } from '@elements/postTitles';
 import { Divider } from '@elements/divider';
 import Header from '@components/Header';
 import { Container } from '@components/layouts';
-import { Heading } from '@components/headings';
+import Aside from '@components/article/Aside';
 import Footer from '@components/Footer';
+import ArticleBlockquote from '@components/article/ArticleBlockquote';
 
 interface staticPathProps {
   slug: {
@@ -107,104 +107,8 @@ const PostLayout = styled(Container, {
 
 const PostBody = styled('article', {
   marginBlockEnd: '$64',
-  paddingBlockStart: '$16',
-
-  '& a': {
-    color: 'hsl($shade500)'
-  }
+  paddingBlockStart: '$16'
 });
-
-const PostTitle = styled('h1', {
-  marginBlockStart: 0,
-  marginBlockEnd: '$16',
-  color: 'hsl($shade100)',
-
-  variants: {
-    translated: {
-      mobile: {
-        fontSize: '$28',
-        lineHeight: '$36'
-      },
-      tablet: {
-        fontSize: '$32',
-        lineHeight: '$40'
-      }
-    },
-    source: {
-      mobile: {
-        display: 'inline-block',
-        fontSize: '$16',
-        fontWeight: 'bold',
-        lineHeight: '$24'
-      }
-    },
-    withSubtitle: {
-      true: {
-        marginBlockEnd: '$8'
-      }
-    }
-  }
-});
-
-const PostSubtitle = styled('p', {
-  marginBlockStart: 0,
-  color: 'hsl($shade800)',
-
-  variants: {
-    translated: {
-      mobile: {
-        marginBlockEnd: '$24',
-        fontSize: '$20',
-        lineHeight: '$28',
-      }
-    },
-    source: {
-      mobile: {
-        marginBlockEnd: '$16',
-        fontSize: '$16',
-        lineHeight: '$20',
-      }
-    }
-  }
-});
-
-const SourceAuthor = styled('h3', {
-  marginBlockStart: 0,
-
-  variants: {
-    of: {
-      name: {
-        marginBlockEnd: '$4',
-        color: 'hsl($shade500)',
-        fontSize: '$16',
-        lineHeight: '$24',
-      },
-      intro: {
-        marginBlockEnd: 0,
-        color: 'hsl($shade800)',
-        fontSize: '$14',
-        lineHeight: '$24',
-      }
-    }
-  }
-});
-
-const Time = styled('time', {
-  display: 'inline-block',
-  color: 'hsl($shade800)',
-  fontSize: '$16',
-
-  variants: {
-    floor: {
-      ground: {
-        marginBlockEnd: '$64'
-      },
-      aside: {
-        marginBlockEnd: 0
-      }
-    }
-  }
-})
 
 // const Pipe = styled('span', {
 //   display: 'inline-block',
@@ -218,30 +122,16 @@ const Time = styled('time', {
 export default function Post({ post, postBody, authorIntro }: postProps) {
   const { title, subtitle, publishedTime, source } = post;
 
-  // const OlWithStartNumber = ({ startNumber, children }: OrderedListProp) => {
-  //   const Ol = styled('ol', {
-  //     marginBlockStart: 0
-  //   });
-
-  //   const Li = styled('li', {
-  //     fontSize: '$18',
-  //     listStyleType: 'square'
-  //   });
-
-  //   return (<Ol start={startNumber}><Li>{children}</Li></Ol>);
-  // }
-
   const mdxComponents = {
     h2: Heading2,
     h3: Heading3,
     p: ArticleP,
     ul: ArticleUL,
     ol: ArticleOL,
-    // a: ArticleLink,
-    img: ArticleImage
-    // blockquote: ({ children }: ChildrenProps) =>
-    //   <ArticleBlockQuote responsive={{ '@initial': 'mobile', '@m992': 'tablet' }}>{children}</ArticleBlockQuote>,
-    // hr: () => <Divider position="article" />
+    a: ArticleLink,
+    img: ArticleImage,
+    blockquote: ArticleBlockquote,
+    hr: () => <Divider position="article" />
   };
 
   return (
@@ -253,20 +143,7 @@ export default function Post({ post, postBody, authorIntro }: postProps) {
           {subtitle && <PostSubtitle translated={{ '@initial': 'mobile' }}>{subtitle}</PostSubtitle>}
           <MDXRemote {...postBody} components={mdxComponents} />
         </PostBody>
-        <aside>
-          <Heading position="cell">原文</Heading>
-          <Link href={source.url} passHref>
-            <PostTitle as="a" source={{ '@initial': 'mobile' }} withSubtitle={!!source.subtitle}>{source.title}</PostTitle>
-          </Link>
-          {source.subtitle && <PostSubtitle source={{ '@initial': 'mobile' }}>{source.subtitle}</PostSubtitle>}
-          <Divider />
-          <SourceAuthor of="name">{source.author}</SourceAuthor>
-          <SourceAuthor as="p" of="intro"><MDXRemote {...authorIntro} /></SourceAuthor>
-          <Heading position="cell">日期</Heading>
-          <Time dateTime={formatDate(publishedTime)} floor={{ '@initial': 'ground', '@m992': 'aside' }}>
-            {formatDate(publishedTime)}
-          </Time>
-        </aside>
+        <Aside authorIntro={authorIntro} publishedTime={publishedTime} source={source} />
       </PostLayout>
       <Footer />
     </>
@@ -374,6 +251,6 @@ export async function getStaticProps({ params }: GetStaticPropsContext) {
       post: post[0],
       postBody,
       authorIntro
-    },
+    }
   }
 }

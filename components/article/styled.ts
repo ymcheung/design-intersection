@@ -93,19 +93,24 @@ export const StyledFigcaption = styled('figcaption', {
   }
 });
 
-export const ArticleBlockQuote = styled('blockquote', {
+export const StyledBlockQuote = styled('blockquote', {
   marginBlockStart: 0,
   marginBlockEnd: '$24',
   marginX: 0,
-  paddingX: '$32',
 
   variants: {
     responsive: {
       mobile: {
-        paddingX: '$32'
+        paddingInlineStart: '$20',
+
+        '& p': {
+          '&::before': {
+            left: '-$24'
+          }
+        }
       },
       tablet: {
-        paddingX: '$64'
+        paddingInlineStart: 0
       }
     }
   },
@@ -113,21 +118,20 @@ export const ArticleBlockQuote = styled('blockquote', {
   '& p': {
     position: 'relative',
     marginY: 0,
-    color: 'hsl($shade100)',
+      color: 'hsl($accent)',
     fontSize: '$20',
     fontWeight: 'bold',
     lineHeight: '$32',
 
     '&::before': {
       position: 'absolute',
-      left: '-$24',
       content: '「',
-      color: 'hsl($accent / 0.5)'
+      fontWeight: 'normal'
     },
 
     '&::after': {
       content: '」',
-      color: 'hsl($accent / 0.5)'
+      fontWeight: 'normal'
     }
   }
 })
