@@ -3,9 +3,14 @@ import { gql } from '@apollo/client';
 import client from '../apollo-client';
 import { serialize } from 'next-mdx-remote/serialize';
 import { MDXRemote } from 'next-mdx-remote';
-import { MdxHeadings, Paragraph, List, ArticleFigure, ArticleImage, ArticleFigureCaption, ArticleLink, ArticleBlockQuote } from '@components/article';
+import Heading2 from '@components/article/Heading2';
+import Heading3 from '@components/article/Heading3';
+import ArticleP from '@components/article/ArticleP';
+import ArticleUL from '@components/article/ArticleUL';
+import ArticleOL from '@components/article/ArticleOL';
+import ArticleLink from '@components/article/ArticleLink';
+import ArticleImage from '@components/article/ArticleImage';
 import Link from 'next/link';
-import Image from 'next/image';
 import { formatDate } from '@utils/formatDate';
 import remarkGfm from 'remark-gfm';
 import remarkUnwrapImages from 'remark-unwrap-images';
@@ -65,7 +70,7 @@ interface postProps {
       intro: string;
     }
     tags: string[];
-  },
+  }
   postBody: {
     compiledSource: string;
   },
@@ -80,11 +85,6 @@ interface ChildrenProps {
 
 interface HrefProp extends ChildrenProps {
   href: string;
-}
-
-interface ImageProps {
-  src: string;
-  alt: string;
 }
 
 interface OrderedListProp extends ChildrenProps {
@@ -107,7 +107,11 @@ const PostLayout = styled(Container, {
 
 const PostBody = styled('article', {
   marginBlockEnd: '$64',
-  paddingBlockStart: '$16'
+  paddingBlockStart: '$16',
+
+  '& a': {
+    color: 'hsl($shade500)'
+  }
 });
 
 const PostTitle = styled('h1', {
@@ -214,38 +218,30 @@ const Time = styled('time', {
 export default function Post({ post, postBody, authorIntro }: postProps) {
   const { title, subtitle, publishedTime, source } = post;
 
-  const OlWithStartNumber = ({ startNumber, children }: OrderedListProp) => {
-    const Ol = styled('ol', {
-      marginBlockStart: 0
-    });
+  // const OlWithStartNumber = ({ startNumber, children }: OrderedListProp) => {
+  //   const Ol = styled('ol', {
+  //     marginBlockStart: 0
+  //   });
 
-    const Li = styled('li', {
-      fontSize: '$18',
-      listStyleType: 'square'
-    });
+  //   const Li = styled('li', {
+  //     fontSize: '$18',
+  //     listStyleType: 'square'
+  //   });
 
-    return (<Ol start={startNumber}><Li>{children}</Li></Ol>);
-  }
+  //   return (<Ol start={startNumber}><Li>{children}</Li></Ol>);
+  // }
 
-  const MDXComponents = {
-    h2: ({ children }: ChildrenProps) => <MdxHeadings level="h2">{children}</MdxHeadings>,
-    h3: ({ children }: ChildrenProps) => <MdxHeadings as="h3" level="h3">{children}</MdxHeadings>,
-    p: ({ children }: ChildrenProps) => <Paragraph>{children}</Paragraph>,
-    strong: ({ children }: ChildrenProps) => <strong>{children}</strong>,
-    ul: ({ children }: ChildrenProps) => <List type="unordered">{ children }</List>,
-    ol: ({ children }: ChildrenProps) => <List as="ol">{ children }</List>,
-    a: ({ href, children }: HrefProp) =>
-      <Link href={href} passHref>
-        <ArticleLink>{children}</ArticleLink>
-      </Link>,
-    img: ({ src, alt }: ImageProps) =>
-      <ArticleFigure responsive={{ '@initial': 'mobile', '@m992': 'tablet' }}>
-        <ArticleImage src={src} alt="" />
-        {alt && <ArticleFigureCaption responsive={{ '@initial': 'mobile', '@m992': 'tablet' }}>{alt}</ArticleFigureCaption>}
-      </ArticleFigure>,
-    blockquote: ({ children }: ChildrenProps) =>
-      <ArticleBlockQuote responsive={{ '@initial': 'mobile', '@m992': 'tablet' }}>{children}</ArticleBlockQuote>,
-    hr: () => <Divider position="article" />
+  const mdxComponents = {
+    h2: Heading2,
+    h3: Heading3,
+    p: ArticleP,
+    ul: ArticleUL,
+    ol: ArticleOL,
+    // a: ArticleLink,
+    img: ArticleImage
+    // blockquote: ({ children }: ChildrenProps) =>
+    //   <ArticleBlockQuote responsive={{ '@initial': 'mobile', '@m992': 'tablet' }}>{children}</ArticleBlockQuote>,
+    // hr: () => <Divider position="article" />
   };
 
   return (
@@ -255,7 +251,7 @@ export default function Post({ post, postBody, authorIntro }: postProps) {
         <PostBody>
           <PostTitle translated={{ '@initial': 'mobile', '@m992': 'tablet' }} withSubtitle={!!subtitle}>{title}</PostTitle>
           {subtitle && <PostSubtitle translated={{ '@initial': 'mobile' }}>{subtitle}</PostSubtitle>}
-          <MDXRemote {...postBody} components={MDXComponents} />
+          <MDXRemote {...postBody} components={mdxComponents} />
         </PostBody>
         <aside>
           <Heading position="cell">原文</Heading>
@@ -345,8 +341,7 @@ export async function getStaticProps({ params }: GetStaticPropsContext) {
         title: source.title,
         subtitle: source.subtitle,
         url: source.url,
-        author: source.author,
-        intro: source.intro
+        author: source.author
       },
       tags: tagsSlug
     })

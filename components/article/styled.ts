@@ -1,6 +1,6 @@
-import { styled } from '../stitches.config';
+import { styled } from '../../stitches.config';
 
-export const MdxHeadings = styled('h2', {
+export const Headings = styled('h2', {
   marginBlockStart: 0,
   marginBlockEnd: '$8',
   color: 'hsl($shade100)',
@@ -48,7 +48,12 @@ export const List = styled('ul', {
   }
 });
 
-export const ArticleFigure = styled('figure', {
+export const StyledLink = styled('a', {
+  color: 'hsl($shade500)'
+});
+
+
+export const StyledFigure = styled('figure', {
   marginBlockStart: 0,
   marginBlockEnd: '$24',
 
@@ -64,14 +69,14 @@ export const ArticleFigure = styled('figure', {
   }
 });
 
-export const ArticleImage = styled('img', {
+export const StyledImage = styled('img', {
   width: '100%',
   maxWidth: 'calc(100% + 32px)',
   marginBlockEnd: '$8'
 });
 
 
-export const ArticleFigureCaption = styled('figcaption', {
+export const StyledFigcaption = styled('figcaption', {
   color: 'hsl($shade800)',
   fontSize: '$16',
   lineHeight: '$24',
@@ -86,10 +91,6 @@ export const ArticleFigureCaption = styled('figcaption', {
       }
     }
   }
-});
-
-export const ArticleLink = styled('a', {
-  color: 'hsl($shade500)'
 });
 
 export const ArticleBlockQuote = styled('blockquote', {
