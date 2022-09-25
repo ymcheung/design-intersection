@@ -1,8 +1,11 @@
 import type { GetStaticPropsContext } from 'next';
+import { useRouter } from 'next/router';
+import Script from 'next/script';
 import { gql } from '@apollo/client';
 import client from '../apollo-client';
 import { serialize } from 'next-mdx-remote/serialize';
 import { MDXRemote } from 'next-mdx-remote';
+import HeadMeta from '@utils/HeadMeta';
 import Heading2 from '@components/article/Heading2';
 import Heading3 from '@components/article/Heading3';
 import ArticleP from '@components/article/ArticleP';
@@ -10,6 +13,7 @@ import ArticleUL from '@components/article/ArticleUL';
 import ArticleOL from '@components/article/ArticleOL';
 import ArticleLink from '@components/article/ArticleLink';
 import ArticleImage from '@components/article/ArticleImage';
+import ImageDivider from '@components/article/ImageDivider';
 import remarkGfm from 'remark-gfm';
 import remarkUnwrapImages from 'remark-unwrap-images';
 import { styled } from '../stitches.config';
@@ -120,7 +124,15 @@ const PostBody = styled('article', {
 // });
 
 export default function Post({ post, postBody, authorIntro }: postProps) {
-  const { title, subtitle, publishedTime, source } = post;
+  const { title, subtitle, description, publishedTime, source } = post;
+
+  const router = useRouter();
+
+  const meta = {
+    title: `${title} | Intersection`,
+    description: `${description}翻譯自 ${source.author} 的 “${source.title}”`,
+    slug: router.asPath
+  }
 
   const mdxComponents = {
     h2: Heading2,
@@ -130,14 +142,21 @@ export default function Post({ post, postBody, authorIntro }: postProps) {
     ol: ArticleOL,
     a: ArticleLink,
     img: ArticleImage,
+    ImageDivider,
     blockquote: ArticleBlockquote,
     hr: () => <Divider position="article" />
   };
 
   return (
     <>
+      <HeadMeta
+        title={meta.title}
+        description={meta.description}
+        slug={meta.slug}
+      />
+      {process.env.NODE_ENV === 'production' && <Script async src="https://cdn.splitbee.io/sb.js"></Script>}
       <Header />
-      <PostLayout layout={{ '@m992': 'tablet' }} responsive={{ '@m1200': 'noPadding' }}>
+      <PostLayout layout={{ '@m992': 'tablet' }} responsive={{ '@m1232': 'noPadding' }}>
         <PostBody>
           <PostTitle translated={{ '@initial': 'mobile', '@m992': 'tablet' }} withSubtitle={!!subtitle}>{title}</PostTitle>
           {subtitle && <PostSubtitle translated={{ '@initial': 'mobile' }}>{subtitle}</PostSubtitle>}

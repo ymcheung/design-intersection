@@ -96,6 +96,7 @@ export const {
   media: {
     m640: '(min-width: 640px)',
     m992: '(min-width: 992px)',
-    m1200: '(min-width: 1200px)'
+    m1200: '(min-width: 1200px)',
+    m1232: '(min-width: 1232px)'
   },
 })

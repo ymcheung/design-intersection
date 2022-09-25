@@ -109,7 +109,8 @@ export const StyledBlockQuote = styled('blockquote', {
           }
         }
       },
-      tablet: {
+      desktop: {
+        width: '64%',
         paddingInlineStart: 0
       }
     }

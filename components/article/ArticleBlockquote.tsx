@@ -5,5 +5,5 @@ interface ChildrenProps {
 }
 
 export default function ArticleBlockquote({ children }: ChildrenProps) {
-  return (<StyledBlockQuote responsive={{ '@initial': 'mobile', '@m992': 'tablet'}}>{children}</StyledBlockQuote>);
+  return (<StyledBlockQuote responsive={{ '@initial': 'mobile', '@m1200': 'desktop'}}>{children}</StyledBlockQuote>);
 };

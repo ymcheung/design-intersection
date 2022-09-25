@@ -4,6 +4,7 @@ import { styled } from '../../stitches.config';
 import { MDXRemote } from 'next-mdx-remote';
 import { Heading } from '@elements/headings';
 import { PostTitle, PostSubtitle } from '@elements/postTitles';
+import ArticleLink from '@components/article/ArticleLink';
 import { Divider } from '@elements/divider';
 
 interface AsideProps {
@@ -58,6 +59,10 @@ const Time = styled('time', {
 })
 
 export default function Aside({ authorIntro, publishedTime, source }: AsideProps) {
+  const mdxComponents = {
+    a: ArticleLink
+  };
+
   return (
     <aside>
       <Heading position="cell">原文</Heading>
@@ -67,7 +72,9 @@ export default function Aside({ authorIntro, publishedTime, source }: AsideProps
       {source.subtitle && <PostSubtitle source={{ '@initial': 'mobile' }}>{source.subtitle}</PostSubtitle>}
       <Divider />
       <SourceAuthor of="name">{source.author}</SourceAuthor>
-      <SourceAuthor as="p" of="intro"><MDXRemote {...authorIntro} /></SourceAuthor>
+      <SourceAuthor as="p" of="intro">
+        <MDXRemote {...authorIntro} components={mdxComponents} />
+      </SourceAuthor>
       <Heading position="cell">日期</Heading>
       <Time dateTime={formatDate(publishedTime)} floor={{ '@initial': 'ground', '@m992': 'aside' }}>
         {formatDate(publishedTime)}

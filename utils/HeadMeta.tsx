@@ -38,6 +38,5 @@ export default function HeadMeta({ title, description, slug, ogCover }: HeadMeta
     <meta property="twitter:description" content={description} />
     <meta property="twitter:image" content={`${process.env.NEXT_PUBLIC_HOSTNAME}og${ogCover}`} />
     <meta name="format-detection" content="telephone=no" />
-    {/* <script type="application/ld+json" set:html={schema}></script> */}
   </Head>);
 }

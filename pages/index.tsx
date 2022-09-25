@@ -6,14 +6,12 @@ import { gql } from '@apollo/client';
 import client from '../apollo-client';
 import { formatDate } from '@utils/formatDate';
 import { styled } from '../stitches.config';
-
 import ymcheung from '../public/translator/ymcheung.webp';
-
 import HeadMeta from '@utils/HeadMeta';
 import { Divider } from '@elements/divider';
 import Header from '@components/Header';
 import { Container } from '@components/layouts';
-import { Heading } from '@components/headings';
+import { Heading } from '@elements/headings';
 import Footer from '@components/Footer';
 
 interface queryProps {
@@ -114,7 +112,6 @@ const Cover = styled('figure', {
   marginBlockStart: 0,
   marginBlockEnd: '$16',
   backgroundColor: 'hsl($shade1500)',
-  // borderBottom: '1px solid hsl($shade1200)',
 
   variants: {
     responsive: {
@@ -220,7 +217,7 @@ const Home: NextPage<postsProps> = ({ posts }) => {
       <HeadMeta />
       {process.env.NODE_ENV === 'production' && <Script async src="https://cdn.splitbee.io/sb.js"></Script>}
       <Header />
-      <HomeLayout layout={{ '@m992': 'tablet' }} responsive={{ '@m1200': 'noPadding' }}>
+      <HomeLayout layout={{ '@m992': 'tablet' }} responsive={{ '@m1232': 'noPadding' }}>
         <HomeCell as="main" position={{ '@m992': 'featured' }} responsive={{ '@m992': 'tablet' }}>
           <PostList>
             {featuredPosts.map(({ slug, title, cover, description, publishedTime }, index) => (
