@@ -5,6 +5,7 @@ import { MDXRemote } from 'next-mdx-remote';
 import { Heading } from '@elements/headings';
 import { PostTitle, PostSubtitle } from '@elements/postTitles';
 import ArticleLink from '@components/article/ArticleLink';
+import IntroP from '@components/article/IntroP';
 import { Divider } from '@elements/divider';
 
 interface AsideProps {
@@ -30,12 +31,6 @@ const SourceAuthor = styled('h3', {
         color: 'hsl($shade500)',
         fontSize: '$16',
         lineHeight: '$24',
-      },
-      intro: {
-        marginBlockEnd: 0,
-        color: 'hsl($shade800)',
-        fontSize: '$14',
-        lineHeight: '$24',
       }
     }
   }
@@ -60,6 +55,7 @@ const Time = styled('time', {
 
 export default function Aside({ authorIntro, publishedTime, source }: AsideProps) {
   const mdxComponents = {
+    p: IntroP,
     a: ArticleLink
   };
 
@@ -72,9 +68,9 @@ export default function Aside({ authorIntro, publishedTime, source }: AsideProps
       {source.subtitle && <PostSubtitle source={{ '@initial': 'mobile' }}>{source.subtitle}</PostSubtitle>}
       <Divider />
       <SourceAuthor of="name">{source.author}</SourceAuthor>
-      <SourceAuthor as="p" of="intro">
+      <div>
         <MDXRemote {...authorIntro} components={mdxComponents} />
-      </SourceAuthor>
+      </div>
       <Heading position="cell">日期</Heading>
       <Time dateTime={formatDate(publishedTime)} floor={{ '@initial': 'ground', '@m992': 'aside' }}>
         {formatDate(publishedTime)}

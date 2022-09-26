@@ -21,11 +21,27 @@ export const Headings = styled('h2', {
 
 export const Paragraph = styled('p', {
   '&:not(blockquote p)': {
-    marginBlockStart: 0,
-    marginBlockEnd: '$24',
-    color: 'hsl($shade400)',
-    fontSize: '$20',
-    lineHeight: '$32'
+    marginBlockStart: 0
+  },
+  variants: {
+    position: {
+      article: {
+        '&:not(blockquote p)': {
+          marginBlockEnd: '$24',
+          color: 'hsl($shade400)',
+          fontSize: '$20',
+          lineHeight: '$32'
+        }
+      },
+      intro: {
+        '&:not(blockquote p)': {
+          marginBlockEnd: '$16',
+          color: 'hsl($shade800)',
+          fontSize: '$14',
+          lineHeight: '$24'
+        }
+      }
+    }
   }
 });
 

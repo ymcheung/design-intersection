@@ -5,5 +5,7 @@ interface ChildrenProps {
 }
 
 export default function ArticleP({ children }: ChildrenProps) {
-  return (<Paragraph>{children}</Paragraph>);
+  return (
+    <Paragraph position="article">{children}</Paragraph>
+  );
 };
