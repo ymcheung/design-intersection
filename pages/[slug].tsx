@@ -83,18 +83,6 @@ interface postProps {
   }
 }
 
-interface ChildrenProps {
-  children: React.ReactNode;
-}
-
-interface HrefProp extends ChildrenProps {
-  href: string;
-}
-
-interface OrderedListProp extends ChildrenProps {
-  startNumber: number;
-}
-
 const PostLayout = styled(Container, {
   fontFamily: '$default',
 

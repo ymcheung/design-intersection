@@ -16,11 +16,19 @@ export default {
     },
     {
       name: 'mainImage',
-      title: 'Main image',
+      title: 'Cover',
       type: 'image',
       required: true,
       options: {
         hotspot: true
+      }
+    },
+    {
+      name: 'coverPosition',
+      title: 'Cover Above Title',
+      type: 'boolean',
+      options: {
+        layout: 'checkbox'
       }
     },
     {
