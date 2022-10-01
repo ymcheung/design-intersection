@@ -13,19 +13,17 @@ export default {
       }
     },
     {
-    name: 'position',
-    title: 'Is Above Title',
-    type: 'boolean',
-    options:
-      {
+      name: 'position',
+      title: 'Is Above Title',
+      type: 'boolean',
+      options: {
         layout: 'checkbox'
       }
     },
     {
       name: 'alt',
       title: 'Alt Text',
-      type: 'string',
-      hidden: ({ parent, value }) => !value && !parent?.position
+      type: 'string'
     }
   ]
-}
+};

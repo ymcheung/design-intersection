@@ -25,7 +25,7 @@ interface queryProps {
         url: string;
       }
     };
-    alt: string;
+    alt?: string;
   };
 
   description: string;
@@ -42,7 +42,7 @@ interface postsProps {
     title: string;
     cover: {
       url: string;
-      alt: string;
+      alt?: string;
     }
     description: string;
     modifiedTime: string;
@@ -203,6 +203,15 @@ const Description = styled('p', {
   }
 });
 
+const WebsiteProcessLink = styled('a', {
+  display: 'block'
+})
+
+const WebsiteProcess = styled('figure', {
+  marginX: 0,
+  marginBlockEnd: '$16'
+});
+
 const TranslatorCard = styled('figure', {
   display: 'grid',
   grid: 'auto / 80px 1fr',
@@ -235,7 +244,7 @@ const Home: NextPage<postsProps> = ({ posts }) => {
                       responsive={{ '@initial': 'mobile', '@m992': 'tablet' }}
                       featured={{ '@initial': 'mobile', '@m992': 'tablet' }}
                     >
-                      <Image src={cover.url} layout="fill" objectFit="cover" alt="" />
+                      <Image src={cover.url} layout="fill" objectFit="cover" alt={cover.alt} />
                       <DateLabel responsive={{ '@initial': 'mobile', '@m992': 'tablet' }} dateTime={formatDate(publishedTime)}>{formatDate(publishedTime)}</DateLabel>
                     </Cover>
                     <Heading position="postsFeatured">{title}</Heading>
@@ -245,6 +254,14 @@ const Home: NextPage<postsProps> = ({ posts }) => {
               </PostItem>
             ))}
           </PostList>
+          <Divider />
+          <Link href="https://thecosignstudio.github.io/process" passHref>
+            <WebsiteProcessLink>
+              <WebsiteProcess>
+                <Image src="/website/process.webp" layout="responsive" width={16} height={3} alt="專業人士的設計流程 (Design Process for Pros)" />
+              </WebsiteProcess>
+            </WebsiteProcessLink>
+          </Link>
           <Divider />
           <Heading position="cell">關於譯者</Heading>
           <TranslatorCard>
@@ -297,7 +314,7 @@ export async function getStaticProps() {
                 url
               }
             }
-            position
+            alt
           }
           description
           _updatedAt
