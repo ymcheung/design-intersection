@@ -19,11 +19,15 @@ interface queryProps {
     current: string;
   };
   title: string;
-  mainImage: {
-    asset: {
-      url: string;
-    }
+  cover: {
+    mainImage: {
+      asset: {
+        url: string;
+      }
+    };
+    alt: string;
   };
+
   description: string;
   _updatedAt: string;
   publishedTime: string;
@@ -36,7 +40,10 @@ interface postsProps {
   posts: [{
     slug: string;
     title: string;
-    cover: string;
+    cover: {
+      url: string;
+      alt: string;
+    }
     description: string;
     modifiedTime: string;
     publishedTime: string;
@@ -228,7 +235,7 @@ const Home: NextPage<postsProps> = ({ posts }) => {
                       responsive={{ '@initial': 'mobile', '@m992': 'tablet' }}
                       featured={{ '@initial': 'mobile', '@m992': 'tablet' }}
                     >
-                      <Image src={cover} layout="fill" objectFit="cover" alt="" />
+                      <Image src={cover.url} layout="fill" objectFit="cover" alt="" />
                       <DateLabel responsive={{ '@initial': 'mobile', '@m992': 'tablet' }} dateTime={formatDate(publishedTime)}>{formatDate(publishedTime)}</DateLabel>
                     </Cover>
                     <Heading position="postsFeatured">{title}</Heading>
@@ -258,7 +265,7 @@ const Home: NextPage<postsProps> = ({ posts }) => {
               <Link href={`/${slug}`} passHref>
                 <PostLink>
                   <Cover responsive={{ '@initial': 'mobile', '@m992': 'tablet' }} position="all">
-                    <Image src={cover} layout="fill" objectFit="cover" alt="" />
+                    <Image src={cover.url} layout="fill" objectFit="cover" alt={cover.alt} />
                     <DateLabel responsive={{ '@initial': 'mobile', '@m992': 'tablet' }} dateTime={formatDate(publishedTime)}>{formatDate(publishedTime)}</DateLabel>
                   </Cover>
                   <Heading as="h3" position="postsAll">{title}</Heading>
@@ -284,10 +291,13 @@ export async function getStaticProps() {
             current
           }
           title
-          mainImage {
-            asset {
-              url
+          cover {
+            mainImage {
+              asset {
+                url
+              }
             }
+            position
           }
           description
           _updatedAt
@@ -300,12 +310,15 @@ export async function getStaticProps() {
     `,
   });
 
-  const posts = data.allPost.map(({ slug, title, mainImage, description, _updatedAt, publishedTime, tags }: queryProps) => {
+  const posts = data.allPost.map(({ slug, title, cover, description, _updatedAt, publishedTime, tags }: queryProps) => {
     const tagsSlug = tags.map(({ slug }) => slug);
     return ({
       slug: slug.current,
       title,
-      cover: mainImage.asset.url,
+      cover: {
+        url: cover.mainImage.asset.url,
+        alt: cover.alt
+      },
       description,
       modifiedTime: _updatedAt,
       publishedTime,

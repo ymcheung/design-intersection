@@ -37,10 +37,14 @@ interface queryProps {
   };
   title: string;
   subtitle?: string;
-  mainImage: {
-    asset: {
-      url: string;
-    }
+  cover: {
+    mainImage: {
+      asset: {
+        url: string;
+      }
+    },
+    position: boolean;
+    alt: string;
   };
   body: string;
   description: string;
@@ -62,7 +66,11 @@ interface postProps {
   post: {
     title: string;
     subtitle?: string;
-    cover: string;
+    cover: {
+      url: string;
+      position: boolean;
+      alt: string;
+    };
     description: string;
     modifiedTime: string;
     publishedTime: string;
@@ -112,7 +120,7 @@ const PostBody = styled('article', {
 // });
 
 export default function Post({ post, postBody, authorIntro }: postProps) {
-  const { title, subtitle, description, publishedTime, source } = post;
+  const { title, subtitle, cover, description, publishedTime, source } = post;
 
   const router = useRouter();
 
@@ -146,6 +154,7 @@ export default function Post({ post, postBody, authorIntro }: postProps) {
       <Header />
       <PostLayout layout={{ '@m992': 'tablet' }} responsive={{ '@m1232': 'noPadding' }}>
         <PostBody>
+          {cover.position ? '534543' : '99999'}
           <PostTitle translated={{ '@initial': 'mobile', '@m992': 'tablet' }} withSubtitle={!!subtitle}>{title}</PostTitle>
           {subtitle && <PostSubtitle translated={{ '@initial': 'mobile' }}>{subtitle}</PostSubtitle>}
           <MDXRemote {...postBody} components={mdxComponents} />
@@ -188,10 +197,14 @@ export async function getStaticProps({ params }: GetStaticPropsContext) {
           _id
           title
           subtitle,
-          mainImage {
-            asset {
-              url
+          cover {
+            mainImage {
+              asset {
+                url
+              }
             }
+            position
+            alt
           }
           body
           description
@@ -212,12 +225,16 @@ export async function getStaticProps({ params }: GetStaticPropsContext) {
     `,
   });
 
-  const post = data.allPost.map(({ title, subtitle, mainImage, description, _updatedAt, publishedTime, source, tags }: queryProps) => {
+  const post = data.allPost.map(({ title, subtitle, cover, description, _updatedAt, publishedTime, source, tags }: queryProps) => {
     const tagsSlug = tags.map(({ slug }) => slug);
     return ({
       title,
       subtitle,
-      cover: mainImage.asset.url,
+      cover: {
+        url: cover.mainImage.asset.url,
+        position: cover.position,
+        alt: cover.alt
+      },
       description,
       modifiedTime: _updatedAt,
       publishedTime,

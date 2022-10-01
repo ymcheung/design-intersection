@@ -15,21 +15,9 @@ export default {
       type: 'string'
     },
     {
-      name: 'mainImage',
+      name: 'cover',
       title: 'Cover',
-      type: 'image',
-      required: true,
-      options: {
-        hotspot: true
-      }
-    },
-    {
-      name: 'coverPosition',
-      title: 'Cover Above Title',
-      type: 'boolean',
-      options: {
-        layout: 'checkbox'
-      }
+      type: 'cover'
     },
     {
       name: 'publishedTime',
@@ -74,11 +62,10 @@ export default {
       of: [{ type: 'reference', to: { type: 'tag' } }]
     }
   ],
-
   preview: {
     select: {
       title: 'title',
-      media: 'mainImage'
+      media: 'cover.mainImage'
     }
   }
 };
