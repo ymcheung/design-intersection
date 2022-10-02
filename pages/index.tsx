@@ -262,7 +262,6 @@ const Home: NextPage<postsProps> = ({ posts }) => {
               </WebsiteProcess>
             </WebsiteProcessLink>
           </Link>
-          <Divider />
           <Heading position="cell">關於譯者</Heading>
           <TranslatorCard>
             <TranslatorAvatar src={ymcheung} width={80} height={80} layout="fixed" alt="" />

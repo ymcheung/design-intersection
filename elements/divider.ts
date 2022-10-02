@@ -18,7 +18,8 @@ export const Divider = styled('hr', {
       article: {
         display: 'block',
         width: '80px',
-        marginX: '$auto'
+        marginX: '$auto',
+        marginBlockEnd: '$64'
       }
     }
   }

@@ -1,4 +1,5 @@
 import type { GetStaticPropsContext } from 'next';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import Script from 'next/script';
 import { gql } from '@apollo/client';
@@ -41,6 +42,12 @@ interface queryProps {
     mainImage: {
       asset: {
         url: string;
+        metadata: {
+          dimensions: {
+            width: number;
+            height: number;
+          }
+        }
       }
     },
     position: boolean;
@@ -68,6 +75,10 @@ interface postProps {
     subtitle?: string;
     cover: {
       url: string;
+      dimensions: {
+        width: number;
+        height: number;
+      };
       position: boolean;
       alt: string;
     };
@@ -90,6 +101,20 @@ interface postProps {
     compiledSource: string;
   }
 }
+
+const CoverAboveTitle = styled('figure', {
+  marginX: '-$16',
+  marginBlockStart: '-$16',
+  marginBlockEnd: '$16',
+
+  variants: {
+    responsive: {
+      tablet: {
+        marginX: 0
+      }
+    }
+  }
+})
 
 const PostLayout = styled(Container, {
   fontFamily: '$default',
@@ -137,7 +162,7 @@ export default function Post({ post, postBody, authorIntro }: postProps) {
     ul: ArticleUL,
     ol: ArticleOL,
     a: ArticleLink,
-    img: ArticleImage,
+    ArticleImage,
     ImageDivider,
     blockquote: ArticleBlockquote,
     hr: () => <Divider position="article" />
@@ -154,7 +179,11 @@ export default function Post({ post, postBody, authorIntro }: postProps) {
       <Header />
       <PostLayout layout={{ '@m992': 'tablet' }} responsive={{ '@m1232': 'noPadding' }}>
         <PostBody>
-          {cover.position ? '534543' : '99999'}
+          {cover.position &&
+            <CoverAboveTitle responsive={{ '@m992': 'tablet' }}>
+              <Image src={cover.url} layout="responsive" width={cover.dimensions.width} height={cover.dimensions.height} alt={cover.alt} />
+            </CoverAboveTitle>
+          }
           <PostTitle translated={{ '@initial': 'mobile', '@m992': 'tablet' }} withSubtitle={!!subtitle}>{title}</PostTitle>
           {subtitle && <PostSubtitle translated={{ '@initial': 'mobile' }}>{subtitle}</PostSubtitle>}
           <MDXRemote {...postBody} components={mdxComponents} />
@@ -201,6 +230,12 @@ export async function getStaticProps({ params }: GetStaticPropsContext) {
             mainImage {
               asset {
                 url
+                metadata {
+                  dimensions {
+                    width
+                    height
+                  }
+                }
               }
             }
             position
@@ -232,6 +267,7 @@ export async function getStaticProps({ params }: GetStaticPropsContext) {
       subtitle,
       cover: {
         url: cover.mainImage.asset.url,
+        dimensions: cover.mainImage.asset.metadata.dimensions,
         position: cover.position,
         alt: cover.alt
       },

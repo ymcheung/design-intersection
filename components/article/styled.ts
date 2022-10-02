@@ -29,8 +29,8 @@ export const Paragraph = styled('p', {
         '&:not(blockquote p)': {
           marginBlockEnd: '$24',
           color: 'hsl($shade400)',
-          fontSize: '$20',
-          lineHeight: '$32'
+          fontSize: 'clamp($16, 2.6vmin, $24)',
+          lineHeight: 1.6
         }
       },
       intro: {
@@ -79,20 +79,14 @@ export const StyledFigure = styled('figure', {
         marginX: '-$16'
       },
       tablet: {
-        marginX: 0
+        marginX: '$auto'
       }
     }
   }
 });
 
-export const StyledImage = styled('img', {
-  width: '100%',
-  maxWidth: 'calc(100% + 32px)',
-  marginBlockEnd: '$8'
-});
-
-
 export const StyledFigcaption = styled('figcaption', {
+  paddingBlockStart: '$8',
   color: 'hsl($shade800)',
   fontSize: '$16',
   lineHeight: '$24',

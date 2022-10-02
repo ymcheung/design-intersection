@@ -1,16 +1,24 @@
-import { StyledFigure, StyledImage, StyledFigcaption } from './styled';
+import Image from 'next/image';
+import { StyledFigure, StyledFigcaption } from './styled';
 
 interface ImageProps {
-  src?: string;
+  src: string;
+  figWidth?: string;
+  figHeight?: string;
+  width: number;
+  height: number;
   alt?: string;
-  title?: string;
+  caption?: string;
 }
 
-export default function ArticleImage({ src, alt, title }: ImageProps) {
+export default function ArticleImage({ src, figWidth, figHeight, width, height, alt, caption }: ImageProps) {
   return (
-    <StyledFigure responsive={{ '@initial': 'mobile', '@m992': 'tablet' }}>
-      <StyledImage src={src} alt={alt} />
-      {title && <StyledFigcaption responsive={{ '@initial': 'mobile', '@m992': 'tablet' }}>{title}</StyledFigcaption>}
+    <StyledFigure css={{ width: figWidth, height: figHeight }} responsive={{ '@initial': 'mobile', '@m992': 'tablet' }}>
+      <Image src={src} width={width} height={height} layout="responsive" alt={alt}  />
+      {
+        caption &&
+        <StyledFigcaption responsive={{ '@initial': 'mobile', '@m992': 'tablet' }}>{caption}</StyledFigcaption>
+      }
     </StyledFigure>
   );
 };
