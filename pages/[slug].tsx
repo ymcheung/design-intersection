@@ -13,6 +13,7 @@ import ArticleP from '@components/article/ArticleP';
 import ArticleUL from '@components/article/ArticleUL';
 import ArticleOL from '@components/article/ArticleOL';
 import ArticleLink from '@components/article/ArticleLink';
+import ArticleImageLink from '@components/article/ArticleImageLink';
 import ArticleImage from '@components/article/ArticleImage';
 import ImageDivider from '@components/article/ImageDivider';
 import remarkGfm from 'remark-gfm';
@@ -162,6 +163,7 @@ export default function Post({ post, postBody, authorIntro }: postProps) {
     ul: ArticleUL,
     ol: ArticleOL,
     a: ArticleLink,
+    ArticleImageLink,
     ArticleImage,
     ImageDivider,
     blockquote: ArticleBlockquote,

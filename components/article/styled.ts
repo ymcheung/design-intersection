@@ -65,7 +65,17 @@ export const List = styled('ul', {
 });
 
 export const StyledLink = styled('a', {
-  color: 'hsl($shade500)'
+  color: 'hsl($shade500)',
+
+  variants: {
+    linkChild: {
+      image: {
+        display: 'block',
+        marginX: '$auto',
+        textDecoration: 'none'
+      }
+    }
+  }
 });
 
 
@@ -74,11 +84,16 @@ export const StyledFigure = styled('figure', {
   marginBlockEnd: '$24',
 
   variants: {
-    responsive: {
+    cover: {
       mobile: {
         marginX: '-$16'
       },
       tablet: {
+        marginX: '$auto'
+      }
+    },
+    general: {
+      true: {
         marginX: '$auto'
       }
     }
@@ -90,6 +105,7 @@ export const StyledFigcaption = styled('figcaption', {
   color: 'hsl($shade800)',
   fontSize: '$16',
   lineHeight: '$24',
+  textDecoration: 'none',
 
   variants: {
     responsive: {

@@ -208,8 +208,25 @@ const WebsiteProcessLink = styled('a', {
 })
 
 const WebsiteProcess = styled('figure', {
+  position: 'relative',
   marginX: 0,
-  marginBlockEnd: '$16'
+  marginBlockEnd: '$16',
+
+  variants: {
+    responsive: {
+      mobile: {
+        aspectRatio: 3 / 1
+      },
+      tablet: {
+        aspectRatio: 16 / 3
+      }
+    }
+  }
+});
+
+const WebsiteProcessImage = styled(Image, {
+  objectFit: 'cover',
+  borderRadius: '24px'
 });
 
 const TranslatorCard = styled('figure', {
@@ -254,11 +271,10 @@ const Home: NextPage<postsProps> = ({ posts }) => {
               </PostItem>
             ))}
           </PostList>
-          <Divider />
           <Link href="https://thecosignstudio.github.io/process" passHref>
             <WebsiteProcessLink>
-              <WebsiteProcess>
-                <Image src="/website/process.webp" layout="responsive" width={16} height={3} alt="專業人士的設計流程 (Design Process for Pros)" />
+              <WebsiteProcess responsive={{ '@initial': 'mobile', '@m992': 'tablet' }}>
+                <WebsiteProcessImage src="/website/process.webp" layout="fill" alt="專業人士的設計流程 (Design Process for Pros)" />
               </WebsiteProcess>
             </WebsiteProcessLink>
           </Link>

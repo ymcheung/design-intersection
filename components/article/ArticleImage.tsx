@@ -3,21 +3,36 @@ import { StyledFigure, StyledFigcaption } from './styled';
 
 interface ImageProps {
   src: string;
-  figWidth?: string;
-  figHeight?: string;
   width: number;
+  maxWidth?: string;
   height: number;
+  isCover?: boolean;
   alt?: string;
-  caption?: string;
+  caption?: React.ReactNode;
 }
 
-export default function ArticleImage({ src, figWidth, figHeight, width, height, alt, caption }: ImageProps) {
+interface ChildrenProps {
+  children?: React.ReactNode;
+}
+
+const ImageFigcaption = ({ children }: ChildrenProps) => {
   return (
-    <StyledFigure css={{ width: figWidth, height: figHeight }} responsive={{ '@initial': 'mobile', '@m992': 'tablet' }}>
+    <StyledFigcaption responsive={{ '@initial': 'mobile', '@m992': 'tablet' }}>
+      {children}
+    </StyledFigcaption>
+  );
+}
+
+export default function ArticleImage({ src, width, maxWidth, height, isCover, alt, caption }: ImageProps) {
+  return (
+    <StyledFigure
+      css={{ maxWidth: maxWidth }}
+      cover={isCover ? { '@initial': 'mobile', '@m992': 'tablet' } : undefined}
+      general={isCover ? undefined : true}
+    >
       <Image src={src} width={width} height={height} layout="responsive" alt={alt}  />
       {
-        caption &&
-        <StyledFigcaption responsive={{ '@initial': 'mobile', '@m992': 'tablet' }}>{caption}</StyledFigcaption>
+        caption && <ImageFigcaption>{caption}</ImageFigcaption>
       }
     </StyledFigure>
   );
