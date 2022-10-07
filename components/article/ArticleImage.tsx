@@ -30,7 +30,7 @@ export default function ArticleImage({ src, width, maxWidth, height, isCover, al
       cover={isCover ? { '@initial': 'mobile', '@m992': 'tablet' } : undefined}
       general={isCover ? undefined : true}
     >
-      <Image src={src} width={width} height={height} layout="responsive" alt={alt}  />
+      <Image src={src} width={width} height={height} layout="responsive" alt={alt} priority={isCover} />
       {
         caption && <ImageFigcaption>{caption}</ImageFigcaption>
       }

@@ -8,12 +8,12 @@ export const Headings = styled('h2', {
   variants: {
     level: {
       h2: {
-        fontSize: '$24',
-        lineHeight: '$36',
+        fontSize: '$h2',
+        lineHeight: 1.33,
       },
       h3: {
-        fontSize: '$20',
-        lineHeight: '$28',
+        fontSize: '$h3',
+        lineHeight: 1.33,
       }
     }
   }
@@ -29,7 +29,7 @@ export const Paragraph = styled('p', {
         '&:not(blockquote p)': {
           marginBlockEnd: '$24',
           color: 'hsl($shade400)',
-          fontSize: 'clamp($16, 2.6vmin, $24)',
+          fontSize: '$paragraph',
           lineHeight: 1.6
         }
       },
@@ -52,8 +52,8 @@ export const List = styled('ul', {
   marginBlockEnd: '$24',
   paddingInlineStart: '$16',
   color: 'hsl($shade400)',
-  fontSize: '$20',
-  lineHeight: '$32',
+  fontSize: '$paragraph',
+  lineHeight: 1.6,
 
   variants: {
     type: {

@@ -59,7 +59,10 @@ export const {
       20: '2rem',
       24: '2.4rem',
       28: '2.8rem',
-      32: '3.2rem'
+      32: '3.2rem',
+      'h2': 'clamp($28, 2.6vmin, $32)',
+      'h3': 'clamp($24, 2.6vmin, $28)',
+      'paragraph': 'clamp($18, 2.6vmin, $20)'
     },
     lineHeights: {
       16: '16px',
