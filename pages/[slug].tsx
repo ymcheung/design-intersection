@@ -103,13 +103,15 @@ interface postProps {
   }
 }
 
-const CoverAboveTitle = styled('figure', {
-  marginX: '-$16',
-  marginBlockStart: '-$16',
+const Cover = styled('figure', {
   marginBlockEnd: '$16',
 
   variants: {
-    responsive: {
+    above: {
+      mobile: {
+        marginBlockStart: '-$16',
+        marginX: '-$16',
+      },
       tablet: {
         marginX: 0
       }
@@ -182,9 +184,9 @@ export default function Post({ post, postBody, authorIntro }: postProps) {
       <PostLayout layout={{ '@m992': 'tablet' }} responsive={{ '@m1232': 'noPadding' }}>
         <PostBody>
           {cover.position &&
-            <CoverAboveTitle responsive={{ '@m992': 'tablet' }}>
+            <Cover above={{ '@initial': 'mobile', '@m992': 'tablet' }}>
               <Image src={cover.url} layout="responsive" width={cover.dimensions.width} height={cover.dimensions.height} alt={cover.alt} />
-            </CoverAboveTitle>
+            </Cover>
           }
           <PostTitle translated={{ '@initial': 'mobile', '@m992': 'tablet' }} withSubtitle={!!subtitle}>{title}</PostTitle>
           {subtitle && <PostSubtitle translated={{ '@initial': 'mobile' }}>{subtitle}</PostSubtitle>}

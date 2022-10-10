@@ -20,9 +20,12 @@ export const Headings = styled('h2', {
 });
 
 export const Paragraph = styled('p', {
+  overflowWrap: 'break-word',
+
   '&:not(blockquote p)': {
     marginBlockStart: 0
   },
+
   variants: {
     position: {
       article: {
@@ -81,7 +84,7 @@ export const StyledLink = styled('a', {
 
 export const StyledFigure = styled('figure', {
   marginBlockStart: 0,
-  marginBlockEnd: '$24',
+  marginBlockEnd: '$32',
 
   variants: {
     cover: {
@@ -105,15 +108,18 @@ export const StyledFigcaption = styled('figcaption', {
   color: 'hsl($shade800)',
   fontSize: '$16',
   lineHeight: '$24',
+  overflowWrap: 'break-word',
   textDecoration: 'none',
 
   variants: {
     responsive: {
       mobile: {
-        marginX: '$16'
+        marginX: '$16',
+        marginBlockEnd: '$16'
       },
       tablet: {
-        marginX: 0
+        marginX: 0,
+        marginBlockEnd: '$24'
       }
     }
   }
@@ -136,29 +142,17 @@ export const StyledBlockQuote = styled('blockquote', {
         }
       },
       desktop: {
-        width: '64%',
+        width: '80%',
         paddingInlineStart: 0
       }
     }
   },
 
   '& p': {
-    position: 'relative',
     marginY: 0,
-      color: 'hsl($accent)',
+    color: 'hsl($shade500)',
     fontSize: '$20',
     fontWeight: 'bold',
     lineHeight: '$32',
-
-    '&::before': {
-      position: 'absolute',
-      content: '「',
-      fontWeight: 'normal'
-    },
-
-    '&::after': {
-      content: '」',
-      fontWeight: 'normal'
-    }
   }
 })

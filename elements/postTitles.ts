@@ -2,7 +2,7 @@ import { styled } from '../stitches.config';
 
 export const PostTitle = styled('h1', {
   marginBlockStart: 0,
-  marginBlockEnd: '$16',
+  marginBlockEnd: '$24',
   color: 'hsl($shade100)',
 
   variants: {
