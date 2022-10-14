@@ -33,7 +33,11 @@ export const Paragraph = styled('p', {
           marginBlockEnd: '$24',
           color: 'hsl($shade400)',
           fontSize: '$paragraph',
-          lineHeight: 1.6
+          lineHeight: 1.6,
+
+          [`& + ${Headings}`]: {
+            paddingTop: '$24'
+          }
         }
       },
       intro: {
@@ -53,7 +57,7 @@ export const List = styled('ul', {
   rowGap: '$12',
   marginBlockStart: 0,
   marginBlockEnd: '$24',
-  paddingInlineStart: '$16',
+  paddingInlineStart: '$24',
   color: 'hsl($shade400)',
   fontSize: '$paragraph',
   lineHeight: 1.6,

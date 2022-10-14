@@ -4,7 +4,7 @@ import { styled } from '../../stitches.config';
 import { MDXRemote } from 'next-mdx-remote';
 import { Heading } from '@elements/headings';
 import { PostTitle, PostSubtitle } from '@elements/postTitles';
-import ArticleLink from '@components/article/ArticleLink';
+import ArticleLink from '@components/article/Link';
 import IntroP from '@components/article/IntroP';
 import { Divider } from '@elements/divider';
 

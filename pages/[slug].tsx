@@ -9,12 +9,14 @@ import { MDXRemote } from 'next-mdx-remote';
 import HeadMeta from '@utils/HeadMeta';
 import Heading2 from '@components/article/Heading2';
 import Heading3 from '@components/article/Heading3';
-import ArticleP from '@components/article/ArticleP';
-import ArticleUL from '@components/article/ArticleUL';
-import ArticleOL from '@components/article/ArticleOL';
-import ArticleLink from '@components/article/ArticleLink';
-import ArticleImageLink from '@components/article/ArticleImageLink';
-import ArticleImage from '@components/article/ArticleImage';
+import Paragraph from '@components/article/Paragraph';
+import Ul from '@components/article/Ul';
+import Ol from '@components/article/Ol';
+import ArticleLink from '@components/article/Link';
+import ArticleImageLink from '@components/article/ImageLink';
+import ArticleImage from '@components/article/Image';
+import ImageGallery from '@components/article/ImageGallery';
+import Blockquote from '@components/article/Blockquote';
 import ImageDivider from '@components/article/ImageDivider';
 import remarkGfm from 'remark-gfm';
 import remarkUnwrapImages from 'remark-unwrap-images';
@@ -25,7 +27,6 @@ import Header from '@components/Header';
 import { Container } from '@components/layouts';
 import Aside from '@components/article/Aside';
 import Footer from '@components/Footer';
-import ArticleBlockquote from '@components/article/ArticleBlockquote';
 
 interface staticPathProps {
   slug: {
@@ -161,15 +162,16 @@ export default function Post({ post, postBody, authorIntro }: postProps) {
   const mdxComponents = {
     h2: Heading2,
     h3: Heading3,
-    p: ArticleP,
-    ul: ArticleUL,
-    ol: ArticleOL,
+    p: Paragraph,
+    ul: Ul,
+    ol: Ol,
     a: ArticleLink,
+    blockquote: Blockquote,
+    hr: () => <Divider position="article" />,
     ArticleImageLink,
     ArticleImage,
+    ImageGallery,
     ImageDivider,
-    blockquote: ArticleBlockquote,
-    hr: () => <Divider position="article" />
   };
 
   return (
