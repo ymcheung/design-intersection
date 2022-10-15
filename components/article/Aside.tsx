@@ -63,7 +63,7 @@ export default function Aside({ authorIntro, publishedTime, source }: AsideProps
     <aside>
       <Heading position="cell">原文</Heading>
       <Link href={source.url} passHref>
-        <PostTitle as="a" source={{ '@initial': 'mobile' }} withSubtitle={!!source.subtitle}>{source.title}</PostTitle>
+        <PostTitle as="a" source={{ '@initial': 'mobile' }} withSubtitle={!!source.subtitle} target="_blank" rel="noopener">{source.title}</PostTitle>
       </Link>
       {source.subtitle && <PostSubtitle source={{ '@initial': 'mobile' }}>{source.subtitle}</PostSubtitle>}
       <Divider />

@@ -97,7 +97,7 @@ export default function Footer() {
         </section>
         <section>
           <Link href="https://build.intersection.tw" passHref>
-            <LogoBuildLink responsive={{ '@m640': 'wide' }}>
+            <LogoBuildLink responsive={{ '@m640': 'wide' }} aria-labelledby="logoBuildTitle">
               <LogoBuild viewBox="0 0 500 80">
                 <use xlinkHref="/sprite.svg#logoBuild" />
               </LogoBuild>

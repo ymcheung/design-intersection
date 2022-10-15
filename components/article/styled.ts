@@ -131,23 +131,17 @@ export const StyledFigcaption = styled('figcaption', {
 
 export const StyledBlockQuote = styled('blockquote', {
   marginBlockStart: 0,
-  marginBlockEnd: '$24',
+  marginBlockEnd: '$40',
   marginX: 0,
 
   variants: {
     responsive: {
       mobile: {
-        paddingInlineStart: '$20',
-
-        '& p': {
-          '&::before': {
-            left: '-$24'
-          }
-        }
+        paddingX: '$24'
       },
       desktop: {
-        width: '80%',
-        paddingInlineStart: 0
+        width: '72%',
+        paddingInlineEnd: 0
       }
     }
   },
@@ -158,5 +152,10 @@ export const StyledBlockQuote = styled('blockquote', {
     fontSize: '$20',
     fontWeight: 'bold',
     lineHeight: '$32',
+  },
+
+  '& a': {
+    color: 'hsl($shade800)',
+    fontWeight: 'normal'
   }
 })

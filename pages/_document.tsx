@@ -8,7 +8,6 @@ export default function IntersectionDocument() {
   return (
     <Html lang="zh-TW">
       <Head>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
         <style
           id="stitches"
           dangerouslySetInnerHTML={{ __html: getCssText() }}
@@ -17,6 +16,7 @@ export default function IntersectionDocument() {
       <body>
         <Main />
         <NextScript />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
       </body>
     </Html>
   )

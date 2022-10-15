@@ -261,7 +261,7 @@ const Home: NextPage<postsProps> = ({ posts }) => {
                       responsive={{ '@initial': 'mobile', '@m992': 'tablet' }}
                       featured={{ '@initial': 'mobile', '@m992': 'tablet' }}
                     >
-                      <Image src={cover.url} layout="fill" objectFit="cover" alt={cover.alt} />
+                      <Image src={cover.url} layout="fill" objectFit="cover" alt={cover.alt} priority />
                       <DateLabel responsive={{ '@initial': 'mobile', '@m992': 'tablet' }} dateTime={formatDate(publishedTime)}>{formatDate(publishedTime)}</DateLabel>
                     </Cover>
                     <Heading position="postsFeatured">{title}</Heading>

@@ -42,6 +42,7 @@ export const {
       20: '20px',
       24: '24px',
       32: '32px',
+      40: '40px',
       64: '64px'
     },
     sizes: {
