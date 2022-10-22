@@ -103,6 +103,13 @@ export const StyledFigure = styled('figure', {
       true: {
         marginX: '$auto'
       }
+    },
+    ratio: {
+      '16x9': {
+        '& > iframe': {
+          aspectRatio: '16 / 9'
+        }
+      }
     }
   }
 });
@@ -118,11 +125,9 @@ export const StyledFigcaption = styled('figcaption', {
   variants: {
     responsive: {
       mobile: {
-        marginX: '$16',
         marginBlockEnd: '$16'
       },
       tablet: {
-        marginX: 0,
         marginBlockEnd: '$24'
       }
     }

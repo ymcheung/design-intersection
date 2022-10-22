@@ -15,15 +15,15 @@ interface ChildrenProps {
   children?: React.ReactNode;
 }
 
-const ImageFigcaption = ({ children }: ChildrenProps) => {
-  return (
-    <StyledFigcaption responsive={{ '@initial': 'mobile', '@m992': 'tablet' }}>
-      {children}
-    </StyledFigcaption>
-  );
-}
-
 export default function ArticleImage({ src, width, maxWidth, height, isCover, alt, caption }: ImageProps) {
+  const ImageFigcaption = ({ children }: ChildrenProps) => {
+    return (
+      <StyledFigcaption css={{ marginX: maxWidth ? '-$48' : 'initial' }} responsive={{ '@initial': 'mobile', '@m992': 'tablet' }}>
+        {children}
+      </StyledFigcaption>
+    );
+  }
+
   return (
     <StyledFigure
       css={{ maxWidth: maxWidth }}

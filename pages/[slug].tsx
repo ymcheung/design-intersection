@@ -16,6 +16,7 @@ import ArticleLink from '@components/article/Link';
 import ArticleImageLink from '@components/article/ImageLink';
 import ArticleImage from '@components/article/Image';
 import ImageGallery from '@components/article/ImageGallery';
+import Figure from '@components/article/Figure';
 import Blockquote from '@components/article/Blockquote';
 import ImageDivider from '@components/article/ImageDivider';
 import remarkGfm from 'remark-gfm';
@@ -170,6 +171,7 @@ export default function Post({ post, postBody, authorIntro }: postProps) {
     hr: () => <Divider position="article" />,
     ArticleImageLink,
     ArticleImage,
+    Figure,
     ImageGallery,
     ImageDivider,
   };
@@ -293,23 +295,23 @@ export async function getStaticProps({ params }: GetStaticPropsContext) {
   const body = data.allPost[0].body;
   const postBody = await serialize(
     body, {
-      mdxOptions: {
-        remarkPlugins: [remarkGfm, remarkUnwrapImages],
-        format: 'mdx'
-      },
-      parseFrontmatter: false
-    }
+    mdxOptions: {
+      remarkPlugins: [remarkGfm, remarkUnwrapImages],
+      format: 'mdx'
+    },
+    parseFrontmatter: false
+  }
   );
 
   const intro = data.allPost[0].source.intro;
   const authorIntro = await serialize(
     intro, {
-      mdxOptions: {
-        remarkPlugins: [remarkGfm],
-        format: 'md'
-      },
-      parseFrontmatter: false
-    }
+    mdxOptions: {
+      remarkPlugins: [remarkGfm],
+      format: 'md'
+    },
+    parseFrontmatter: false
+  }
   );
 
   return {
