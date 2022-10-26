@@ -6,14 +6,19 @@ export const Headings = styled('h2', {
   color: 'hsl($shade100)',
 
   variants: {
-    level: {
-      h2: {
-        fontSize: '$h2',
-        lineHeight: 1.33,
+    article: {
+      large: {
+        fontSize: '$fluidLarge',
+        lineHeight: 1.33
       },
-      h3: {
-        fontSize: '$h3',
-        lineHeight: 1.33,
+      xlarge: {
+        fontSize: '$fluidXLarge',
+        lineHeight: 1.33
+      },
+      linkPreview: {
+        color: 'hsl($shade500)',
+        fontSize: '$18',
+        lineHeight: 1.33
       }
     }
   }
@@ -39,6 +44,11 @@ export const Paragraph = styled('p', {
             paddingTop: '$24'
           }
         }
+      },
+      linkPreview: {
+        color: 'hsl($shade800)',
+        fontSize: '$14',
+        lineHeight: '$24'
       },
       intro: {
         '&:not(blockquote p)': {
@@ -88,12 +98,12 @@ export const StyledLink = styled('a', {
 
 export const StyledFigure = styled('figure', {
   marginBlockStart: 0,
-  marginBlockEnd: '$32',
 
   variants: {
     cover: {
       mobile: {
-        marginX: '-$16'
+        marginX: '-$16',
+        marginBlockEnd: '$32',
       },
       tablet: {
         marginX: '$auto'
@@ -101,14 +111,29 @@ export const StyledFigure = styled('figure', {
     },
     general: {
       true: {
-        marginX: '$auto'
+        marginX: '$auto',
+        marginBlockEnd: '$32',
       }
     },
     ratio: {
-      '16x9': {
+      '4x3': {
+        marginBlockEnd: '$32',
+
         '& > iframe': {
-          aspectRatio: '16 / 9'
+          aspectRatio: '4 / 3'
         }
+      }
+    },
+    linkPreview: {
+      mobile: {
+        position: 'relative',
+        aspectRatio: '16 / 9',
+        marginX: 0,
+        marginBlockEnd: '$12'
+      },
+      tablet: {
+        marginBlockEnd: 0,
+        aspectRatio: '4 / 3'
       }
     }
   }

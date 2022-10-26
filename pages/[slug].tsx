@@ -17,6 +17,7 @@ import ArticleImageLink from '@components/article/ImageLink';
 import ArticleImage from '@components/article/Image';
 import ImageGallery from '@components/article/ImageGallery';
 import Figure from '@components/article/Figure';
+import LinkPreview from '@components/article/LinkPreview';
 import Blockquote from '@components/article/Blockquote';
 import ImageDivider from '@components/article/ImageDivider';
 import remarkGfm from 'remark-gfm';
@@ -86,8 +87,8 @@ interface postProps {
       alt: string;
     };
     description: string;
-    modifiedTime: string;
-    publishedTime: string;
+    dateModified: string;
+    datePublished: string;
     source: {
       title: string;
       subtitle?: string;
@@ -150,15 +151,15 @@ const PostBody = styled('article', {
 // });
 
 export default function Post({ post, postBody, authorIntro }: postProps) {
-  const { title, subtitle, cover, description, publishedTime, source } = post;
+  const { title, subtitle, cover, description, dateModified, datePublished, source } = post;
 
   const router = useRouter();
 
   const meta = {
-    title: `${title} | Intersection`,
+    title,
     description: `${description}翻譯自 ${source.author} 的 “${source.title}”`,
     slug: router.asPath
-  }
+  };
 
   const mdxComponents = {
     h2: Heading2,
@@ -172,6 +173,7 @@ export default function Post({ post, postBody, authorIntro }: postProps) {
     ArticleImageLink,
     ArticleImage,
     Figure,
+    LinkPreview,
     ImageGallery,
     ImageDivider,
   };
@@ -182,6 +184,8 @@ export default function Post({ post, postBody, authorIntro }: postProps) {
         title={meta.title}
         description={meta.description}
         slug={meta.slug}
+        dateModified={dateModified}
+        datePublished={datePublished}
       />
       {process.env.NODE_ENV === 'production' && <Script async src="https://cdn.splitbee.io/sb.js"></Script>}
       <Header />
@@ -196,7 +200,7 @@ export default function Post({ post, postBody, authorIntro }: postProps) {
           {subtitle && <PostSubtitle translated={{ '@initial': 'mobile' }}>{subtitle}</PostSubtitle>}
           <MDXRemote {...postBody} components={mdxComponents} />
         </PostBody>
-        <Aside authorIntro={authorIntro} publishedTime={publishedTime} source={source} />
+        <Aside authorIntro={authorIntro} publishedTime={datePublished} source={source} />
       </PostLayout>
       <Footer />
     </>
@@ -280,8 +284,8 @@ export async function getStaticProps({ params }: GetStaticPropsContext) {
         alt: cover.alt
       },
       description,
-      modifiedTime: _updatedAt,
-      publishedTime,
+      dateModified: _updatedAt,
+      datePublished: publishedTime,
       source: {
         title: source.title,
         subtitle: source.subtitle,

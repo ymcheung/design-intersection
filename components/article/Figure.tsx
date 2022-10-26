@@ -1,7 +1,7 @@
 import { StyledFigure, StyledFigcaption } from './styled';
 
 interface ChildrenProps {
-  ratio?: '16x9';
+  ratio?: '4x3';
   children?: React.ReactNode;
   caption?: React.ReactNode;
 }

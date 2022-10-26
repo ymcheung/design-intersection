@@ -5,5 +5,5 @@ interface ChildrenProps {
 }
 
 export default function Heading2({ children }: ChildrenProps) {
-  return (<Headings level="h2">{children}</Headings>);
+  return (<Headings article="xlarge">{children}</Headings>);
 };
