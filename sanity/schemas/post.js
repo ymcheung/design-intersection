@@ -47,7 +47,6 @@ export default {
       type: 'text',
       required: true
     },
-
     {
       title: 'Source',
       name: 'source',
@@ -60,6 +59,18 @@ export default {
       title: 'Tags',
       type: 'array',
       of: [{ type: 'reference', to: { type: 'tag' } }]
+    },
+    {
+      name: 'likes',
+      title: 'Likes',
+      type: 'number',
+      required: true
+    },
+    {
+      name: 'views',
+      title: 'Views',
+      type: 'number',
+      required: true
     }
   ],
   preview: {
