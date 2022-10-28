@@ -24,7 +24,7 @@ export default function HeadMeta({ title, description, slug, dateModified, dateP
     const website = {
       '@type': 'Website',
       name: headMetaDefault.TITLE,
-      url: 'https://intersection.tw'
+      url: process.env.NEXT_PUBLIC_HOSTNAME
     };
 
     const blogPosting = {

@@ -95,18 +95,17 @@ const PostList = styled('ul', {
 });
 
 const PostItem = styled('li', {
-  listStyleType: 'none',
+  listStyleType: 'none'
+  // variants: {
+  //   position: {
+  //     featured: {
 
-  variants: {
-    position: {
-      featured: {
+  //     },
+  //     all: {
 
-      },
-      all: {
-
-      }
-    }
-  }
+  //     }
+  //   }
+  // }
 });
 
 const PostLink = styled('a', {
@@ -240,14 +239,68 @@ const TranslatorAvatar = styled(Image, {
   borderRadius: '12px'
 });
 
+const AllByList = styled('ul', {
+  display: 'grid',
+  marginBlockStart: 0,
+  marginBlockEnd: '$32',
+  padding: 0,
+
+  variants: {
+    responsive: {
+      mobile: {
+        grid: 'auto / 1fr 1fr',
+        columnGap: '$16'
+      }
+    }
+  }
+});
+
+const AllByItem = styled('li', {
+  listStyleType: 'none'
+});
+
+const AllByLink = styled('a', {
+  display: 'block',
+  paddingBlockStart: '$10',
+  paddingBlockEnd: '$6',
+  paddingInlineStart: '$16',
+  color: 'hsl($white)',
+  fontSize: '$16',
+  lineHeight: 1,
+  textDecoration: 'none',
+  backgroundColor: 'hsl($accent)'
+});
+
+const AllByIcon = styled('svg', {
+  width: '$16',
+  aspectRatio: 1,
+  verticalAlign: 'middle'
+});
+
 const Home: NextPage<postsProps> = ({ posts }) => {
+  const meta = {
+    dateModified: '2022-11-01T00:00:00+08:00',
+    datePublished: '2016-06-13T00:00:00+08:00'
+  };
+
+  const allBy = [
+    {
+      title: '熱門排序',
+      path: 'popular'
+    },
+    {
+      title: '時間排序',
+      path: 'time'
+    }
+  ];
+
   const featuredPosts = posts.filter(({ tags }) =>
     tags.includes('featured')
   );
 
   return (
     <>
-      <HeadMeta />
+      <HeadMeta dateModified={meta.dateModified} datePublished={meta.datePublished} />
       {process.env.NODE_ENV === 'production' && <Script async src="https://cdn.splitbee.io/sb.js"></Script>}
       <Header />
       <HomeLayout layout={{ '@m992': 'tablet' }} responsive={{ '@m1232': 'noPadding' }}>
@@ -290,22 +343,38 @@ const Home: NextPage<postsProps> = ({ posts }) => {
           <Divider display={{ '@m992': 'none' }} />
         </HomeCell>
         <HomeCell position={{ '@m992': 'all' }} responsive={{ '@m992': 'tablet' }}>
-        <Heading position="cell">所有文章</Heading>
-        <PostList>
-          {posts.map(({ slug, title, cover, publishedTime }, index) => (
-            <PostItem key={`all_${index}`}>
-              <Link href={`/${slug}`} passHref>
-                <PostLink>
-                  <Cover responsive={{ '@initial': 'mobile', '@m992': 'tablet' }} position="all">
-                    <Image src={cover.url} layout="fill" objectFit="cover" alt={cover.alt} />
-                    <DateLabel responsive={{ '@initial': 'mobile', '@m992': 'tablet' }} dateTime={formatDate(publishedTime)}>{formatDate(publishedTime)}</DateLabel>
-                  </Cover>
-                  <Heading as="h3" position="postsAll">{title}</Heading>
-                </PostLink>
-              </Link>
-            </PostItem>
-          ))}
-        </PostList>
+          <Heading position="cell">所有文章</Heading>
+          <PostList>
+            {posts.map(({ slug, title, cover, publishedTime }, index) => (
+              <PostItem key={`all_${index}`}>
+                <Link href={`/${slug}`} passHref>
+                  <PostLink>
+                    <Cover responsive={{ '@initial': 'mobile', '@m992': 'tablet' }} position="all">
+                      <Image src={cover.url} layout="fill" objectFit="cover" alt={cover.alt} />
+                      <DateLabel responsive={{ '@initial': 'mobile', '@m992': 'tablet' }} dateTime={formatDate(publishedTime)}>{formatDate(publishedTime)}</DateLabel>
+                    </Cover>
+                    <Heading as="h3" position="postsAll">{title}</Heading>
+                  </PostLink>
+                </Link>
+              </PostItem>
+            ))}
+          </PostList>
+          <AllByList responsive={{ '@initial': 'mobile' }}>
+            {
+              allBy.map(({ title, path }) =>
+                <AllByItem key={`AllBy-${path}`}>
+                  <Link href={`/${path}`} passHref>
+                    <AllByLink>
+                      {title}
+                      <AllByIcon viewBox="0 0 16 16">
+                        <use xlinkHref="/sprite.svg#arrow" />
+                      </AllByIcon>
+                    </AllByLink>
+                  </Link>
+                </AllByItem>
+              )
+            }
+          </AllByList>
         </HomeCell>
       </HomeLayout>
       <Footer />
@@ -362,7 +431,7 @@ export async function getStaticProps() {
     props: {
       posts
     },
- };
+  };
 }
 
 export default Home;
