@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { gql } from '@apollo/client';
 import client from '../apollo-client';
+import { queryProps, postsProps } from '@utils/types';
 import { formatDate } from '@utils/formatDate';
 import { styled } from '../stitches.config';
 import ymcheung from '../public/translator/ymcheung.webp';
@@ -13,43 +14,6 @@ import Header from '@components/Header';
 import { Container } from '@components/layouts';
 import { Heading } from '@elements/headings';
 import Footer from '@components/Footer';
-
-interface queryProps {
-  slug: {
-    current: string;
-  };
-  title: string;
-  cover: {
-    mainImage: {
-      asset: {
-        url: string;
-      }
-    };
-    alt?: string;
-  };
-
-  description: string;
-  _updatedAt: string;
-  publishedTime: string;
-  tags: [{
-    slug: string
-  }];
-}
-
-interface postsProps {
-  posts: [{
-    slug: string;
-    title: string;
-    cover: {
-      url: string;
-      alt?: string;
-    }
-    description: string;
-    modifiedTime: string;
-    publishedTime: string;
-    tags: string[];
-  }]
-}
 
 const HomeLayout = styled(Container, {
   fontFamily: '$default',
@@ -263,7 +227,7 @@ const AllByLink = styled('a', {
   display: 'block',
   paddingBlockStart: '$10',
   paddingBlockEnd: '$6',
-  paddingInlineStart: '$16',
+  paddingInlineStart: '$12',
   color: 'hsl($white)',
   fontSize: '$16',
   lineHeight: 1,
@@ -285,12 +249,12 @@ const Home: NextPage<postsProps> = ({ posts }) => {
 
   const allBy = [
     {
-      title: '熱門排序',
-      path: 'popular'
+      title: '熱門文章',
+      path: 'all/popular'
     },
     {
       title: '時間排序',
-      path: 'time'
+      path: 'all/time'
     }
   ];
 
@@ -386,7 +350,7 @@ export async function getStaticProps() {
   const { data } = await client.query({
     query: gql`
       query Posts {
-        allPost(sort: { publishedTime:DESC }) {
+        allPost(limit: 8, sort: { publishedTime:DESC }) {
           _id
           slug {
             current

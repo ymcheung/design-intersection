@@ -87,7 +87,6 @@ export default function HeadMeta({ title, description, slug, dateModified, dateP
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: schema() }}
-        key="product-jsonld"
       />
     </Head>);
 }
