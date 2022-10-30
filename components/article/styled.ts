@@ -124,6 +124,12 @@ export const StyledFigure = styled('figure', {
         }
       }
     },
+    gallery: {
+      mobile: {
+        display: 'grid',
+        columnGap: '$16'
+      }
+    },
     linkPreview: {
       mobile: {
         position: 'relative',

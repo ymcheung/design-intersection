@@ -13,22 +13,24 @@ interface ImageProps {
 
 interface ChildrenProps {
   children?: React.ReactNode;
+  span: number;
 }
 
-const ImageFigcaption = ({ children }: ChildrenProps) => {
+const ImageFigcaption = ({ children, span }: ChildrenProps) => {
   return (
-    <StyledFigcaption responsive={{ '@initial': 'mobile', '@m992': 'tablet' }}>
+    <StyledFigcaption css={{ gridColumn: `span ${span}` }} responsive={{ '@initial': 'mobile', '@m992': 'tablet' }}>
       {children}
     </StyledFigcaption>
   );
 }
 
-export default function ArticleImage({ src, width, maxWidth, height, isCover, alt, caption }: ImageProps) {
+export default function ImageGallery({ src, width, maxWidth, height, isCover, alt, caption }: ImageProps) {
   return (
     <StyledFigure
-      css={{ '@m992': { maxWidth: maxWidth }}}
+      css={{ grid: `auto / repeat(${src.length}, 1fr)`, '@m992': { maxWidth: maxWidth ? maxWidth : 'initial' }}}
       cover={isCover ? { '@initial': 'mobile', '@m992': 'tablet' } : undefined}
       general={isCover ? undefined : true}
+      gallery={{ '@initial': 'mobile' }}
     >
       {src.map((url, index) =>
         <Image
@@ -38,7 +40,7 @@ export default function ArticleImage({ src, width, maxWidth, height, isCover, al
           alt={alt ? alt[index] : ''} key={index}
         />
       )}
-      {caption && <ImageFigcaption>{caption}</ImageFigcaption>}
+      {caption && <ImageFigcaption span={src.length}>{caption}</ImageFigcaption>}
     </StyledFigure>
   );
 };
