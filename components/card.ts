@@ -44,7 +44,7 @@ export const DateLabel = styled('time', {
   paddingTop: '$4',
   paddingBottom: '$2',
   paddingInlineStart: '$12',
-  color: 'hsl($shade800)',
+  color: 'hsl($shade500)',
   fontSize: '$14',
   lineHeight: '$18',
   backgroundColor: 'hsl($shade1500)',

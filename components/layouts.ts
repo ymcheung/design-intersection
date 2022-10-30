@@ -1,4 +1,4 @@
-  import { styled } from "../stitches.config";
+import { styled } from "../stitches.config";
 
 export const Container = styled('div', {
   maxWidth: '1200px',
@@ -21,8 +21,7 @@ export const Container = styled('div', {
         fontFamily: '$default'
       },
       all: {
-        marginBlockEnd: '$32',
-        paddingBlockStart: '$16'
+        marginBlockEnd: '$32'
       }
     },
     responsive: {

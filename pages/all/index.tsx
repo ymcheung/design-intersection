@@ -5,44 +5,19 @@ import { queryProps, postsProps } from '@utils/types';
 import Header from '@components/Header';
 import { gql } from '@apollo/client';
 import client from '../../apollo-client';
-import { styled } from '../../stitches.config';
 import { Container } from '@components/layouts';
 import { Heading } from '@elements/headings';
+import { PostsList, ListItem } from '@components/posts';
 import { PostLink, Cover, DateLabel } from '@components/card';
 import Link from 'next/link';
 import Image from 'next/image';
 import { formatDate } from '@utils/formatDate';
 import Footer from '@components/Footer';
 
-const PostsList = styled('ul', {
-  display: 'grid',
-  marginY: 0,
-  padding: 0,
-  fontFamily: '$default',
-
-  variants: {
-    year: {
-      mobile: {
-        rowGap: '$32'
-      }
-    },
-    posts: {
-      mobile: {
-        display: 'grid',
-        grid: 'auto / repeat(auto-fill, minmax(288px, 1fr))',
-        gap: '$24'
-      }
-    }
-  }
-});
-
-const ListItem = styled('li', {
-  listStyleType: 'none',
-});
 
 const All: NextPage<postsProps> = ({ posts }) => {
   const meta = {
-    title: '時間排序所有文章',
+    title: '所有文章以時間排序',
     dateModified: '2022-11-01T00:00:00+08:00',
     datePublished: '2016-06-13T00:00:00+08:00'
   }
@@ -73,6 +48,7 @@ const All: NextPage<postsProps> = ({ posts }) => {
       {process.env.NODE_ENV === 'production' && <Script async src="https://cdn.splitbee.io/sb.js"></Script>}
       <Header />
       <Container as="main" layout="all" responsive={{ '@initial': 'mobile', '@m1232': 'desktop' }}>
+        <Heading as="h1" position="cell">{meta.title}</Heading>
         <PostsList year={{ '@initial': 'mobile' }}>
         {
           byYear().map(({ year, yearPosts }) =>
