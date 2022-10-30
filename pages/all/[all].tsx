@@ -52,7 +52,7 @@ const AllBy: NextPage<allByPostsProps> = ({ posts, by }) => {
                     <Image src={cover.url} layout="fill" objectFit="cover" alt={cover.alt} />
                     <DateLabel responsive={{ '@initial': 'mobile', '@m992': 'tablet' }} dateTime={formatDate(publishedTime)}>{formatDate(publishedTime)}</DateLabel>
                   </Cover>
-                  <Heading as="h3" position="postsAll">{title}</Heading>
+                  <Heading as="h2" position="postsAll">{title}</Heading>
                 </PostLink>
               </Link>
             </ListItem>
