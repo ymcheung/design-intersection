@@ -87,7 +87,7 @@ export default function Footer() {
 
   return (
     <FooterBox>
-      <FooterLayout responsive={{ '@m1232': 'noPadding' }} layout={{'@m640': 'wide' }}>
+      <FooterLayout responsive={{ '@m1232': 'desktop' }} layout={{'@m640': 'wide' }}>
         <section>
         <Logo>
           <IntersectionLogo position="footer" viewBox="0 0 96 96"><use xlinkHref="/sprite.svg#logoIntersection" /></IntersectionLogo>

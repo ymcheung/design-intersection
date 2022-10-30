@@ -64,6 +64,8 @@ export const {
       24: '2.4rem',
       28: '2.8rem',
       32: '3.2rem',
+      48: '4.8rem',
+      'fluidXXLarge': 'clamp($32, 5vmin, $48)',
       'fluidXLarge': 'clamp($28, 2.6vmin, $32)',
       'fluidLarge': 'clamp($24, 2.6vmin, $28)',
       'paragraph': 'clamp($18, 2.6vmin, $20)'
@@ -76,7 +78,8 @@ export const {
       28: '28px',
       32: '32px',
       36: '36px',
-      40: '40px'
+      40: '40px',
+      48: '48px'
     },
     fonts: {
       default: `"Overpass", system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"`
@@ -102,6 +105,7 @@ export const {
   },
   media: {
     m640: '(min-width: 640px)',
+    m768: '(min-width: 768px)',
     m992: '(min-width: 992px)',
     m1200: '(min-width: 1200px)',
     m1232: '(min-width: 1232px)'

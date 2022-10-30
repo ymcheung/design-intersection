@@ -43,7 +43,7 @@ export default function Header() {
 
   return (
     <HeaderBox>
-      <Container responsive={{ '@m1232': 'noPadding' }}>
+      <Container responsive={{ '@m1232': 'desktop' }}>
         <SiteHeading as={isRootPath ? 'h1' : 'strong'}>
         {
           isRootPath ?

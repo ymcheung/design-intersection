@@ -12,23 +12,9 @@ import HeadMeta from '@utils/HeadMeta';
 import { Divider } from '@elements/divider';
 import Header from '@components/Header';
 import { Container } from '@components/layouts';
+import { PostLink, Cover, DateLabel, Description } from '@components/card';
 import { Heading } from '@elements/headings';
 import Footer from '@components/Footer';
-
-const HomeLayout = styled(Container, {
-  fontFamily: '$default',
-
-  variants: {
-    layout: {
-      tablet: {
-        display: 'grid',
-        grid: '"featured all" auto / 5fr 3fr',
-        alignItems: 'start',
-        columnGap: '$64'
-      }
-    }
-  }
-});
 
 const HomeCell = styled('div', {
   variants: {
@@ -72,100 +58,6 @@ const PostItem = styled('li', {
   // }
 });
 
-const PostLink = styled('a', {
-  display: 'block',
-  textDecoration: 'none'
-});
-
-const Cover = styled('figure', {
-  position: 'relative',
-  marginBlockStart: 0,
-  marginBlockEnd: '$16',
-  backgroundColor: 'hsl($shade1500)',
-
-  variants: {
-    responsive: {
-      mobile: {
-        marginX: '-$16'
-
-      },
-      tablet: {
-        marginX: 0
-      }
-    },
-    featured: {
-      mobile: {
-        aspectRatio: 16 / 9
-      },
-      tablet: {
-        aspectRatio: 32 / 9
-      }
-    },
-    position: {
-      all: {
-        aspectRatio: 16 / 9
-      }
-    }
-  }
-});
-
-const DateLabel = styled('time', {
-  position: 'absolute',
-  right: 0,
-  bottom: '-$12',
-  paddingTop: '$4',
-  paddingBottom: '$2',
-  paddingInlineStart: '$12',
-  color: 'hsl($shade800)',
-  fontSize: '$14',
-  lineHeight: '$18',
-  backgroundColor: 'hsl($shade1500)',
-  border: '4px solid white',
-  borderRight: 0,
-
-  variants: {
-    responsive: {
-      mobile: {
-        paddingInlineEnd: '$16'
-      },
-      tablet: {
-        paddingInlineEnd: '$12'
-      }
-    }
-  }
-});
-
-const Description = styled('p', {
-  marginBlockStart: 0,
-
-  variants: {
-    position: {
-      featured: {
-        color: 'hsl($shade500)',
-        fontSize: '$16',
-        lineHeight: '$24'
-      },
-      translator: {
-        marginBlockEnd: '$4',
-        color: 'hsl($shade800)',
-        fontSize: '$14',
-        lineHeight: '$20'
-      },
-      translatorLink: {
-        marginBlockEnd: '$4',
-        color: 'hsl($shade800)',
-        fontSize: '$14',
-        lineHeight: '$20',
-        textDecorationColor: 'transparent',
-
-        '&:hover': {
-          textDecorationColor: 'hsl($shade800)',
-        }
-      }
-    }
-  }
-});
-
 const WebsiteProcessLink = styled('a', {
   display: 'block'
 })
@@ -196,7 +88,19 @@ const TranslatorCard = styled('figure', {
   display: 'grid',
   grid: 'auto / 80px 1fr',
   columnGap: '$8',
-  margin: '0 0 $32',
+
+  variants: {
+    responsive: {
+      mobile: {
+        marginBlockStart: 0,
+        marginBlockEnd: '$32',
+        marginInlineStart: 0
+      },
+      tablet: {
+        marginBlockEnd: 0,
+      }
+    }
+  }
 });
 
 const TranslatorAvatar = styled(Image, {
@@ -206,7 +110,7 @@ const TranslatorAvatar = styled(Image, {
 const AllByList = styled('ul', {
   display: 'grid',
   marginBlockStart: 0,
-  marginBlockEnd: '$32',
+  marginBlockEnd: 0,
   padding: 0,
 
   variants: {
@@ -254,7 +158,7 @@ const Home: NextPage<postsProps> = ({ posts }) => {
     },
     {
       title: '時間排序',
-      path: 'all/time'
+      path: 'all'
     }
   ];
 
@@ -267,7 +171,7 @@ const Home: NextPage<postsProps> = ({ posts }) => {
       <HeadMeta dateModified={meta.dateModified} datePublished={meta.datePublished} />
       {process.env.NODE_ENV === 'production' && <Script async src="https://cdn.splitbee.io/sb.js"></Script>}
       <Header />
-      <HomeLayout layout={{ '@m992': 'tablet' }} responsive={{ '@m1232': 'noPadding' }}>
+      <Container layout={{ '@m992': 'home' }} responsive={{ '@initial': 'mobile', '@m1232': 'desktop' }}>
         <HomeCell as="main" position={{ '@m992': 'featured' }} responsive={{ '@m992': 'tablet' }}>
           <PostList>
             {featuredPosts.map(({ slug, title, cover, description, publishedTime }, index) => (
@@ -296,7 +200,7 @@ const Home: NextPage<postsProps> = ({ posts }) => {
             </WebsiteProcessLink>
           </Link>
           <Heading position="cell">關於譯者</Heading>
-          <TranslatorCard>
+          <TranslatorCard responsive={{ '@initial': 'mobile', '@m992': 'tablet' }}>
             <TranslatorAvatar src={ymcheung} width={80} height={80} layout="fixed" alt="" />
             <figcaption>
               <Heading position="translator">Yuming Cheung</Heading>
@@ -326,7 +230,7 @@ const Home: NextPage<postsProps> = ({ posts }) => {
           <AllByList responsive={{ '@initial': 'mobile' }}>
             {
               allBy.map(({ title, path }) =>
-                <AllByItem key={`AllBy-${path}`}>
+                <AllByItem key={`AllBy_${path}`}>
                   <Link href={`/${path}`} passHref>
                     <AllByLink>
                       {title}
@@ -340,7 +244,7 @@ const Home: NextPage<postsProps> = ({ posts }) => {
             }
           </AllByList>
         </HomeCell>
-      </HomeLayout>
+      </Container>
       <Footer />
     </>
   )

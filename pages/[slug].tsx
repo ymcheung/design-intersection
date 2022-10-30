@@ -122,20 +122,6 @@ const Cover = styled('figure', {
   }
 })
 
-const PostLayout = styled(Container, {
-  fontFamily: '$default',
-
-  variants: {
-    layout: {
-      tablet: {
-        display: 'grid',
-        grid: 'auto / 3fr 1fr',
-        columnGap: '$64'
-      }
-    }
-  }
-});
-
 const PostBody = styled('article', {
   marginBlockEnd: '$64',
   paddingBlockStart: '$16'
@@ -189,7 +175,7 @@ export default function Post({ post, postBody, authorIntro }: postProps) {
       />
       {process.env.NODE_ENV === 'production' && <Script async src="https://cdn.splitbee.io/sb.js"></Script>}
       <Header />
-      <PostLayout layout={{ '@m992': 'tablet' }} responsive={{ '@m1232': 'noPadding' }}>
+      <Container layout={{ '@m992': 'post' }} responsive={{ '@initial': 'mobile', '@m1232': 'desktop' }}>
         <PostBody>
           {cover.position &&
             <Cover above={{ '@initial': 'mobile', '@m992': 'tablet' }}>
@@ -201,7 +187,7 @@ export default function Post({ post, postBody, authorIntro }: postProps) {
           <MDXRemote {...postBody} components={mdxComponents} />
         </PostBody>
         <Aside authorIntro={authorIntro} publishedTime={datePublished} source={source} />
-      </PostLayout>
+      </Container>
       <Footer />
     </>
   );

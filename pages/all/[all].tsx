@@ -5,6 +5,7 @@ import { queryProps, postsProps } from '@utils/types';
 import Header from '@components/Header';
 import { gql } from '@apollo/client';
 import client from '../../apollo-client';
+import { Container } from '@components/layouts';
 import Footer from '@components/Footer';
 
 interface allByPostsProps extends postsProps {
@@ -26,13 +27,18 @@ const AllBy: NextPage<allByPostsProps> = ({ posts, by }) => {
     },
     dateModified: '2022-11-01T00:00:00+08:00',
     datePublished: '2016-06-13T00:00:00+08:00'
-  }
+  };
 
   return (
     <>
       <HeadMeta title={meta.title[by]} dateModified={meta.dateModified} datePublished={meta.datePublished} />
       {process.env.NODE_ENV === 'production' && <Script async src="https://cdn.splitbee.io/sb.js"></Script>}
       <Header />
+      <Container responsive={{ '@initial': 'mobile', '@m1232': 'desktop' }}>
+      {
+        posts.map(({ title, slug }) => <a href={slug}>{title}</a>)
+      }
+      </Container>
       <Footer />
     </>
   );

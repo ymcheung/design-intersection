@@ -1,11 +1,44 @@
-import type { NextPage, GetStaticPropsContext } from 'next';
+import type { NextPage } from 'next';
 import Script from 'next/script';
 import HeadMeta from '@utils/HeadMeta';
 import { queryProps, postsProps } from '@utils/types';
 import Header from '@components/Header';
 import { gql } from '@apollo/client';
 import client from '../../apollo-client';
+import { styled } from '../../stitches.config';
+import { Container } from '@components/layouts';
+import { Heading } from '@elements/headings';
+import { PostLink, Cover, DateLabel } from '@components/card';
+import Link from 'next/link';
+import Image from 'next/image';
+import { formatDate } from '@utils/formatDate';
 import Footer from '@components/Footer';
+
+const PostsList = styled('ul', {
+  display: 'grid',
+  marginY: 0,
+  padding: 0,
+  fontFamily: '$default',
+
+  variants: {
+    year: {
+      mobile: {
+        rowGap: '$32'
+      }
+    },
+    posts: {
+      mobile: {
+        display: 'grid',
+        grid: 'auto / repeat(auto-fill, minmax(288px, 1fr))',
+        gap: '$24'
+      }
+    }
+  }
+});
+
+const ListItem = styled('li', {
+  listStyleType: 'none',
+});
 
 const All: NextPage<postsProps> = ({ posts }) => {
   const meta = {
@@ -14,17 +47,62 @@ const All: NextPage<postsProps> = ({ posts }) => {
     datePublished: '2016-06-13T00:00:00+08:00'
   }
 
+  const handleTimeToYear = (time: string) => {
+    return new Date(time).getFullYear();
+  };
+
+  const byYear = () => {
+    const allYears = posts.map(({ publishedTime }) => handleTimeToYear(publishedTime));
+    const uniqueYears = [...new Set(allYears)];
+
+    const filterByYear = uniqueYears.map((year) => {
+      const yearPosts = posts.filter(({ publishedTime }) => handleTimeToYear(publishedTime) === year);
+
+      return {
+        year,
+        yearPosts
+      }
+    })
+
+    return filterByYear;
+  };
+
   return (
     <>
       <HeadMeta title={meta.title}  dateModified={meta.dateModified} datePublished={meta.datePublished} />
       {process.env.NODE_ENV === 'production' && <Script async src="https://cdn.splitbee.io/sb.js"></Script>}
       <Header />
+      <Container as="main" layout="all" responsive={{ '@initial': 'mobile', '@m1232': 'desktop' }}>
+        <PostsList year={{ '@initial': 'mobile' }}>
+        {
+          byYear().map(({ year, yearPosts }) =>
+          <ListItem key={`year_${year}`}>
+            <Heading position="postsYear">{year}</Heading>
+            <PostsList posts={{ '@initial': 'mobile' }}>
+              {yearPosts.map(({ title, slug, cover, publishedTime }) =>
+                <ListItem key={slug}>
+                  <Link href={`/${slug}`} passHref>
+                    <PostLink>
+                      <Cover responsive={{ '@initial': 'mobile', '@m768': 'tablet' }} position="all">
+                        <Image src={cover.url} layout="fill" objectFit="cover" alt={cover.alt} />
+                        <DateLabel responsive={{ '@initial': 'mobile', '@m992': 'tablet' }} dateTime={formatDate(publishedTime)}>{formatDate(publishedTime)}</DateLabel>
+                      </Cover>
+                      <Heading as="h3" position="postsAll">{title}</Heading>
+                    </PostLink>
+                  </Link>
+                </ListItem>
+              )}
+            </PostsList>
+          </ListItem>
+              )}
+        </PostsList>
+      </Container>
       <Footer />
     </>
   );
 }
 
-export async function getStaticProps({ params }: GetStaticPropsContext) {
+export async function getStaticProps() {
   const { data } = await client.query({
     query: gql`
       query Posts {
