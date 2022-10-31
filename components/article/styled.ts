@@ -204,7 +204,8 @@ export const StyledPre = styled('pre', {
   paddingBlockStart: '$24',
   paddingBlockEnd: '$4',
   color: 'hsl($shade400)',
-  fontSize: '',
+  fontSize: '$14',
+  whiteSpace: 'pre-line',
   backgroundColor: 'hsl($shade1500)',
 
   variants: {
