@@ -27,14 +27,14 @@ export const Headings = styled('h2', {
 export const Paragraph = styled('p', {
   overflowWrap: 'break-word',
 
-  '&:not(blockquote p)': {
+  '&:not(blockquote p):not(pre p)': {
     marginBlockStart: 0
   },
 
   variants: {
     position: {
       article: {
-        '&:not(blockquote p)': {
+        '&:not(blockquote p):not(pre p)': {
           marginBlockEnd: '$24',
           color: 'hsl($shade400)',
           fontSize: '$paragraph',
@@ -195,3 +195,41 @@ export const StyledBlockQuote = styled('blockquote', {
     fontWeight: 'normal'
   }
 })
+
+export const StyledPre = styled('pre', {
+  position: 'relative',
+  marginBlockStart: 0,
+  marginBlockEnd: '$24',
+  paddingX: '$12',
+  paddingBlockStart: '$24',
+  paddingBlockEnd: '$4',
+  color: 'hsl($shade400)',
+  fontSize: '',
+  backgroundColor: 'hsl($shade1500)',
+
+  variants: {
+    withAsterisk: {
+      true: {
+        paddingBlockStart: '$48',
+
+        '&::before': {
+          position: 'absolute',
+          top: 0,
+          left: '$8',
+          content: '*',
+          color: 'hsl($shade1200)',
+          fontSize: '$64',
+          lineHeight: 1,
+          fontWeight: 'bold'
+        }
+      }
+    }
+  },
+
+  '& p': {
+    marginBlockStart: 0,
+    marginBlockEnd: '$12',
+    fontSize: '$14',
+    lineHeight: 1.5
+  }
+});

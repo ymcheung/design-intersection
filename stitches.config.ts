@@ -65,6 +65,7 @@ export const {
       28: '2.8rem',
       32: '3.2rem',
       48: '4.8rem',
+      64: '6.4rem',
       'fluidXXLarge': 'clamp($32, 5vmin, $48)',
       'fluidXLarge': 'clamp($28, 2.6vmin, $32)',
       'fluidLarge': 'clamp($24, 2.6vmin, $28)',

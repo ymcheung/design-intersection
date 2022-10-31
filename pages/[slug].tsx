@@ -19,6 +19,7 @@ import ImageGallery from '@components/article/ImageGallery';
 import Figure from '@components/article/Figure';
 import LinkPreview from '@components/article/LinkPreview';
 import Blockquote from '@components/article/Blockquote';
+import Note from '@components/article/Note';
 import ImageDivider from '@components/article/ImageDivider';
 import remarkGfm from 'remark-gfm';
 import remarkUnwrapImages from 'remark-unwrap-images';
@@ -162,6 +163,7 @@ export default function Post({ post, postBody, authorIntro }: postProps) {
     LinkPreview,
     ImageGallery,
     ImageDivider,
+    Note
   };
 
   return (
