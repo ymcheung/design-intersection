@@ -1,5 +1,6 @@
 import type { NextPage } from 'next';
 import Script from 'next/script';
+import { useRouter } from 'next/router';
 import HeadMeta from '@utils/HeadMeta';
 import { queryProps, postsProps } from '@utils/types';
 import Header from '@components/Header';
@@ -18,7 +19,7 @@ import Footer from '@components/Footer';
 const All: NextPage<postsProps> = ({ posts }) => {
   const meta = {
     title: '所有文章以時間排序',
-    dateModified: '2022-11-01T00:00:00+08:00',
+    dateModified: '2022-11-01T23:00:00+08:00',
     datePublished: '2016-06-13T00:00:00+08:00'
   }
 
@@ -42,9 +43,11 @@ const All: NextPage<postsProps> = ({ posts }) => {
     return filterByYear;
   };
 
+  const router = useRouter();
+
   return (
     <>
-      <HeadMeta title={meta.title}  dateModified={meta.dateModified} datePublished={meta.datePublished} />
+      <HeadMeta title={meta.title} slug={router.asPath} dateModified={meta.dateModified} datePublished={meta.datePublished} />
       {process.env.NODE_ENV === 'production' && <Script data-respect-dnt async src="https://cdn.splitbee.io/sb.js"></Script>}
       <Header />
       <Container as="main" layout="all" responsive={{ '@initial': 'mobile', '@m1232': 'desktop' }}>

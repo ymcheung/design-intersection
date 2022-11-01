@@ -1,5 +1,6 @@
 import type { NextPage, GetStaticPaths, GetStaticPropsContext } from 'next';
 import Script from 'next/script';
+import { useRouter } from 'next/router';
 import HeadMeta from '@utils/HeadMeta';
 import { queryProps, postsProps } from '@utils/types';
 import Header from '@components/Header';
@@ -31,13 +32,15 @@ const AllBy: NextPage<allByPostsProps> = ({ posts, by }) => {
     title: {
       popular: '熱門文章'
     },
-    dateModified: '2022-11-01T00:00:00+08:00',
+    dateModified: '2022-11-01T23:00:00+08:00',
     datePublished: '2016-06-13T00:00:00+08:00'
   };
 
+  const router = useRouter();
+
   return (
     <>
-      <HeadMeta title={meta.title[by]} dateModified={meta.dateModified} datePublished={meta.datePublished} />
+      <HeadMeta title={meta.title[by]} slug={router.asPath} dateModified={meta.dateModified} datePublished={meta.datePublished} />
       {process.env.NODE_ENV === 'production' && <Script data-respect-dnt async src="https://cdn.splitbee.io/sb.js"></Script>}
       <Header />
       <Container as="main" layout="all" responsive={{ '@initial': 'mobile', '@m1232': 'desktop' }}>

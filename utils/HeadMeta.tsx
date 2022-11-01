@@ -34,6 +34,12 @@ const defaultProps = {
 HeadMeta.defaultProps = defaultProps;
 
 export default function HeadMeta({ title, description, slug, dateModified, datePublished, ogCover }: HeadMetaProps) {
+  const handleOgType = () => {
+    if (!slug || slug.includes('all')) return 'website';
+
+    return 'article';
+  };
+
   const schema = () => {
     const website = {
       '@type': 'Website',
@@ -85,11 +91,11 @@ export default function HeadMeta({ title, description, slug, dateModified, dateP
       <meta name="description" content={description} />
       <link rel="canonical" href={`${process.env.NEXT_PUBLIC_HOSTNAME}${slug}`} />
       <link rel="icon" sizes="any" href="/favicon.ico" />
-      <link rel="icon" type="image/svg+xml" href="/intersecrtion.svg" />
+      <link rel="icon" type="image/svg+xml" href="/intersection.svg" />
       <link rel="apple-touch-icon" href="/intersection.png" />
       <link rel="manifest" href="/favicons/site.webmanifest" />
-      <meta property="og:type" content="website" />
-      <meta property="og:site_name" content={title} />
+      <meta property="og:type" content={handleOgType()} />
+      <meta property="og:site_name" content={headMetaDefault.TITLE} />
       <meta property="og:url" content={`${process.env.NEXT_PUBLIC_HOSTNAME}${slug}`} />
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
