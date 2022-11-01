@@ -7,14 +7,28 @@ type HeadMetaProps = {
   slug: string;
   dateModified: string;
   datePublished: string;
-  ogCover: string;
+  ogCover: {
+    url: string;
+    dimensions: {
+      width: number;
+      height: number;
+    }
+    alt: string;
+  }
 } & typeof defaultProps;
 
 const defaultProps = {
   title: headMetaDefault.TITLE,
   description: headMetaDefault.DESCRIPTION,
   slug: '',
-  ogCover: '/home/ogCover.jpg'
+  ogCover: {
+    url: `${process.env.NEXT_PUBLIC_HOSTNAME}/ogCover.jpg`,
+    dimensions: {
+      width: 1200,
+      height: 630
+    },
+    alt: 'Intersection 的標誌'
+  }
 };
 
 HeadMeta.defaultProps = defaultProps;
@@ -63,6 +77,8 @@ export default function HeadMeta({ title, description, slug, dateModified, dateP
     })
   }
 
+  const { url: ogUrl, dimensions: { width: ogWidth, height: ogHeight }, alt: ogAlt } = ogCover;
+
   return (
     <Head>
       <title>{title}</title>
@@ -77,12 +93,16 @@ export default function HeadMeta({ title, description, slug, dateModified, dateP
       <meta property="og:url" content={`${process.env.NEXT_PUBLIC_HOSTNAME}${slug}`} />
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
-      <meta property="og:image" content={`${process.env.NEXT_PUBLIC_HOSTNAME}og${ogCover}`} />
+      <meta property="og:image" content={ogUrl} />
+      <meta property="og:image:width" content={`${ogWidth}`} />
+      <meta property="og:image:height" content={`${ogHeight}`} />
+      <meta property="og:image:alt" content={ogAlt} />
       <meta property="twitter:card" content="summary_large_image" />
       <meta property="twitter:url" content={`${process.env.NEXT_PUBLIC_HOSTNAME}${slug}`} />
       <meta property="twitter:title" content={title} />
       <meta property="twitter:description" content={description} />
-      <meta property="twitter:image" content={`${process.env.NEXT_PUBLIC_HOSTNAME}og${ogCover}`} />
+      <meta property="twitter:image" content={ogUrl} />
+      <meta property="twitter:image:alt" content={ogAlt} />
       <meta name="format-detection" content="telephone=no" />
       <script
         type="application/ld+json"

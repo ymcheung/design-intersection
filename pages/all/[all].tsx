@@ -38,7 +38,7 @@ const AllBy: NextPage<allByPostsProps> = ({ posts, by }) => {
   return (
     <>
       <HeadMeta title={meta.title[by]} dateModified={meta.dateModified} datePublished={meta.datePublished} />
-      {process.env.NODE_ENV === 'production' && <Script async src="https://cdn.splitbee.io/sb.js"></Script>}
+      {process.env.NODE_ENV === 'production' && <Script data-respect-dnt async src="https://cdn.splitbee.io/sb.js"></Script>}
       <Header />
       <Container as="main" layout="all" responsive={{ '@initial': 'mobile', '@m1232': 'desktop' }}>
         <Heading as="h1" position="cell">{meta.title[by]}</Heading>

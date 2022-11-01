@@ -145,7 +145,15 @@ export default function Post({ post, postBody, authorIntro }: postProps) {
   const meta = {
     title,
     description: `${description}翻譯自 ${source.author} 的 “${source.title}”`,
-    slug: router.asPath
+    slug: router.asPath,
+    cover: {
+      url: cover.url,
+      alt: cover.alt,
+      dimensions: {
+        width: cover.dimensions.width,
+        height: cover.dimensions.height
+      }
+    }
   };
 
   const mdxComponents = {
@@ -174,8 +182,9 @@ export default function Post({ post, postBody, authorIntro }: postProps) {
         slug={meta.slug}
         dateModified={dateModified}
         datePublished={datePublished}
+        ogCover={meta.cover}
       />
-      {process.env.NODE_ENV === 'production' && <Script async src="https://cdn.splitbee.io/sb.js"></Script>}
+      {process.env.NODE_ENV === 'production' && <Script data-respect-dnt async src="https://cdn.splitbee.io/sb.js"></Script>}
       <Header />
       <Container layout={{ '@m992': 'post' }} responsive={{ '@initial': 'mobile', '@m1232': 'desktop' }}>
         <PostBody>
