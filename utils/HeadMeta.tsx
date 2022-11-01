@@ -109,6 +109,7 @@ export default function HeadMeta({ title, description, slug, dateModified, dateP
       <meta property="twitter:description" content={description} />
       <meta property="twitter:image" content={ogUrl} />
       <meta property="twitter:image:alt" content={ogAlt} />
+      <meta property="fb:app_id" content="1241704385975640" />
       <meta name="format-detection" content="telephone=no" />
       <script
         type="application/ld+json"
