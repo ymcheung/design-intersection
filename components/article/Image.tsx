@@ -18,7 +18,7 @@ interface ChildrenProps {
 export default function ArticleImage({ src, width, maxWidth, height, isCover, alt, caption }: ImageProps) {
   const ImageFigcaption = ({ children }: ChildrenProps) => {
     return (
-      <StyledFigcaption css={{ '@m992': { marginBlockEnd: maxWidth ? '-$64' : 'initial' }}} responsive={{ '@initial': 'mobile', '@m992': 'tablet' }}>
+      <StyledFigcaption css={{ '@m992': { marginInlineEnd: maxWidth ? '-$64' : 'initial' }}} responsive={{ '@initial': 'mobile', '@m992': 'tablet' }}>
         {children}
       </StyledFigcaption>
     );
