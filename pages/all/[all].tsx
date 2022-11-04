@@ -42,6 +42,7 @@ const AllBy: NextPage<allByPostsProps> = ({ posts, by }) => {
     <>
       <HeadMeta title={meta.title[by]} slug={router.asPath} dateModified={meta.dateModified} datePublished={meta.datePublished} />
       {process.env.NODE_ENV === 'production' && <Script data-respect-dnt async src="https://cdn.splitbee.io/sb.js"></Script>}
+      {process.env.NODE_ENV === 'production' && <Script async src="https://analytics.intersection.tw/tracker.js" data-ackee-server="https://analytics.intersection.tw" data-ackee-domain-id="411f2f5e-eafc-42bb-b8d1-95c96ab528c0"></Script>}
       <Header />
       <Container as="main" layout="all" responsive={{ '@initial': 'mobile', '@m1232': 'desktop' }}>
         <Heading as="h1" position="cell">{meta.title[by]}</Heading>
