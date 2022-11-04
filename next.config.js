@@ -141,9 +141,8 @@ const nextConfig = {
       {
         source:
           '/%E5%AD%B8%E7%BF%92%E4%BD%BF%E7%94%A8%E8%80%85%E7%B6%93%E9%A9%97%E7%9A%84-ux-%E5%A3%9E%E4%BA%86-b3fae12e97bb',
-        destination:
-          'https://medium.com/intersection-translation/%E5%AD%B8%E7%BF%92%E4%BD%BF%E7%94%A8%E8%80%85%E7%B6%93%E9%A9%97%E7%9A%84-ux-%E5%A3%9E%E4%BA%86-b3fae12e97bb',
-        permanent: false
+        destination: '/b3fae12e97bb',
+        permanent: true
       },
       {
         source:
@@ -182,9 +181,8 @@ const nextConfig = {
       {
         source:
           '/%E5%A6%82%E4%BD%95%E6%89%BE%E5%88%B0%E7%B7%9A%E7%A8%BF%E7%9A%84%E5%83%B9%E5%80%BC-99a830480da',
-        destination:
-          'https://medium.com/intersection-translation/%E5%A6%82%E4%BD%95%E6%89%BE%E5%88%B0%E7%B7%9A%E7%A8%BF%E7%9A%84%E5%83%B9%E5%80%BC-99a830480da',
-        permanent: false
+        destination: '/99a830480da',
+        permanent: true
       },
       {
         source:
