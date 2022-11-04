@@ -11,14 +11,12 @@ export const Container = styled('div', {
         display: 'grid',
         grid: '"featured all" auto / 5fr 3fr',
         alignItems: 'start',
-        columnGap: '$64',
-        fontFamily: '$default'
+        columnGap: '$64'
       },
       post: {
         display: 'grid',
         grid: 'auto / 3fr 1fr',
-        columnGap: '$64',
-        fontFamily: '$default'
+        columnGap: '$64'
       },
       all: {
         marginBlockEnd: '$32'
@@ -26,7 +24,8 @@ export const Container = styled('div', {
     },
     responsive: {
       mobile: {
-        marginBlockEnd: '$32'
+        marginBlockEnd: '$32',
+        fontFamily: '$default'
       },
       desktop: {
         paddingX: 0

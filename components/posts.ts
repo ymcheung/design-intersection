@@ -4,7 +4,6 @@ export const PostsList = styled('ul', {
   display: 'grid',
   marginY: 0,
   padding: 0,
-  fontFamily: '$default',
 
   variants: {
     year: {

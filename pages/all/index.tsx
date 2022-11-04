@@ -63,7 +63,7 @@ const All: NextPage<postsProps> = ({ posts }) => {
                   <Link href={`/${slug}`} passHref>
                     <PostLink>
                       <Cover responsive={{ '@initial': 'mobile', '@m768': 'tablet' }} position="all">
-                        <Image src={cover.url} layout="fill" objectFit="cover" alt={cover.alt} />
+                        <Image src={`${cover.url}?w=880&q=100`} layout="fill" objectFit="cover" alt={cover.alt} />
                         <DateLabel responsive={{ '@initial': 'mobile', '@m992': 'tablet' }} dateTime={formatDate(publishedTime)}>{formatDate(publishedTime)}</DateLabel>
                       </Cover>
                       <Heading as="h2" position="postsAll">{title}</Heading>
