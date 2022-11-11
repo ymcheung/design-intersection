@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://intersection.tw
+
+# Sitemaps
+Sitemap: https://intersection.tw/sitemap.xml
