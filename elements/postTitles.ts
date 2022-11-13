@@ -34,19 +34,18 @@ export const PostTitle = styled('h1', {
 
 export const PostSubtitle = styled('p', {
   marginBlockStart: 0,
+  marginBlockEnd: '$24',
   color: 'hsl($shade800)',
 
   variants: {
     translated: {
       mobile: {
-        marginBlockEnd: '$24',
         fontSize: '$20',
         lineHeight: '$28',
       }
     },
     source: {
       mobile: {
-        marginBlockEnd: '$16',
         fontSize: '$16',
         lineHeight: '$20',
       }

@@ -104,7 +104,7 @@ export default function Footer() {
               </LogoBuild>
             </LogoBuildLink>
           </Link>
-          <Divider />
+          <Divider align="left" />
           <Footnote>2016 ~ {thisYear}・<Link href="https://read.cv/ymcheung" passHref><AuthorLink target="_blank" rel="noopener">@ymcheung</AuthorLink></Link> 翻譯的文章</Footnote>
         </section>
       </FooterLayout>

@@ -78,24 +78,27 @@ export default function Aside({ authorIntro, publishedTime, source }: AsideProps
   const [value, copy] = useCopyToClipboard();
 
   return (
-    <aside>
-      <Heading position="cell">原文</Heading>
-      <Link href={source.url} passHref>
-        <PostTitle as="a" source={{ '@initial': 'mobile' }} withSubtitle={!!source.subtitle} target="_blank" rel="noopener">{source.title}</PostTitle>
-      </Link>
-      {source.subtitle && <PostSubtitle source={{ '@initial': 'mobile' }}>{source.subtitle}</PostSubtitle>}
-      <Divider />
-      <SourceAuthor of="name">{source.author}</SourceAuthor>
-      <div>
-        <MDXRemote {...authorIntro} components={mdxComponents} />
-      </div>
-      <Heading position="cell">日期</Heading>
-      <Time dateTime={formatDate(publishedTime)}>
-        {formatDate(publishedTime)}
-      </Time>
-      <Heading position="cell">分享</Heading>
-      <CopyUrlButton type="button" onClick={() => copy(postUrl)}>複製文章網址</CopyUrlButton>
-      <CopiedMessage>{value && '已複製！'}</CopiedMessage>
-    </aside>
+    <>
+      <Divider display={{ '@m992': 'none' }} length="full" />
+      <aside>
+        <Heading position="cell">原文</Heading>
+        <Link href={source.url} passHref>
+          <PostTitle as="a" source={{ '@initial': 'mobile' }} withSubtitle={!!source.subtitle} target="_blank" rel="noopener">{source.title}</PostTitle>
+        </Link>
+        {source.subtitle && <PostSubtitle source={{ '@initial': 'mobile' }}>{source.subtitle}</PostSubtitle>}
+        <Divider align="left" />
+        <SourceAuthor of="name">{source.author}</SourceAuthor>
+        <div>
+          <MDXRemote {...authorIntro} components={mdxComponents} />
+        </div>
+        <Heading position="cell">日期</Heading>
+        <Time dateTime={formatDate(publishedTime)}>
+          {formatDate(publishedTime)}
+        </Time>
+        <Heading position="cell">分享</Heading>
+        <CopyUrlButton type="button" onClick={() => copy(postUrl)}>複製文章網址</CopyUrlButton>
+        <CopiedMessage>{value && '已複製！'}</CopiedMessage>
+      </aside>
+    </>
   );
 }

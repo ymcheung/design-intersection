@@ -99,9 +99,8 @@ const nextConfig = {
       {
         source:
           '/%E5%99%93-%E5%88%A5%E8%B7%9F%E4%BB%96%E5%80%91%E8%AA%AA%E8%A8%AD%E8%A8%88%E6%80%9D%E8%80%83%E4%B8%8D%E6%98%AF%E9%AD%94%E6%B3%95-ce86469dda59',
-        destination:
-          'https://medium.com/intersection-translation/%E5%99%93-%E5%88%A5%E8%B7%9F%E4%BB%96%E5%80%91%E8%AA%AA%E8%A8%AD%E8%A8%88%E6%80%9D%E8%80%83%E4%B8%8D%E6%98%AF%E9%AD%94%E6%B3%95-ce86469dda59',
-        permanent: false
+        destination: '/ce86469dda59',
+        permanent: true
       },
       {
         source:

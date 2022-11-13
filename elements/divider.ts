@@ -1,8 +1,9 @@
 import { styled } from "../stitches.config";
 
 export const Divider = styled('hr', {
+  display: 'block',
   marginBlockStart: 0,
-  marginBlockEnd: '$16',
+  marginBlockEnd: '$24',
   borderTop: '1px solid hsl($shade1200)',
   borderRight: 0,
   borderBottom: 0,
@@ -14,18 +15,29 @@ export const Divider = styled('hr', {
         display: 'none'
       }
     },
+    length: {
+      short: {
+        width: '80px'
+      },
+      full: {
+        width: '100%'
+      }
+    },
+    align: {
+      left: {
+        marginInlineStart: 0
+      }
+    },
     position: {
       article: {
-        display: 'block',
-        width: '80px',
-        // marginX: '$auto',
         marginBlockEnd: '$64'
       },
       pre: {
-        display: 'block',
-        width: '80px',
         marginBlockEnd: '$8'
       }
     }
+  },
+  defaultVariants: {
+    length: 'short'
   }
 });
