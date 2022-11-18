@@ -245,9 +245,8 @@ const nextConfig = {
       {
         source:
           '/%E5%BE%AE%E4%BA%92%E5%8B%95-%E8%A8%AD%E8%A8%88%E8%89%AF%E5%A5%BD-app-%E7%9A%84%E7%A7%98%E5%AF%86-742c369a464e',
-        destination:
-          'https://medium.com/intersection-translation/%E5%BE%AE%E4%BA%92%E5%8B%95-%E8%A8%AD%E8%A8%88%E8%89%AF%E5%A5%BD-app-%E7%9A%84%E7%A7%98%E5%AF%86-742c369a464e',
-        permanent: false
+        destination: '/742c369a464e',
+        permanent: true
       },
       {
         source:
