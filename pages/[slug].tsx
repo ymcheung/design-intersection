@@ -1,3 +1,4 @@
+// import { useEffect } from 'react';
 import type { GetStaticPropsContext } from 'next';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -38,6 +39,7 @@ interface staticPathProps {
 }
 
 interface queryProps {
+  _id: string;
   slug: {
     current: string;
   };
@@ -231,7 +233,7 @@ export async function getStaticProps({ params }: GetStaticPropsContext) {
   const { data } = await client.query({
     query: gql`
       query Posts {
-        allPost( where: { slug: { current: { eq: "${params?.slug}"}}}) {
+        allPost( where: { slug: { current: { eq: "${params?.slug}"}}} ) {
           _id
           title
           subtitle,
@@ -269,9 +271,10 @@ export async function getStaticProps({ params }: GetStaticPropsContext) {
     `,
   });
 
-  const post = data.allPost.map(({ title, subtitle, cover, description, _updatedAt, publishedTime, source, tags }: queryProps) => {
+  const post = data.allPost.map(({ _id, title, subtitle, cover, description, _updatedAt, publishedTime, source, tags }: queryProps) => {
     const tagsSlug = tags.map(({ slug }) => slug);
     return ({
+      id: _id,
       title,
       subtitle,
       cover: {
@@ -315,11 +318,16 @@ export async function getStaticProps({ params }: GetStaticPropsContext) {
   }
   );
 
+  const postId = data.allPost[0]._id
+  const res = await fetch(`${process.env.NEXT_PUBLIC_HOSTNAME}/api/${postId}`, { method: 'POST' });
+  const update = JSON.stringify(res);
+
   return {
     props: {
       post: post[0],
       postBody,
-      authorIntro
+      authorIntro,
+      update
     }
   }
 }
