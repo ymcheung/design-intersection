@@ -321,15 +321,15 @@ export async function getStaticProps({ params }: GetStaticPropsContext) {
 
   const postId = data.allPost[0]._id;
 
-  const res = await updateViews(postId)
-  const update = JSON.stringify(res);
+  await updateViews(postId)
+  // const update = JSON.stringify(res);
 
   return {
     props: {
       post: post[0],
       postBody,
-      authorIntro,
-      update
+      authorIntro
+      // update
     }
   }
 }
