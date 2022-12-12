@@ -1,5 +1,6 @@
 // import { useEffect } from 'react';
 import type { GetStaticPropsContext } from 'next';
+import { updateViews } from '../lib/updateViews';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import Script from 'next/script';
@@ -318,8 +319,9 @@ export async function getStaticProps({ params }: GetStaticPropsContext) {
   }
   );
 
-  const postId = data.allPost[0]._id
-  const res = await fetch(`${process.env.NEXT_PUBLIC_HOSTNAME}/api/${postId}`, { method: 'POST' });
+  const postId = data.allPost[0]._id;
+
+  const res = await updateViews(postId)
   const update = JSON.stringify(res);
 
   return {
