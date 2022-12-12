@@ -18,6 +18,8 @@ export interface queryProps {
   tags: [{
     slug: string
   }];
+  likes: number,
+  views: number
 }
 
 export interface postsProps {

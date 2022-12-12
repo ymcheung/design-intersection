@@ -102,8 +102,8 @@ export async function getStaticProps({ params }: GetStaticPropsContext) {
           description
           _updatedAt
           publishedTime
-          views
           likes
+          views
           tags {
             slug
           }
@@ -112,7 +112,7 @@ export async function getStaticProps({ params }: GetStaticPropsContext) {
     `,
   });
 
-  const posts = data.allPost.map(({ slug, title, cover, description, _updatedAt, publishedTime }: queryProps) => {
+  let posts = data.allPost.map(({ slug, title, cover, description, _updatedAt, publishedTime, likes, views }: queryProps) => {
     return ({
       slug: slug.current,
       title,
@@ -122,9 +122,15 @@ export async function getStaticProps({ params }: GetStaticPropsContext) {
       },
       description,
       modifiedTime: _updatedAt,
-      publishedTime
+      publishedTime,
+      likes,
+      views
     })
   });
+
+  posts.sort((a: { likes: number, views: number}, b: { likes: number, views: number}) =>
+    (b.likes * 0.6 + b.views * 0.4) - (a.likes * 0.6 + a.views * 0.4)
+  );
 
   return {
     props: {
