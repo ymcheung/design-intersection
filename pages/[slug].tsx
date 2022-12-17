@@ -1,6 +1,6 @@
-// import { useEffect } from 'react';
+import { useEffect } from 'react';
 import type { GetStaticPropsContext } from 'next';
-import { updateViews } from '../lib/updateViews';
+// import { updateViews } from '../lib/updateViews';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import Script from 'next/script';
@@ -79,6 +79,7 @@ interface queryProps {
 
 interface postProps {
   post: {
+    id: string;
     title: string;
     subtitle?: string;
     cover: {
@@ -141,7 +142,7 @@ const PostBody = styled('article', {
 // });
 
 export default function Post({ post, postBody, authorIntro }: postProps) {
-  const { title, subtitle, cover, description, dateModified, datePublished, source } = post;
+  const { id, title, subtitle, cover, description, dateModified, datePublished, source } = post;
 
   const router = useRouter();
 
@@ -176,6 +177,27 @@ export default function Post({ post, postBody, authorIntro }: postProps) {
     ImageDivider,
     Note
   };
+
+  const reqBody = JSON.stringify({
+    mutations: [{
+      patch: {
+        id,
+        inc: {
+          views: 1
+        }
+      }
+    }]
+  });
+
+  useEffect(() => {
+    fetch(`/api/${id}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: reqBody,
+  })
+  }, [])
 
   return (
     <>
@@ -319,17 +341,11 @@ export async function getStaticProps({ params }: GetStaticPropsContext) {
   }
   );
 
-  const postId = data.allPost[0]._id;
-
-  await updateViews(postId)
-  // const update = JSON.stringify(res);
-
   return {
     props: {
       post: post[0],
       postBody,
       authorIntro
-      // update
     }
   }
 }
