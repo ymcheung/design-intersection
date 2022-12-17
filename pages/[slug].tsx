@@ -190,6 +190,8 @@ export default function Post({ post, postBody, authorIntro }: postProps) {
   });
 
   useEffect(() => {
+    if (process.env.NODE_ENV !== 'production') return;
+
     fetch(`/api/${id}`, {
       method: 'POST',
       headers: {
