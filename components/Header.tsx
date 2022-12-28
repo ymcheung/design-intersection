@@ -2,7 +2,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { styled } from '../stitches.config';
 import { Container } from '@components/layouts';
-import { IntersectionLogo, Intersection } from '@elements/intersection';
+import IntersectionLogo from '@elements/IntersectionLogo';
+// import { IntersectionLogo, Intersection } from '@elements/intersection';
 
 const HeaderBox = styled('header', {
   position: 'sticky',
@@ -47,16 +48,11 @@ export default function Header() {
         <SiteHeading as={isRootPath ? 'h1' : 'strong'}>
         {
           isRootPath ?
-          <>
-            <IntersectionLogo position="header" viewBox="0 0 96 96">
-              <use xlinkHref="/sprite.svg#logoIntersection" />
-            </IntersectionLogo>
-            <Intersection position="header">Intersection</Intersection>
-          </> : (
+          <IntersectionLogo position="header" /> : (
             <Link href="/" passHref>
               <HomeLink>
                 <SiteHeadingHome>首頁</SiteHeadingHome>
-                <Intersection position="header">Intersection</Intersection>
+                <span className="intersection font-size:12 line-height:16px">Intersection</span>
               </HomeLink>
             </Link>
           )

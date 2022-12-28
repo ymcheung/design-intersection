@@ -1,0 +1,46 @@
+:root {
+  --font-default: "Overpass", system-ui, "Segoe UI", "Roboto", "Helvetica", "Arial", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+@font-face {
+  font-family: "Overpass";
+  font-style: normal;
+  font-weight: 400;
+  src: local("Overpass"), url('/fonts/Overpass-Regular.woff2') format('woff2');
+}
+@font-face {
+  font-family: "Overpass";
+  font-style: italic;
+  font-weight: 400;
+  src: local("Overpass"), url("/fonts/Overpass-Italic.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Overpass";
+  font-style: normal;
+  font-weight: 600;
+  src: local("Overpass"), url("/fonts/Overpass-SemiBold.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Overpass";
+  font-style: italic;
+  font-weight: 600;
+  src: local("Overpass"), url("/fonts/Overpass-SemiBoldItalic.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Overpass";
+  font-style: normal;
+  font-weight: 700;
+  src: local("Overpass"), url("/fonts/Overpass-Bold.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Overpass";
+  font-style: italic;
+  font-weight: 700;
+  src: local("Overpass"), url("/fonts/Overpass-BoldItalic.woff2") format("woff2");
+}

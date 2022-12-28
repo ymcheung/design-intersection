@@ -7,13 +7,14 @@ import client from '../apollo-client';
 import { queryProps, postsProps } from '@utils/types';
 import { formatDate } from '@utils/formatDate';
 import { styled } from '../stitches.config';
-import ymcheung from '../public/translator/ymcheung.webp';
 import HeadMeta from '@utils/HeadMeta';
-import { Divider } from '@elements/divider';
+import '@master/css';
+import 'styles/master.css';
 import Header from '@components/Header';
 import { Container } from '@components/layouts';
 import { PostLink, Cover, DateLabel, Description } from '@components/card';
 import { Heading } from '@elements/headings';
+import Translator from '@components/Translator';
 import Footer from '@components/Footer';
 
 const HomeCell = styled('div', {
@@ -46,16 +47,6 @@ const PostList = styled('ul', {
 
 const PostItem = styled('li', {
   listStyleType: 'none'
-  // variants: {
-  //   position: {
-  //     featured: {
-
-  //     },
-  //     all: {
-
-  //     }
-  //   }
-  // }
 });
 
 const WebsiteProcessLink = styled('a', {
@@ -82,29 +73,6 @@ const WebsiteProcess = styled('figure', {
 const WebsiteProcessImage = styled(Image, {
   objectFit: 'cover',
   borderRadius: '24px'
-});
-
-const TranslatorCard = styled('figure', {
-  display: 'grid',
-  grid: 'auto / 80px 1fr',
-  columnGap: '$8',
-
-  variants: {
-    responsive: {
-      mobile: {
-        marginBlockStart: 0,
-        marginBlockEnd: '$32',
-        marginInlineStart: 0
-      },
-      tablet: {
-        marginBlockEnd: 0,
-      }
-    }
-  }
-});
-
-const TranslatorAvatar = styled(Image, {
-  borderRadius: '12px'
 });
 
 const AllByList = styled('ul', {
@@ -148,10 +116,7 @@ const AllByIcon = styled('svg', {
 const Home: NextPage<postsProps> = ({ posts }) => {
   const meta = {
     dateModified: '2022-11-01T00:00:00+08:00',
-    datePublished: '2016-06-13T00:00:00+08:00',
-    cover: {
-
-    }
+    datePublished: '2016-06-13T00:00:00+08:00'
   };
 
   const allBy = [
@@ -202,16 +167,8 @@ const Home: NextPage<postsProps> = ({ posts }) => {
               </WebsiteProcess>
             </WebsiteProcessLink>
           </Link>
-          <Heading position="cell">關於譯者</Heading>
-          <TranslatorCard responsive={{ '@initial': 'mobile', '@m992': 'tablet' }}>
-            <TranslatorAvatar src={ymcheung} width={80} height={80} layout="fixed" alt="" />
-            <figcaption>
-              <Heading position="translator">Yuming Cheung</Heading>
-              <Description position="translator">網站前端開發 @RE:LAB</Description>
-              <Link href="https://read.cv/ymcheung" passHref><Description as="a" position="translatorLink">read.cv/ymcheung</Description></Link>
-            </figcaption>
-          </TranslatorCard>
-          <Divider display={{ '@m992': 'none' }} />
+          <Translator />
+          <hr className="divider display:none@m992" />
         </HomeCell>
         <HomeCell position={{ '@m992': 'all' }} responsive={{ '@m992': 'tablet' }}>
           <Heading position="cell">所有文章</Heading>
