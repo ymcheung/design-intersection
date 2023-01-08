@@ -1,9 +1,14 @@
+import { createElement } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { styled } from '../stitches.config';
 import { Container } from '@components/layouts';
 import IntersectionLogo from '@elements/IntersectionLogo';
 // import { IntersectionLogo, Intersection } from '@elements/intersection';
+
+interface HeaderProps {
+  children?: React.ReactNode
+}
 
 const HeaderBox = styled('header', {
   position: 'sticky',
@@ -18,47 +23,39 @@ const HeaderBox = styled('header', {
   backdropFilter: 'blur(12px)',
 });
 
-const HomeLink = styled('a', {
-  display: 'inline-block',
-  textDecoration: 'none'
-});
 
-const SiteHeading = styled('strong', {
-  display: 'block',
-  margin: 0,
-  fontSize: 0
-});
-
-const SiteHeadingHome = styled('span', {
-  display: 'block',
-  marginBlockEnd: '$4',
-  color: 'hsl($shade800)',
-  fontSize: '$14',
-  fontWeight: 'normal',
-  lineHeight: '$20'
-});
+// const SiteHeading = styled('strong', {
+//   display: 'block',
+//   margin: 0,
+//   fontSize: 0
+// });
 
 export default function Header() {
   const router = useRouter();
   const isRootPath = router.pathname === '/';
 
+  const SiteHeading = ({ children }: HeaderProps) => {
+    return isRootPath ? <h1 className="margin:0 f:0">{children}</h1> : <strong className="d:block f:0">{children}</strong>
+  }
+
   return (
-    <HeaderBox>
-      <Container responsive={{ '@m1232': 'desktop' }}>
-        <SiteHeading as={isRootPath ? 'h1' : 'strong'}>
+    <header className="position:sticky top:0 right:0 left:0 z-index:1 py:12 border-bottom:1|solid|shade-1200 backdrop-filter:blur(12px)">
+      <div className="container">
+
+        <SiteHeading>
         {
           isRootPath ?
           <IntersectionLogo position="header" /> : (
             <Link href="/" passHref>
-              <HomeLink>
-                <SiteHeadingHome>首頁</SiteHeadingHome>
-                <span className="intersection font-size:12 line-height:16px">Intersection</span>
-              </HomeLink>
+              <a className="d:inline-block text-decoration:none">
+                <span className="d:block margin-bottom:4 color:shade-800 f:14 font-weight:normal line-height:20px">首頁</span>
+                <span className="intersection fontDefault font-size:12 line-height:16px">Intersection</span>
+              </a>
             </Link>
           )
         }
         </SiteHeading>
-      </Container>
-    </HeaderBox>
+      </div>
+    </header>
   );
 }

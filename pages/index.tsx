@@ -6,112 +6,12 @@ import { gql } from '@apollo/client';
 import client from '../apollo-client';
 import { queryProps, postsProps } from '@utils/types';
 import { formatDate } from '@utils/formatDate';
-import { styled } from '../stitches.config';
 import HeadMeta from '@utils/HeadMeta';
 import '@master/css';
-import 'styles/master.css';
+// import 'styles/master.css';
 import Header from '@components/Header';
-import { Container } from '@components/layouts';
-import { PostLink, Cover, DateLabel, Description } from '@components/card';
-import { Heading } from '@elements/headings';
 import Translator from '@components/Translator';
 import Footer from '@components/Footer';
-
-const HomeCell = styled('div', {
-  variants: {
-    position: {
-      featured: {
-        gridArea: 'featured'
-      },
-      all: {
-        gridArea: 'all'
-      }
-    },
-    responsive: {
-      tablet: {
-        position: 'sticky',
-        top: '$64'
-      }
-    }
-  }
-});
-
-
-const PostList = styled('ul', {
-  display: 'grid',
-  rowGap: '$24',
-  marginBlockStart: 0,
-  marginBlockEnd: '$24',
-  padding: 0
-});
-
-const PostItem = styled('li', {
-  listStyleType: 'none'
-});
-
-const WebsiteProcessLink = styled('a', {
-  display: 'block'
-})
-
-const WebsiteProcess = styled('figure', {
-  position: 'relative',
-  marginX: 0,
-  marginBlockEnd: '$16',
-
-  variants: {
-    responsive: {
-      mobile: {
-        aspectRatio: 3 / 1
-      },
-      tablet: {
-        aspectRatio: 16 / 3
-      }
-    }
-  }
-});
-
-const WebsiteProcessImage = styled(Image, {
-  objectFit: 'cover',
-  borderRadius: '24px'
-});
-
-const AllByList = styled('ul', {
-  display: 'grid',
-  marginBlockStart: 0,
-  marginBlockEnd: 0,
-  padding: 0,
-
-  variants: {
-    responsive: {
-      mobile: {
-        grid: 'auto / 1fr 1fr',
-        columnGap: '$16'
-      }
-    }
-  }
-});
-
-const AllByItem = styled('li', {
-  listStyleType: 'none'
-});
-
-const AllByLink = styled('a', {
-  display: 'block',
-  paddingBlockStart: '$10',
-  paddingBlockEnd: '$6',
-  paddingInlineStart: '$12',
-  color: 'hsl($white)',
-  fontSize: '$16',
-  lineHeight: 1,
-  textDecoration: 'none',
-  backgroundColor: 'hsl($accent)'
-});
-
-const AllByIcon = styled('svg', {
-  width: '$16',
-  aspectRatio: 1,
-  verticalAlign: 'middle'
-});
 
 const Home: NextPage<postsProps> = ({ posts }) => {
   const meta = {
@@ -139,72 +39,71 @@ const Home: NextPage<postsProps> = ({ posts }) => {
       <HeadMeta dateModified={meta.dateModified} datePublished={meta.datePublished} />
       {process.env.NODE_ENV === 'production' && <Script data-respect-dnt async src="https://cdn.splitbee.io/sb.js"></Script>}
       <Header />
-      <Container layout={{ '@m992': 'home' }} responsive={{ '@initial': 'mobile', '@m1232': 'desktop' }}>
-        <HomeCell as="main" position={{ '@m992': 'featured' }} responsive={{ '@m992': 'tablet' }}>
-          <PostList>
+      {/* <Container layout={{ '@m992': 'home' }} responsive={{ '@initial': 'mobile', '@m1232': 'desktop' }}> */}
+      <div className="container d:grid@m992 grid-template-areas:'featured|all'@m992 grid-template-columns:5fr|3fr@m992 align-items:start@m992 gap-x:64@m992 margin-bottom:32">
+        <main className="grid-template-areas:featured@m992 position:sticky@m992 top:64@m992">
+          <ul className="d:grid gap-y:24 mt:0 mb:24 p:0">
             {featuredPosts.map(({ slug, title, cover, description, publishedTime }, index) => (
-              <PostItem key={`featured_${index}`}>
+              <li className="list-style-type:none" key={`featured${index}`}>
                 <Link href={`/${slug}`} passHref>
-                  <PostLink>
-                    <Cover
-                      responsive={{ '@initial': 'mobile', '@m992': 'tablet' }}
-                      featured={{ '@initial': 'mobile', '@m992': 'tablet' }}
-                    >
+                  <a className="d:block linkArea">
+                    <figure className="cardCover aspect-ratio:32/9@m992">
                       <Image src={cover.url} layout="fill" objectFit="cover" alt={cover.alt} priority />
-                      <DateLabel responsive={{ '@initial': 'mobile', '@m992': 'tablet' }} dateTime={formatDate(publishedTime)}>{formatDate(publishedTime)}</DateLabel>
-                    </Cover>
-                    <Heading position="postsFeatured">{title}</Heading>
-                    <Description position="featured">{description}</Description>
-                  </PostLink>
+                      <time className="dateLabel" dateTime={formatDate(publishedTime)}>{formatDate(publishedTime)}</time>
+                    </figure>
+                    <h2 className="margin:0|0|12 color:shade-100 f:20 line-height:1.4">{title}</h2>
+                    <p className="mt:0 color:shade-500 f:16 line-height:1.5">{description}</p>
+                  </a>
                 </Link>
-              </PostItem>
+              </li>
             ))}
-          </PostList>
+          </ul>
           <Link href="https://thecosignstudio.github.io/process" passHref>
-            <WebsiteProcessLink>
-              <WebsiteProcess responsive={{ '@initial': 'mobile', '@m992': 'tablet' }}>
-                <WebsiteProcessImage src="/website/process.webp" layout="fill" alt="專業人士的設計流程 (Design Process for Pros)" />
-              </WebsiteProcess>
-            </WebsiteProcessLink>
+            <a className="d:block">
+              <figure className="position:relative aspect-ratio:3/1 aspect-ratio:16/3@m992 mx:0 mb:16">
+                <Image className="object-fit:cover border-radius:24" src="/website/process.webp" layout="fill" alt="專業人士的設計流程 (Design Process for Pros)" />
+              </figure>
+            </a>
           </Link>
           <Translator />
           <hr className="divider display:none@m992" />
-        </HomeCell>
-        <HomeCell position={{ '@m992': 'all' }} responsive={{ '@m992': 'tablet' }}>
-          <Heading position="cell">所有文章</Heading>
-          <PostList>
+        </main>
+        <div className="grid-template-areas:all@m992">
+          <h2 className="cellHeading fontDefault">所有文章</h2>
+          <ul className="d:grid gap-y:24 mt:0 mb:24 p:0">
             {posts.map(({ slug, title, cover, publishedTime }, index) => (
-              <PostItem key={`all_${index}`}>
+              <li className="list-style-type:none" key={`all_${index}`}>
                 <Link href={`/${slug}`} passHref>
-                  <PostLink>
-                    <Cover responsive={{ '@initial': 'mobile', '@m992': 'tablet' }} position="all">
+                  <a className="d:block linkArea">
+                    <figure className="cardCover">
                       <Image src={cover.url} layout="fill" objectFit="cover" alt={cover.alt} />
-                      <DateLabel responsive={{ '@initial': 'mobile', '@m992': 'tablet' }} dateTime={formatDate(publishedTime)}>{formatDate(publishedTime)}</DateLabel>
-                    </Cover>
-                    <Heading as="h3" position="postsAll">{title}</Heading>
-                  </PostLink>
+                      <time className="dateLabel" dateTime={formatDate(publishedTime)}>{formatDate(publishedTime)}</time>
+                    </figure>
+                    <h3 className="margin:0 color:shade-100 f:16 line-height:1.5">{title}</h3>
+                  </a>
                 </Link>
-              </PostItem>
+              </li>
             ))}
-          </PostList>
-          <AllByList responsive={{ '@initial': 'mobile' }}>
+          </ul>
+          <ul className="d:grid grid-template-columns:1fr|1fr gap-x:16 my:0 p:0">
             {
               allBy.map(({ title, path }) =>
-                <AllByItem key={`AllBy_${path}`}>
+                <li className="list-style-type:none" key={`AllBy_${path}`}>
                   <Link href={`/${path}`} passHref>
-                    <AllByLink>
+                    <a className="d:block pt:10 pb:6 pl:12 color:white f:16 line-height:1 text-decoration:none background-color:accent">
                       {title}
-                      <AllByIcon viewBox="0 0 16 16">
+                      <svg className="w:16 aspect-ratio:1 vertical-align:middle" viewBox="0 0 16 16">
                         <use xlinkHref="/sprite.svg#arrow" />
-                      </AllByIcon>
-                    </AllByLink>
+                      </svg>
+                    </a>
                   </Link>
-                </AllByItem>
+                </li>
               )
             }
-          </AllByList>
-        </HomeCell>
-      </Container>
+          </ul>
+        </div>
+        {/* </Container> */}
+        </div>
       <Footer />
     </>
   )
