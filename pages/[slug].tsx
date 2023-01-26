@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import type { GetStaticPropsContext } from 'next';
-// import { updateViews } from '../lib/updateViews';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import Script from 'next/script';
@@ -26,10 +25,10 @@ import ImageDivider from '@components/article/ImageDivider';
 import remarkGfm from 'remark-gfm';
 import remarkUnwrapImages from 'remark-unwrap-images';
 import { styled } from '../stitches.config';
-import { PostTitle, PostSubtitle } from '@elements/postTitles';
+// import { PostTitle, PostSubtitle } from '@elements/postTitles';
 import { Divider } from '@elements/divider';
 import Header from '@components/Header';
-import { Container } from '@components/layouts';
+// import { Container } from '@components/layouts';
 import Aside from '@components/article/Aside';
 import Footer from '@components/Footer';
 
@@ -213,19 +212,19 @@ export default function Post({ post, postBody, authorIntro }: postProps) {
       />
       {process.env.NODE_ENV === 'production' && <Script data-respect-dnt async src="https://cdn.splitbee.io/sb.js"></Script>}
       <Header />
-      <Container layout={{ '@m992': 'post' }} responsive={{ '@initial': 'mobile', '@m1232': 'desktop' }}>
-        <PostBody>
+      <div className="container d:grid@m992 grid-template-columns:3fr|1fr@m992 gap-x:64 margin-bottom:32">
+        <article className="margin-bottom:64 padding-top:16">
           {cover.position &&
-            <Cover above={{ '@initial': 'mobile', '@m992': 'tablet' }}>
+            <figure className="margin-top:-16 mx:-16 mx:0@m992 margin-bottom:16">
               <Image src={cover.url} layout="responsive" width={cover.dimensions.width} height={cover.dimensions.height} alt={cover.alt} />
-            </Cover>
+            </figure>
           }
-          <PostTitle translated={{ '@initial': 'mobile', '@m992': 'tablet' }} withSubtitle={!!subtitle}>{title}</PostTitle>
-          {subtitle && <PostSubtitle translated={{ '@initial': 'mobile' }}>{subtitle}</PostSubtitle>}
+        <h1 className={`sansDefault margin-top:0 ${!!subtitle ? 'margin-bottom:8' : 'margin-bottom:24'} color:shade-100 f:28 f:32@m992 line-height:40px`}>{title}</h1>
+        {!!subtitle && <p className="sansDefault margin-top:0 margin-bottom:24 color:shade-800 f:20 line-height:28px">{subtitle}</p>}
           <MDXRemote {...postBody} components={mdxComponents} />
-        </PostBody>
+        </article>
         <Aside authorIntro={authorIntro} publishedTime={datePublished} source={source} />
-      </Container>
+      </div>
       <Footer />
     </>
   );

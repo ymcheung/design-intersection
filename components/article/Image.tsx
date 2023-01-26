@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import classNames from 'classnames';
 import { StyledFigure, StyledFigcaption } from './styled';
 
 interface ImageProps {
@@ -25,15 +26,23 @@ export default function ArticleImage({ src, width, maxWidth, height, isCover, al
   }
 
   return (
-    <StyledFigure
-      css={{ maxWidth: maxWidth }}
-      cover={isCover ? { '@initial': 'mobile', '@m992': 'tablet' } : undefined}
-      general={isCover ? undefined : true}
-    >
+    // <StyledFigure
+    //   css={{ maxWidth: maxWidth }}
+    //   cover={isCover ? { '@initial': 'mobile', '@m992': 'tablet' } : undefined}
+    //   general={isCover ? undefined : true}
+    // >
+    // <figure className={`${maxWidth ? `max-width:${maxWidth}` : ''}${isCover ? '' : ''}`}>
+    <figure className={
+      classNames('article-img-figure',
+        { [`max-width:${maxWidth}`]: !!maxWidth },
+        'mb:32',
+        isCover ? 'mx:-16 mx:auto@m992' : 'mx:auto' )
+    }>
       <Image src={src} width={width} height={height} layout="responsive" alt={alt} priority={isCover} />
       {
         caption && <ImageFigcaption>{caption}</ImageFigcaption>
       }
-    </StyledFigure>
+    </figure>
+    // </StyledFigure>
   );
 };

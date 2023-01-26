@@ -39,9 +39,8 @@ export default function Header() {
   }
 
   return (
-    <header className="position:sticky top:0 right:0 left:0 z-index:1 py:12 border-bottom:1|solid|shade-1200 backdrop-filter:blur(12px)">
+    <header className="position:sticky top:0 right:0 left:0 z-index:1 py:12 background-color:hsl(0|100%|100%/0.88) border-bottom:1|solid|shade-1200 backdrop-filter:blur(12px)">
       <div className="container">
-
         <SiteHeading>
         {
           isRootPath ?
@@ -49,7 +48,7 @@ export default function Header() {
             <Link href="/" passHref>
               <a className="d:inline-block text-decoration:none">
                 <span className="d:block margin-bottom:4 color:shade-800 f:14 font-weight:normal line-height:20px">首頁</span>
-                <span className="intersection fontDefault font-size:12 line-height:16px">Intersection</span>
+                <span className="sansDefault intersection font-size:12 line-height:16px">Intersection</span>
               </a>
             </Link>
           )

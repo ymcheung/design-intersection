@@ -7,8 +7,6 @@ import client from '../apollo-client';
 import { queryProps, postsProps } from '@utils/types';
 import { formatDate } from '@utils/formatDate';
 import HeadMeta from '@utils/HeadMeta';
-import '@master/css';
-// import 'styles/master.css';
 import Header from '@components/Header';
 import Translator from '@components/Translator';
 import Footer from '@components/Footer';
@@ -39,17 +37,16 @@ const Home: NextPage<postsProps> = ({ posts }) => {
       <HeadMeta dateModified={meta.dateModified} datePublished={meta.datePublished} />
       {process.env.NODE_ENV === 'production' && <Script data-respect-dnt async src="https://cdn.splitbee.io/sb.js"></Script>}
       <Header />
-      {/* <Container layout={{ '@m992': 'home' }} responsive={{ '@initial': 'mobile', '@m1232': 'desktop' }}> */}
       <div className="container d:grid@m992 grid-template-areas:'featured|all'@m992 grid-template-columns:5fr|3fr@m992 align-items:start@m992 gap-x:64@m992 margin-bottom:32">
         <main className="grid-template-areas:featured@m992 position:sticky@m992 top:64@m992">
           <ul className="d:grid gap-y:24 mt:0 mb:24 p:0">
             {featuredPosts.map(({ slug, title, cover, description, publishedTime }, index) => (
               <li className="list-style-type:none" key={`featured${index}`}>
                 <Link href={`/${slug}`} passHref>
-                  <a className="d:block linkArea">
+                  <a className="d:block text:none">
                     <figure className="cardCover aspect-ratio:32/9@m992">
                       <Image src={cover.url} layout="fill" objectFit="cover" alt={cover.alt} priority />
-                      <time className="dateLabel" dateTime={formatDate(publishedTime)}>{formatDate(publishedTime)}</time>
+                      <time className="dateLabel sansDefault" dateTime={formatDate(publishedTime)}>{formatDate(publishedTime)}</time>
                     </figure>
                     <h2 className="margin:0|0|12 color:shade-100 f:20 line-height:1.4">{title}</h2>
                     <p className="mt:0 color:shade-500 f:16 line-height:1.5">{description}</p>
@@ -69,15 +66,15 @@ const Home: NextPage<postsProps> = ({ posts }) => {
           <hr className="divider display:none@m992" />
         </main>
         <div className="grid-template-areas:all@m992">
-          <h2 className="cellHeading fontDefault">所有文章</h2>
+          <h2 className="cell-heading sansDefault">所有文章</h2>
           <ul className="d:grid gap-y:24 mt:0 mb:24 p:0">
             {posts.map(({ slug, title, cover, publishedTime }, index) => (
               <li className="list-style-type:none" key={`all_${index}`}>
                 <Link href={`/${slug}`} passHref>
-                  <a className="d:block linkArea">
+                  <a className="d:block text:none">
                     <figure className="cardCover">
                       <Image src={cover.url} layout="fill" objectFit="cover" alt={cover.alt} />
-                      <time className="dateLabel" dateTime={formatDate(publishedTime)}>{formatDate(publishedTime)}</time>
+                      <time className="dateLabel sansDefault" dateTime={formatDate(publishedTime)}>{formatDate(publishedTime)}</time>
                     </figure>
                     <h3 className="margin:0 color:shade-100 f:16 line-height:1.5">{title}</h3>
                   </a>
@@ -102,7 +99,6 @@ const Home: NextPage<postsProps> = ({ posts }) => {
             }
           </ul>
         </div>
-        {/* </Container> */}
         </div>
       <Footer />
     </>

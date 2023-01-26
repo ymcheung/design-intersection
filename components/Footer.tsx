@@ -6,7 +6,7 @@ export default function Footer() {
   const thisYear = new Date().getFullYear();
 
   return (
-    <footer className="fontDefault pt:24 pb:16 background-color:shade-1500 grid-area:footer@m768">
+    <footer className="sansDefault pt:24 pb:16 background-color:shade-1500 grid-area:footer@m768">
       <section className="container d:grid grid-template-columns:1fr|1fr@m640 gap-x:16@m640 margin-bottom:32">
         <div>
           <figure className="d:grid grid-template-columns:24|auto gap-x:8 mt:0 mx:0 mb:16">

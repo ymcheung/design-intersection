@@ -2,12 +2,13 @@ lockfileVersion: 5.4
 
 specifiers:
   '@apollo/client': ^3.6.9
-  '@master/css.webpack': 2.0.0-beta.101
+  '@master/css.webpack': 2.0.0-beta.102
   '@stitches/react': ^1.2.8
   '@types/node': 18.7.16
   '@types/react': 18.0.19
   '@types/react-dom': 18.0.6
   '@vercel/analytics': ^0.1.5
+  classnames: ^2.3.2
   eslint: 8.23.0
   eslint-config-next: 12.3.0
   graphql: ^16.6.0
@@ -24,6 +25,7 @@ dependencies:
   '@apollo/client': 3.6.9_onqnqwb3ubg5opvemcqf7c2qhy
   '@stitches/react': 1.2.8_react@18.2.0
   '@vercel/analytics': 0.1.5_react@18.2.0
+  classnames: 2.3.2
   graphql: 16.6.0
   next: 12.3.4_biqbaboplfbrettd7655fr4n2y
   next-mdx-remote: 4.1.0_biqbaboplfbrettd7655fr4n2y
@@ -34,7 +36,7 @@ dependencies:
   remark-unwrap-images: 3.0.1
 
 devDependencies:
-  '@master/css.webpack': 2.0.0-beta.101
+  '@master/css.webpack': 2.0.0-beta.102
   '@types/node': 18.7.16
   '@types/react': 18.0.19
   '@types/react-dom': 18.0.6
@@ -373,10 +375,10 @@ packages:
     resolution: {integrity: sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==}
     dev: true
 
-  /@master/css-compiler/2.0.0-beta.101:
-    resolution: {integrity: sha512-dtvkanj3CPhSODQ96llPQ2+R4AW8eE1XjR6k1aB5LAfSnI68LK14rM4nuu7qrmCfT0cwrdxN832LpgT8zZEFWw==}
+  /@master/css-compiler/2.0.0-beta.103:
+    resolution: {integrity: sha512-uC9I3fK/DlZfIFKLvf2/imaxLaB0pgv8R80fc0pXeVn7TbZKzK44bhFjgfm2aubuka5NhFLsMG9NkMHO9DzE8A==}
     dependencies:
-      '@master/css': 2.0.0-beta.101
+      '@master/css': 2.0.0-beta.103
       fast-glob: 3.2.12
       minimatch: 5.1.2
       stylelint: 14.16.1
@@ -386,30 +388,30 @@ packages:
       - supports-color
     dev: true
 
-  /@master/css.webpack/2.0.0-beta.101:
-    resolution: {integrity: sha512-+bVk7M6tmX6zlmcquKOy0/I2y9glEqu9OtpscH2JsoCdftcaiqdw32ZWS7HPZgjGkIFI4faKjRKEVNlz04xp3Q==}
+  /@master/css.webpack/2.0.0-beta.102:
+    resolution: {integrity: sha512-czg3L9RkB9yoGpto2Q7QhQS9A+40x5XyMiU6NhUslRriW3z1MfwnRs+lzoohERZhIQ3Ecc5JLrwbYxOy3Dkhyw==}
     dependencies:
-      '@master/css': 2.0.0-beta.101
-      '@master/css-compiler': 2.0.0-beta.101
+      '@master/css': 2.0.0-beta.103
+      '@master/css-compiler': 2.0.0-beta.103
       webpack-virtual-modules: 0.5.0
     transitivePeerDependencies:
       - supports-color
     dev: true
 
-  /@master/css/2.0.0-beta.101:
-    resolution: {integrity: sha512-CjnuOUN8PQsRU4jpKOTntpEJlgUfkP/ReSB+o7CChqt853ulg/QZ1qNto0c6QN5Cp/TaCXtXPmku5SzrzYcZUA==}
+  /@master/css/2.0.0-beta.103:
+    resolution: {integrity: sha512-r0ua7ThTZ2FHEyy4T/iblyoGAzkjRznMPqOWKie17VLwlTLA23JgH/hQUzZml+0p3AZcScCZYQZR8rx6FA5/8A==}
     requiresBuild: true
     dependencies:
-      '@master/keyframes.css': 2.0.0-beta.101
-      '@master/normal.css': 2.0.0-beta.101
+      '@master/keyframes.css': 2.0.0-beta.103
+      '@master/normal.css': 2.0.0-beta.103
     dev: true
 
-  /@master/keyframes.css/2.0.0-beta.101:
-    resolution: {integrity: sha512-AkEDIo47n7a/5xzfWPuHQicKzX0YeWdx+0GKP/4hkOblgXjrtJOx3OmsI2HcGYWsSIgP+WhJhhs3o4+PO4P7HA==}
+  /@master/keyframes.css/2.0.0-beta.103:
+    resolution: {integrity: sha512-Ev0aga9+BT4duIYxzlrKkzAebGOpBxx5lRKXhe/zSwA5DU/QP+9FACmcIu6p1NpcnWL+F960JXo5ubIlMPxfEg==}
     dev: true
 
-  /@master/normal.css/2.0.0-beta.101:
-    resolution: {integrity: sha512-6I+I8Azt9aYwfBpWvmmI0EyEEGUGzIi1ET+8LYK1GiVIpzQ03F6y4E+8tbJFoeHqw+4vmghgBJ0GYsUbaObTfw==}
+  /@master/normal.css/2.0.0-beta.103:
+    resolution: {integrity: sha512-sstblrbbpd5cC2Co3/FimC4bxRl3pK3IY4iIVs6kjI5hizhoXAF5M4R1K0s3oa2X+n5ULc1ivmAeM+A3JM+qqQ==}
     dev: true
 
   /@mdx-js/mdx/2.1.3:
@@ -1021,6 +1023,10 @@ packages:
 
   /character-reference-invalid/2.0.1:
     resolution: {integrity: sha512-iBZ4F4wRbyORVsu0jPV7gXkOsGYjGHPmAyv+HiHG8gi5PtC9KI2j1+v8/tlibRvjoWX027ypmG/n0HtO5t7unw==}
+    dev: false
+
+  /classnames/2.3.2:
+    resolution: {integrity: sha512-CSbhY4cFEJRe6/GQzIk5qXZ4Jeg5pcsP7b5peFSDpffpe1cqjASH/n9UTjBwOp6XpMSTwQ8Za2K5V02ueA7Tmw==}
     dev: false
 
   /color-convert/1.9.3:

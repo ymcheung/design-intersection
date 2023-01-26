@@ -3,11 +3,11 @@ import { useRouter } from 'next/router';
 import { formatDate } from '@utils/formatDate';
 import { styled } from '../../stitches.config';
 import { MDXRemote } from 'next-mdx-remote';
-import { Heading } from '@elements/headings';
+// import { Heading } from '@elements/headings';
 import { PostTitle, PostSubtitle } from '@elements/postTitles';
 import ArticleLink from '@components/article/Link';
 import IntroP from '@components/article/IntroP';
-import { Divider } from '@elements/divider';
+// import { Divider } from '@elements/divider';
 import useCopyToClipboard from '@utils/useCopyToClipboard';
 
 interface AsideProps {
@@ -79,23 +79,23 @@ export default function Aside({ authorIntro, publishedTime, source }: AsideProps
 
   return (
     <>
-      <Divider display={{ '@m992': 'none' }} length="full" />
+      <hr className="divider display:none@m992" />
       <aside>
-        <Heading position="cell">原文</Heading>
+        <h2 className="cell-heading">原文</h2>
         <Link href={source.url} passHref>
           <PostTitle as="a" source={{ '@initial': 'mobile' }} withSubtitle={!!source.subtitle} target="_blank" rel="noopener">{source.title}</PostTitle>
         </Link>
         {source.subtitle && <PostSubtitle source={{ '@initial': 'mobile' }}>{source.subtitle}</PostSubtitle>}
-        <Divider align="left" />
+        <hr className="divider w:80 margin-left:0" />
         <SourceAuthor of="name">{source.author}</SourceAuthor>
         <div>
           <MDXRemote {...authorIntro} components={mdxComponents} />
         </div>
-        <Heading position="cell">日期</Heading>
+        <h2 className="cell-heading">日期</h2>
         <Time dateTime={formatDate(publishedTime)}>
           {formatDate(publishedTime)}
         </Time>
-        <Heading position="cell">分享</Heading>
+        <h2 className="cell-heading">分享</h2>
         <CopyUrlButton type="button" onClick={() => copy(postUrl)}>複製文章網址</CopyUrlButton>
         <CopiedMessage>{value && '已複製！'}</CopiedMessage>
       </aside>
