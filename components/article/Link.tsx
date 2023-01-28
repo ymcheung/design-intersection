@@ -1,6 +1,5 @@
 import type { ComponentProps } from 'react';
 import Link from 'next/link';
-import { StyledLink } from './styled';
 
 export default function ArticleLink({ children, href }: ComponentProps<'a'>) {
   if (!href) {
@@ -11,11 +10,11 @@ export default function ArticleLink({ children, href }: ComponentProps<'a'>) {
 
   return (
     <Link href={href} passHref>
-      {
-        isExternal ?
-          <StyledLink target="_blank" rel="noopener">{children}</StyledLink> :
-          <StyledLink>{children}</StyledLink>
-      }
+      <a className="color:shade-500"
+        target={isExternal ? '_blank' : undefined}
+        rel={isExternal ? "noopener" : undefined}>
+        {children}
+      </a>
     </Link>
   );
 };
