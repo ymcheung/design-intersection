@@ -126,9 +126,8 @@ const nextConfig = {
       {
         source:
           '/%E6%98%93%E7%94%A8%E6%80%A7%E6%B8%AC%E8%A9%A6%E6%B5%81%E7%A8%8B%E7%9A%84%E5%BC%B7%E5%8A%9B%E4%BF%AE%E6%AD%A3-955d99420fd9',
-        destination:
-          'https://medium.com/intersection-translation/%E6%98%93%E7%94%A8%E6%80%A7%E6%B8%AC%E8%A9%A6%E6%B5%81%E7%A8%8B%E7%9A%84%E5%BC%B7%E5%8A%9B%E4%BF%AE%E6%AD%A3-955d99420fd9',
-        permanent: false
+        destination: '/955d99420fd9',
+        permanent: true
       },
       {
         source:
