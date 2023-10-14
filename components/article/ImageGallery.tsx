@@ -1,5 +1,5 @@
-import Image from 'next/image';
-import { StyledFigure, StyledFigcaption } from './styled';
+import Image from "next/image";
+import { StyledFigure, StyledFigcaption } from "./styled";
 
 interface ImageProps {
   src: string[];
@@ -18,29 +18,46 @@ interface ChildrenProps {
 
 const ImageFigcaption = ({ children, span }: ChildrenProps) => {
   return (
-    <StyledFigcaption css={{ gridColumn: `span ${span}` }} responsive={{ '@initial': 'mobile', '@m992': 'tablet' }}>
+    <StyledFigcaption
+      css={{ gridColumn: `span ${span}` }}
+      responsive={{ "@initial": "mobile", "@m992": "tablet" }}
+    >
       {children}
     </StyledFigcaption>
   );
-}
+};
 
-export default function ImageGallery({ src, width, maxWidth, height, isCover, alt, caption }: ImageProps) {
+export default function ImageGallery({
+  src,
+  width,
+  maxWidth,
+  height,
+  isCover,
+  alt,
+  caption,
+}: ImageProps) {
   return (
     <StyledFigure
-      css={{ grid: `auto / repeat(${src.length}, 1fr)`, '@m992': { maxWidth: maxWidth ? maxWidth : 'initial' }}}
-      cover={isCover ? { '@initial': 'mobile', '@m992': 'tablet' } : undefined}
+      css={{
+        grid: `auto / repeat(${src.length}, 1fr)`,
+        "@m992": { maxWidth: maxWidth ? maxWidth : "initial" },
+      }}
+      cover={isCover ? { "@initial": "mobile", "@m992": "tablet" } : undefined}
       general={isCover ? undefined : true}
-      gallery={{ '@initial': 'mobile' }}
+      gallery={{ "@initial": "mobile" }}
     >
-      {src.map((url, index) =>
+      {src.map((url, index) => (
         <Image
-          src={url} width={width[index]}
+          src={url}
+          width={width[index]}
           height={height[index]}
-          layout="responsive"
-          alt={alt ? alt[index] : ''} key={index}
+          alt={alt ? alt[index] : ""}
+          key={index}
         />
+      ))}
+      {caption && (
+        <ImageFigcaption span={src.length}>{caption}</ImageFigcaption>
       )}
-      {caption && <ImageFigcaption span={src.length}>{caption}</ImageFigcaption>}
     </StyledFigure>
   );
-};
+}

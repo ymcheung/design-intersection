@@ -1,37 +1,37 @@
-import { useEffect } from 'react';
-import type { GetStaticPropsContext } from 'next';
+import { useEffect } from "react";
+import type { GetStaticPropsContext } from "next";
 // import { updateViews } from '../lib/updateViews';
-import Image from 'next/image';
-import { useRouter } from 'next/router';
-import Script from 'next/script';
-import { gql } from '@apollo/client';
-import client from '../apollo-client';
-import { serialize } from 'next-mdx-remote/serialize';
-import { MDXRemote } from 'next-mdx-remote';
-import HeadMeta from '@utils/HeadMeta';
-import Heading2 from '@components/article/Heading2';
-import Heading3 from '@components/article/Heading3';
-import Paragraph from '@components/article/Paragraph';
-import Ul from '@components/article/Ul';
-import Ol from '@components/article/Ol';
-import ArticleLink from '@components/article/Link';
-import ArticleImageLink from '@components/article/ImageLink';
-import ArticleImage from '@components/article/Image';
-import ImageGallery from '@components/article/ImageGallery';
-import Figure from '@components/article/Figure';
-import LinkPreview from '@components/article/LinkPreview';
-import Blockquote from '@components/article/Blockquote';
-import Note from '@components/article/Note';
-import ImageDivider from '@components/article/ImageDivider';
-import remarkGfm from 'remark-gfm';
-import remarkUnwrapImages from 'remark-unwrap-images';
-import { styled } from '../stitches.config';
-import { PostTitle, PostSubtitle } from '@elements/postTitles';
-import { Divider } from '@elements/divider';
-import Header from '@components/Header';
-import { Container } from '@components/layouts';
-import Aside from '@components/article/Aside';
-import Footer from '@components/Footer';
+import Image from "next/image";
+import { useRouter } from "next/router";
+import Script from "next/script";
+import { gql } from "@apollo/client";
+import client from "../apollo-client";
+import { serialize } from "next-mdx-remote/serialize";
+import { MDXRemote } from "next-mdx-remote";
+import HeadMeta from "@utils/HeadMeta";
+import Heading2 from "@components/article/Heading2";
+import Heading3 from "@components/article/Heading3";
+import Paragraph from "@components/article/Paragraph";
+import Ul from "@components/article/Ul";
+import Ol from "@components/article/Ol";
+import ArticleLink from "@components/article/Link";
+import ArticleImageLink from "@components/article/ImageLink";
+import ArticleImage from "@components/article/Image";
+import ImageGallery from "@components/article/ImageGallery";
+import Figure from "@components/article/Figure";
+import LinkPreview from "@components/article/LinkPreview";
+import Blockquote from "@components/article/Blockquote";
+import Note from "@components/article/Note";
+import ImageDivider from "@components/article/ImageDivider";
+import remarkGfm from "remark-gfm";
+import remarkUnwrapImages from "remark-unwrap-images";
+import { styled } from "../stitches.config";
+import { PostTitle, PostSubtitle } from "@elements/postTitles";
+import { Divider } from "@elements/divider";
+import Header from "@components/Header";
+import { Container } from "@components/layouts";
+import Aside from "@components/article/Aside";
+import Footer from "@components/Footer";
 
 interface staticPathProps {
   slug: {
@@ -54,10 +54,10 @@ interface queryProps {
           dimensions: {
             width: number;
             height: number;
-          }
-        }
-      }
-    },
+          };
+        };
+      };
+    };
     position: boolean;
     alt: string;
   };
@@ -72,9 +72,11 @@ interface queryProps {
     author: string;
     intro: string;
   };
-  tags: [{
-    slug: string
-  }];
+  tags: [
+    {
+      slug: string;
+    }
+  ];
 }
 
 interface postProps {
@@ -100,36 +102,36 @@ interface postProps {
       url: string;
       author: string;
       intro: string;
-    }
+    };
     tags: string[];
-  }
+  };
   postBody: {
     compiledSource: string;
-  },
+  };
   authorIntro: {
     compiledSource: string;
-  }
+  };
 }
 
-const Cover = styled('figure', {
-  marginBlockEnd: '$16',
+const Cover = styled("figure", {
+  marginBlockEnd: "$16",
 
   variants: {
     above: {
       mobile: {
-        marginBlockStart: '-$16',
-        marginX: '-$16',
+        marginBlockStart: "-$16",
+        marginX: "-$16",
       },
       tablet: {
-        marginX: 0
-      }
-    }
-  }
-})
+        marginX: 0,
+      },
+    },
+  },
+});
 
-const PostBody = styled('article', {
-  marginBlockEnd: '$64',
-  paddingBlockStart: '$16'
+const PostBody = styled("article", {
+  marginBlockEnd: "$64",
+  paddingBlockStart: "$16",
 });
 
 // const Pipe = styled('span', {
@@ -142,7 +144,16 @@ const PostBody = styled('article', {
 // });
 
 export default function Post({ post, postBody, authorIntro }: postProps) {
-  const { id, title, subtitle, cover, description, dateModified, datePublished, source } = post;
+  const {
+    id,
+    title,
+    subtitle,
+    cover,
+    description,
+    dateModified,
+    datePublished,
+    source,
+  } = post;
 
   const router = useRouter();
 
@@ -155,9 +166,9 @@ export default function Post({ post, postBody, authorIntro }: postProps) {
       alt: cover.alt,
       dimensions: {
         width: cover.dimensions.width,
-        height: cover.dimensions.height
-      }
-    }
+        height: cover.dimensions.height,
+      },
+    },
   };
 
   const mdxComponents = {
@@ -175,31 +186,33 @@ export default function Post({ post, postBody, authorIntro }: postProps) {
     LinkPreview,
     ImageGallery,
     ImageDivider,
-    Note
+    Note,
   };
 
   const reqBody = JSON.stringify({
-    mutations: [{
-      patch: {
-        id,
-        inc: {
-          views: 1
-        }
-      }
-    }]
+    mutations: [
+      {
+        patch: {
+          id,
+          inc: {
+            views: 1,
+          },
+        },
+      },
+    ],
   });
 
   useEffect(() => {
-    if (process.env.NODE_ENV !== 'production') return;
+    if (process.env.NODE_ENV !== "production") return;
 
     fetch(`/api/${id}`, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: reqBody,
-  })
-  }, [])
+    });
+  }, []);
 
   return (
     <>
@@ -211,20 +224,48 @@ export default function Post({ post, postBody, authorIntro }: postProps) {
         datePublished={datePublished}
         ogCover={meta.cover}
       />
-      {process.env.NODE_ENV === 'production' && <Script data-respect-dnt async src="https://cdn.splitbee.io/sb.js"></Script>}
+      {process.env.NODE_ENV === "production" && (
+        <Script
+          data-respect-dnt
+          async
+          src="https://cdn.splitbee.io/sb.js"
+        ></Script>
+      )}
       <Header />
-      <Container layout={{ '@m992': 'post' }} responsive={{ '@initial': 'mobile', '@m1232': 'desktop' }}>
+      <Container
+        layout={{ "@m992": "post" }}
+        responsive={{ "@initial": "mobile", "@m1232": "desktop" }}
+      >
         <PostBody>
-          {cover.position &&
-            <Cover above={{ '@initial': 'mobile', '@m992': 'tablet' }}>
-              <Image src={cover.url} layout="responsive" width={cover.dimensions.width} height={cover.dimensions.height} alt={cover.alt} />
+          {cover.position && (
+            <Cover above={{ "@initial": "mobile", "@m992": "tablet" }}>
+              <Image
+                src={cover.url}
+                fill={true}
+                width={cover.dimensions.width}
+                height={cover.dimensions.height}
+                alt={cover.alt}
+              />
             </Cover>
-          }
-          <PostTitle translated={{ '@initial': 'mobile', '@m992': 'tablet' }} withSubtitle={!!subtitle}>{title}</PostTitle>
-          {subtitle && <PostSubtitle translated={{ '@initial': 'mobile' }}>{subtitle}</PostSubtitle>}
+          )}
+          <PostTitle
+            translated={{ "@initial": "mobile", "@m992": "tablet" }}
+            withSubtitle={!!subtitle}
+          >
+            {title}
+          </PostTitle>
+          {subtitle && (
+            <PostSubtitle translated={{ "@initial": "mobile" }}>
+              {subtitle}
+            </PostSubtitle>
+          )}
           <MDXRemote {...postBody} components={mdxComponents} />
         </PostBody>
-        <Aside authorIntro={authorIntro} publishedTime={datePublished} source={source} />
+        <Aside
+          authorIntro={authorIntro}
+          publishedTime={datePublished}
+          source={source}
+        />
       </Container>
       <Footer />
     </>
@@ -245,13 +286,13 @@ export async function getStaticPaths() {
   });
 
   const paths = data.allPost.map(({ slug }: staticPathProps) => ({
-    params: { slug: slug.current }
+    params: { slug: slug.current },
   }));
 
   return {
     paths,
-    fallback: false
-  }
+    fallback: false,
+  };
 }
 
 export async function getStaticProps({ params }: GetStaticPropsContext) {
@@ -296,58 +337,66 @@ export async function getStaticProps({ params }: GetStaticPropsContext) {
     `,
   });
 
-  const post = data.allPost.map(({ _id, title, subtitle, cover, description, _updatedAt, publishedTime, source, tags }: queryProps) => {
-    const tagsSlug = tags.map(({ slug }) => slug);
-    return ({
-      id: _id,
+  const post = data.allPost.map(
+    ({
+      _id,
       title,
       subtitle,
-      cover: {
-        url: cover.mainImage.asset.url,
-        dimensions: cover.mainImage.asset.metadata.dimensions,
-        position: cover.position,
-        alt: cover.alt
-      },
+      cover,
       description,
-      dateModified: _updatedAt,
-      datePublished: publishedTime,
-      source: {
-        title: source.title,
-        subtitle: source.subtitle,
-        url: source.url,
-        author: source.author
-      },
-      tags: tagsSlug
-    })
-  });
+      _updatedAt,
+      publishedTime,
+      source,
+      tags,
+    }: queryProps) => {
+      const tagsSlug = tags.map(({ slug }) => slug);
+      return {
+        id: _id,
+        title,
+        subtitle,
+        cover: {
+          url: cover.mainImage.asset.url,
+          dimensions: cover.mainImage.asset.metadata.dimensions,
+          position: cover.position,
+          alt: cover.alt,
+        },
+        description,
+        dateModified: _updatedAt,
+        datePublished: publishedTime,
+        source: {
+          title: source.title,
+          subtitle: source.subtitle,
+          url: source.url,
+          author: source.author,
+        },
+        tags: tagsSlug,
+      };
+    }
+  );
 
   const body = data.allPost[0].body;
-  const postBody = await serialize(
-    body, {
+  const postBody = await serialize(body, {
     mdxOptions: {
       remarkPlugins: [remarkGfm, remarkUnwrapImages],
-      format: 'mdx'
+      format: "mdx",
     },
-    parseFrontmatter: false
-  }
-  );
+    parseFrontmatter: false,
+  });
 
   const intro = data.allPost[0].source.intro;
-  const authorIntro = await serialize(
-    intro, {
+  const authorIntro = await serialize(intro, {
     mdxOptions: {
       remarkPlugins: [remarkGfm],
-      format: 'md'
+      format: "md",
     },
-    parseFrontmatter: false
-  }
-  );
+    parseFrontmatter: false,
+  });
 
   return {
     props: {
       post: post[0],
       postBody,
-      authorIntro
-    }
-  }
+      authorIntro,
+    },
+  };
 }

@@ -1,4 +1,4 @@
-import Image from 'next/image';
+import Image from "next/image";
 
 interface ImageProps {
   src: string;
@@ -7,5 +7,5 @@ interface ImageProps {
 }
 
 export default function ImageDivider({ src, width, height }: ImageProps) {
-  return (<Image src={src} layout="fixed" width={width} height={height} alt="" />);
-};
+  return <Image src={src} width={width} height={height} alt="" />;
+}
